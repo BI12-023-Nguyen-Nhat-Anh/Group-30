@@ -33,5 +33,3 @@ Bậc 5: Cho kWh từ 301 - 400        2.834
 Bậc 6: Cho kWh từ 401 trở lên      2.927
 
 - Đối với khách hàng đóng tiền muộn: Lấy số tiền mà người dùng phải đóng ngày hôm trước * 10%
-
-11:08 PM 3/21/2023
