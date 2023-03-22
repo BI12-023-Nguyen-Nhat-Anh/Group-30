@@ -46,4 +46,4 @@ Bậc 3: Cho kWh từ 2201 trở lên     2.442
 + Linh: design UI, Meter Reading
 + Nghĩa: Billing and payments record + data
 + Diệp: Electricity consumption
-+ Cường - Nhật Anh: Front end và Customer
++ Cường - Nhật Anh: Front end và Customer + Bill calculate
