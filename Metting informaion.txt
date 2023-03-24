@@ -1,0 +1,49 @@
+.LOG
+
+09:36 PM 3/14/2023
+- Group topic: Electricity Information Management System (e.g. EVN)
+- 4/4 is the deadline
+
+08:17 PM 3/17/2023
+- Dự án Electricity Information Management System là một hệ thống quản lý thông tin về điện năng, đặc biệt là để quản lý việc sản xuất, phân phối và tiêu thụ điện năng.
+- Hệ thống này được thiết kế và phát triển để cho phép các công ty điện lực có thể đáp ứng nhu cầu cung cấp dịch vụ cho khách hàng một cách tốt nhất và hiệu quả nhất. 
+Đồng thời đảm bảo cho việc quản lý sử dụng điện năng ở mức độ cục bộ, khu vực và quốc gia.
+Một số tính năng chính của hệ thống này có thể bao gồm:
++ Quản lý các thông tin về khách hàng và hợp đồng cung cấp điện
++ Quản lý các thông tin liên quan đến việc sản xuất, phân phối và tiêu thụ điện năng
++ Quản lý các thông tin về giá cả và hóa đơn điện của khách hàng
++ Tự động hóa việc đọc chỉ số điện và lập hóa đơn điện tử
++ Đảm bảo an toàn và bảo mật của dữ liệu từ các tiểu vùng đến mức độ quốc gia.
+- Tổng quan, hệ thống quản lý thông tin về điện năng này giúp cải thiện hiệu quả quản lý điện lực, tối ưu hóa hoạt động sản xuất đáp ứng nhu cầu điện cho mọi khách hàng 
+và giảm thiểu tổn thất điện năng.
+
+09:47 PM 3/21/2023
+- Cách tính tiền điện sinh hoạt: 
+Nhóm đối tượng khách hàng          Giá bán (Đồng/kwh)
+Bậc 1: Cho kWh từ 0 - 50           1.678
+Bậc 2: Cho kWh từ 51 - 100         1.734
+Bậc 3: Cho kWh từ 101 - 200        2.014
+Bậc 4: Cho kWh từ 201 - 300        2.536
+Bậc 5: Cho kWh từ 301 - 400        2.834
+Bậc 6: Cho kWh từ 401 trở lên      2.927
+
+- Cách tính tiền điện của cả 3 loại điện (Sản xuất, Kinh doanh, Hành chính - sự nghiệp)
++ Cách tính tiền điện dựa theo giá bản lẻ điện sinh hoạt (Gồm 6 bậc)
+Nhóm đối tượng khách hàng          Giá bán (Đồng/kwh)
+Bậc 1: Cho kWh từ 0 - 600          2.666
+Bậc 2: Cho kWh từ 601 - 2200       2.629
+Bậc 3: Cho kWh từ 2201 trở lên     2.442
+
+- Đối với khách hàng đóng tiền muộn: Lấy số tiền mà người dùng phải đóng ngày hôm trước * 10%
+
+9:09 PM 3/22/2023
+- Electricity consumption sẽ in ra lượng tiêu thụ của khách hàng và in ra màn hình cho người dùng
+- Billing and payments record:
++ Mình sẽ random người nộp đúng hạn và người nộp muộn để có thể chạy hết tất cả các trường hợp
++ Nếu như mà người dùng không nộp đúng hạn trong 1 tháng thì sẽ cắt điện
+
+- Chia việc:
++ Linh: design UI, Meter Reading
++ Nghĩa: Billing and payments record + data
++ Diệp: Electricity consumption
++ Cường - Nhật Anh: Front end và Customer + Bill calculate
