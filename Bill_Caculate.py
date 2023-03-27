@@ -1,10 +1,6 @@
-hd = []
-ao = []
-mi = []
-bs = []
-
+numbers = {}
 def Household(count):
-    
+
     # Seperate the total consumption electric for each stage
     count1 = count - 50
     count2 = count1 - 50
@@ -59,8 +55,8 @@ def Household(count):
         amount5 = 100 
         amount = (amount1 * 1.678) + (amount2 * 1.734) + (amount3 * 2.014) +(amount4 * 2.536)+ (amount5 * 2.834) + (count5 * 2.927)
     print(f"{amount}")
-    hd.append(amount)
-    
+    name = "Household: "
+    numbers[name] = amount
 
 def Manufacturing_industries(count):
     count1 = count - 600
@@ -84,9 +80,8 @@ def Manufacturing_industries(count):
         amount2 = 1600
         amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442
     print(f"{amount}")
-    mi.append(amount)
-    
-
+    name = "Manufacturing_industries: "
+    numbers[name] = amount
 def Administrative_offices(count):
     count1 = count - 600
     count2 = count1 - 1600
@@ -109,7 +104,9 @@ def Administrative_offices(count):
         amount2 = 1600
         amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442
     print(f"{amount}")
-    ao.append(amount)
+    name = "Administrative_offices: "
+    numbers[name] = amount
+
 
 def Business(count):
     count1 = count - 600
@@ -133,30 +130,17 @@ def Business(count):
         amount2 = 1600
         amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442
     print(f"{amount}")
-    bs.append(amount)
+    name = "Business: "
+    numbers[name] = amount
 
 
-# Take the value form meter_reading the consumption of electric
+
 Household(500)
 Administrative_offices(2000)
 Business(1500)
 Manufacturing_industries(1700)
 
-# For the customers who does not complete in date
-# Late fee
-def late_fee_Household():
-    for i in range(len(hd)):
-        print(hd[i] * (10/100))
-def late_fee_Administrative_offices():
-    for i in range(len(ao)):
-        print(ao[i] * (10/100))
-def late_fee_Business():
-    for i in range(len(bs)):
-        print(bs[i] * (10/100))
-def late_fee_Manufacturing_industries():
-    for i in range(len(mi)):
-        print(mi[i] * (10/100))
-late_fee_Household()
-late_fee_Administrative_offices()
-late_fee_Business()
-late_fee_Manufacturing_industries()
+
+print("Late Fee")
+for name in numbers:
+    print(f"{numbers[name] * 10/100}")
