@@ -48,7 +48,8 @@ class customer(person):
             else:
                 self.__tax=tax
         return self.__tax
-    
+
+# Test class customer
 test=customer(1,"nanh","So 1 am phu","0829032003","test",2)
 print(test.get_id())
 print(test.get_name())
