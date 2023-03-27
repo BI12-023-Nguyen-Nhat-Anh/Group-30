@@ -33,46 +33,46 @@ MyEntry8 = Entry(window,borderwidth=5,font=25).place(relx=0.515,rely=0.73,relwid
 def onClick_Province():
     def Close_tab():
         myLable.destroy()
-        my_img = ImageTk.PhotoImage(file="assets/Arrow_Down.png")
         MyButton.config(image = my_img)
         MyButton.config(command = onClick_Province)
     myLable = Label(window, text=" ",borderwidth=5,font=25,bg="black")
     myLable.place(relx=0.02,rely=0.42,relwidth = 0.3,relheight = 0.06)
     MyButton.config(text = 'X')
     MyButton.config(command = Close_tab)
+    my_img = ImageTk.PhotoImage(file="assets/Arrow_Down.png")
 
 def onClick_District():
     def Close_tab():
         myLable.destroy()
-        my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_Down.png"))
         MyButton.config(image = my_img)
         MyButton.config(command = onClick_District)
     myLable = Label(window, text=" ",borderwidth=5,font=25,bg="black")
     myLable.place(relx=0.35,rely=0.42,relwidth = 0.3,relheight = 0.06)
     MyButton1.config(text = 'X')
     MyButton1.config(command = Close_tab)
+    my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_Down.png"))
 
 def onClick_Ward():
     def Close_tab():
         myLable.destroy()
-        my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_Down.png"))
         MyButton.config(image = my_img)
         MyButton.config(command = onClick_Ward)
     myLable = Label(window, text=" ",borderwidth=5,font=25,bg="black")
     myLable.place(relx=0.68,rely=0.42,relwidth = 0.3,relheight = 0.06)
     MyButton2.config(text = 'X')
     MyButton2.config(command = Close_tab)
+    my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_Down.png"))
 
 def onClick_Intended():
     def Close_tab():
         myLable.destroy()
-        my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_Down.png"))
         MyButton.config(image = my_img)
         MyButton.config(command = onClick_Intended)
     myLable =Label(window, text=" ",borderwidth=5,font=25,bg="black")
     myLable.place(relx=0.02,rely=0.8,relwidth = 0.45,relheight = 0.06)
     MyButton3.config(text = 'X')
     MyButton3.config(command = Close_tab)
+    my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_Down.png"))
 
 my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_Down.png"))
 MyButton = Button(image = my_img,bg="#fff",borderwidth=5,activebackground="#158aff",activeforeground="white",command=onClick_Province)
@@ -89,5 +89,5 @@ window.mainloop()
 
 
 
-    
+
 
