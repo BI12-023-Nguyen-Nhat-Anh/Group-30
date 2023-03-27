@@ -33,7 +33,7 @@ MyEntry8 = Entry(window,borderwidth=5,font=25).place(relx=0.515,rely=0.73,relwid
 def onClick_Province():
     def Close_tab():
         myLable.destroy()
-        my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_Down.png"))
+        my_img = ImageTk.PhotoImage(file="assets/Arrow_Down.png")
         MyButton.config(image = my_img)
         MyButton.config(command = onClick_Province)
     myLable = Label(window, text=" ",borderwidth=5,font=25,bg="black")
