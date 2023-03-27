@@ -39,10 +39,21 @@ class customer(person):
     
     def get_type(self):
         return self.__type
-    
-    if(get_type()>1):
-        def set_tax(self,tax):
+
+    def get_tax(self):
+        if(self.get_type()>1): # Only when the user chooses a different type of electricity than domestic electricity
+            tax=input("Your tax number is: ")
             if not re.match(r"^[0-9]{10}$", tax):   # Check if tax number have the right formula 10 digits contain from 0-9 
                 self.__tax=False
             else:
                 self.__tax=tax
+        return self.__tax
+    
+test=customer(1,"nanh","So 1 am phu","0829032003","test",2)
+print(test.get_id())
+print(test.get_name())
+print(test.get_email())
+print(test.get_address())
+print(test.get_phone_number())
+print(test.get_type())
+print(test.get_tax())
