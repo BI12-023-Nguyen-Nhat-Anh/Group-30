@@ -1,4 +1,4 @@
-import customer
+from domain.customer import customer
 import datetime
 import pytz
 
