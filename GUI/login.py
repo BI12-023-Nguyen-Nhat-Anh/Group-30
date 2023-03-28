@@ -1,13 +1,37 @@
 import tkinter as tk
-import threading
+import re
 from PIL import Image, ImageTk
 
-# Compare_password function to warn user when password and confirm password do not match
-def compare_password(password_input, confirm_password):
-    if(password_input.get()==confirm_password.get()):
-        tk.Label(root_reset, text="Password doesn't match", fg="white", bg="white").place(x=235, y=395)
+def check_user(phone_input, email_input, password_input, confirm_password):
+    global phone, email, password, confirm 
+    phone=phone_input.get()
+    email=email_input.get()
+    password=password_input.get()
+    confirm=confirm_password.get()
+    if(phone!="") and (email!="") and (password!="") and (confirm!=""):
+        if(password==confirm):
+            if(formula_email(email)):
+                tk.Label(text="Wrong email template", fg="white", bg="white").place(x=225,y=86)
+                print("Phone:",phone)
+                print("Email:",email)
+                print("Password:", password)
+                root_register.destroy()
+                login()
+            else:
+                tk.Label(text="Wrong email template", fg="red", bg="white").place(x=225,y=86)
+
+def formula_email(email_input):
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email_input):
+        return False
     else:
-        tk.Label(root_reset, text="Password doesn't match", fg="red", bg="white").place(x=235, y=395)
+        return True
+
+# Compare_password function to warn user when password and confirm password do not match
+def compare_password(password_input, confirm_password, x,y):
+    if(password_input.get()==confirm_password.get()):
+        tk.Label(text="Password doesn't match", fg="white", bg="white").place(x=x, y=y)
+    else:
+        tk.Label(text="Password doesn't match", fg="red", bg="white").place(x=x, y=y)
 
 # check_number function ensures that when a user enters a phone number containing only 10 digits from 0 to 9
 def check_number(input):
@@ -40,11 +64,59 @@ def check_reset(phone_input, password_input, confirm_password):
     phone=phone_input.get()
     password=password_input.get()
     con_password=confirm_password.get()
+    print(phone)
+    print(password)
     if(con_password==password) and (phone_input.get()!=""):
         print(phone)
         print(password)
         root_reset.destroy()
         login()
+
+def new_user():
+    root.destroy()
+    global root_register
+    root_register=tk.Tk()
+    root_register.geometry("1000x562")
+    root_register.title("Register")
+    root_register.resizable(False, False)
+    img=Image.open("assets/register.png")
+    img=img.resize((1000,562))
+    background=ImageTk.PhotoImage(img)
+    tk.Label(image=background).pack()
+    
+    email_input=tk.Entry(root_register, font="assets/Space_Mono/SpaceMono-Regular.ttf 13", borderwidth=0 , background="white",width=30)
+    email_input.place(x=115,y=113)
+
+    number_input = root_register.register(check_number)
+    global phone_input
+    phone_input = tk.Entry(root_register, validate="key", validatecommand=(number_input, '%S'), font="assets/Space_Mono/SpaceMono-Regular 13", borderwidth=0, background="white",width=30)
+    phone_input.place(x=115, y=200)
+
+    password_input = tk.Entry(root_register, font="assets/Space_Mono/SpaceMono-Regular.ttf 13", borderwidth=0, background="white",width=30, show="*")
+    password_input.place(x=115, y=285)
+
+    global password_visible
+    password_visible = False
+    show_password_button = tk.Button(root_register, text="Show", command=lambda: show_password(password_input), borderwidth=0, background="white", activebackground="white")
+    show_password_button.place(x=342, y=285)
+    
+    confirm_password = tk.Entry(root_register, font="assets/Space_Mono/SpaceMono-Regular.ttf 13", borderwidth=0 , background="white",width=30, show="*")
+    confirm_password.place(x=115, y=373)
+
+    password_visible = False
+    show_password_button = tk.Button(root_register, text="Show", command=lambda: show_password(confirm_password), borderwidth=0, background="white", activebackground="white")
+    show_password_button.place(x=342, y=373)
+
+    password_input.bind('<KeyRelease>', lambda event: compare_password(password_input, confirm_password, 270, 345))    
+    confirm_password.bind('<KeyRelease>', lambda event: compare_password(password_input, confirm_password, 270, 345))
+
+    img = Image.open("assets/submit.png")
+    img = img.resize((321,50))
+    submit = ImageTk.PhotoImage(img)
+    submit_button = tk.Button(image=submit, background="white", activebackground="white", borderwidth=0, command=lambda: check_user(phone_input, email_input, password_input, confirm_password))
+    submit_button.place(x=88, y=427, in_=root_register)
+
+    root_register.mainloop()
 
 def reset():
     root.destroy()  # when run form reset, form login will straightway close to open form reset
@@ -86,8 +158,8 @@ def reset():
     confirm_password.place(x=73, y=420)
 
     # bind function to forcus on new event in this stutation is when user input password_input and confirm_password, compare_password function will compare in real time
-    password_input.bind('<KeyRelease>', lambda event: compare_password(password_input, confirm_password))    
-    confirm_password.bind('<KeyRelease>', lambda event: compare_password(password_input, confirm_password))
+    password_input.bind('<KeyRelease>', lambda event: compare_password(password_input, confirm_password, 235, 395))    
+    confirm_password.bind('<KeyRelease>', lambda event: compare_password(password_input, confirm_password, 235, 395))
 
     password_visible = False
     show_password_button = tk.Button(root_reset, text="Show", command=lambda: show_password(confirm_password), borderwidth=0, background="white", activebackground="white")
@@ -115,7 +187,7 @@ def login():
     box.create_rectangle(150,150,250,250)
     box.place(x=58,y=180)
 
-    tk.Label(root,text="Phone number/Username", bg="white").place(x=70,y=183)
+    tk.Label(root,text="Phone number", bg="white").place(x=70,y=183)
 
     username_input = tk.Entry(root, font="assets/Space_Mono/SpaceMono-Regular.ttf 13", borderwidth=0, background="white",width=30)
     username_input.place(x=73, y=207)
@@ -140,7 +212,7 @@ def login():
     forget.place(x=165, y=360)  
 
     tk.Label(root,text="Don't have an account ?", background="white").place(x=100,y=400)
-    tk.Button(root,text="Create one", borderwidth=0, activebackground="white", background="white", fg="#645CBB", activeforeground="light blue").place(x=240,y=400)
+    tk.Button(root,text="Create one", borderwidth=0, command=lambda: new_user(), activebackground="white", background="white", fg="#645CBB", activeforeground="light blue").place(x=240,y=400)
 
     # to have a beautiful button I use an image named submit.png as a button
     log_in = Image.open("assets/submit.png")
