@@ -50,12 +50,12 @@ def show_password(password_input):
         password_input.config(show="*")
 
 # check_login function takes input from user then compare with the data 
-def check_login(username_input, password_input):
-    global user_name, password
-    user_name=username_input.get()
+def check_login(phone_input, password_input):
+    global phone, password
+    phone=phone_input.get()
     password=password_input.get()
-    if(user_name!='') and (password!=''):
-        print(user_name)
+    if(phone!='') and (password!=''):
+        print(phone)
         print(password)
 
 # check_reset function takes input from the user to update the new password for user
@@ -188,9 +188,10 @@ def login():
     box.place(x=58,y=180)
 
     tk.Label(root,text="Phone number", bg="white").place(x=70,y=183)
-
-    username_input = tk.Entry(root, font="assets/Space_Mono/SpaceMono-Regular.ttf 13", borderwidth=0, background="white",width=30)
-    username_input.place(x=73, y=207)
+    number_input = root.register(check_number)
+    global phone_input
+    phone_input = tk.Entry(root, validate="key", validatecommand=(number_input, '%S'), font="assets/Space_Mono/SpaceMono-Regular 13", borderwidth=0, background="white",width=30)
+    phone_input.place(x=73, y=207)
 
     # to have a beautiful box input, I created a rectangle then I created an input box with boderwith=0 to invisible in front of the user
     box=tk.Canvas(root, width=321, height=55, highlightbackground="black", background="white")
@@ -218,7 +219,7 @@ def login():
     log_in = Image.open("assets/submit.png")
     log_in = log_in.resize((321,50))
     log_in_button = ImageTk.PhotoImage(log_in)
-    submit_button = tk.Button(image=log_in_button, background="white", activebackground="white", borderwidth=0, command=lambda: check_login(username_input, password_input))
+    submit_button = tk.Button(image=log_in_button, background="white", activebackground="white", borderwidth=0, command=lambda: check_login(phone_input, password_input))
     submit_button.place(x=59, y=430, in_=root)
 
     root.mainloop()
