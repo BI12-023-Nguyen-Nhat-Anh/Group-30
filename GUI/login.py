@@ -37,6 +37,8 @@ def compare_password(password_input, confirm_password, x,y):
 def check_number(input):
     if input.isdigit() and len(phone_input.get())<10:
         return True
+    elif input=="":
+        return True
     else:
         return False
 
@@ -64,8 +66,6 @@ def check_reset(phone_input, password_input, confirm_password):
     phone=phone_input.get()
     password=password_input.get()
     con_password=confirm_password.get()
-    print(phone)
-    print(password)
     if(con_password==password) and (phone_input.get()!=""):
         print(phone)
         print(password)
