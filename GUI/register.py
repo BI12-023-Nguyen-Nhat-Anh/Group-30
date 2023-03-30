@@ -40,7 +40,7 @@ def onClick_Province():
     myFrame = Frame(window,bg="black")
     myFrame.place(relx=0.02,rely=0.42,height= 250,relwidth= 0.26)
     
-    hanoi_btn = Button(myFrame,text= "Hanoi", font=('Bold',20),fg='white',bg="black",command=lambda: MyEntry2.insert(0, hanoi_btn["text"]))
+    hanoi_btn = Button(myFrame,text= "Hanoi", font=('Bold',20),fg='white',bg="black",bd=0,command=lambda: MyEntry2.insert(0, hanoi_btn["text"]))
     hanoi_btn.place(relx=0.01,rely=0.1,relwidth=0.98,relheight=0.2)
 
     MyButton.config(command = Close_tab)
