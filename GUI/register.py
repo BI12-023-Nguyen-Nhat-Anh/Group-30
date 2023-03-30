@@ -81,7 +81,7 @@ def onClick_Intended():
 
 my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_1.png"))
 MyButton = Button(image = my_img,bg="#fff",bd=0,activebackground="#fff",activeforeground="white",command=onClick_Province)
-MyButton.place(relx = 0.275,rely = 0.36, relwidth = 0.04, relheight = 0.036)
+MyButton.place(relx = 0.276,rely = 0.36, relwidth = 0.04, relheight = 0.036)
 MyButton1 = Button(image= my_img,bg="#fff",bd=0,activebackground="#fff",activeforeground="white",command=onClick_District)
 MyButton1.place(relx = 0.605,rely = 0.36, relwidth = 0.04, relheight = 0.036)
 MyButton2 = Button(image= my_img,bg="#fff",bd=0,activebackground="#fff",activeforeground="white",command=onClick_Ward)
