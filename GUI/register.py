@@ -79,10 +79,11 @@ def onClick_Province():
         MyButton.config(image=my_img)
         MyButton.config(command=onClick_Province)
 
-    myFrame = Frame(window, bg="black")
+    myFrame = Frame(window, bg="#fff", borderwidth=20)
+    myFrame.config( highlightbackground="black")
     myFrame.place(relx=0.02, rely=0.42, height=250, relwidth=0.26)
 
-    hanoi_btn = Button(myFrame, text="Hanoi", font=('Bold', 20), fg='white', bg="black", bd=0,
+    hanoi_btn = Button(myFrame, text="Hanoi", font=('Bold', 20), fg='black', bg="#fff", bd=0,
                    command=lambda: MyEntry2.insert(0, hanoi_btn["text"]))
     hanoi_btn.place(relx=0.01, rely=0.1, relwidth=0.98, relheight=0.2)
 
@@ -95,45 +96,49 @@ def onClick_District():
         MyButton1.config(image=my_img)
         MyButton1.config(command=onClick_District)
 
-    # create a new canvas and scrollbar
-    canvas = Canvas(window)
-    canvas.pack(side=LEFT, fill=BOTH, expand=True)
-
-    scrollbar = Scrollbar(window, orient=VERTICAL, command=canvas.yview)
-    scrollbar.pack(side=RIGHT, fill=Y)
-
-    canvas.config(yscrollcommand=scrollbar.set)
-
-    # create a new frame inside the canvas to hold the buttons
-    myFrame1 = Frame(canvas, bg="black")
+    myFrame1 = Frame(window, bg="black")
     myFrame1.place(relx=0.35, rely=0.42, height=250, relwidth=0.26)
 
-    bactuliem_btn = Button(myFrame1, text="BacTuLiem", font=('Bold', 20), fg='white', bg="black", bd=0,
-                        command=lambda: MyEntry3.insert(END, "BacTuLiem"))
-    bactuliem_btn.place(relx=0.01, rely=0.1, relwidth=0.98, relheight=0.2)
+    # create a scrollbar for the frame
+    scrollbar = Scrollbar(myFrame1)
+    scrollbar.pack(side=RIGHT, fill=Y)
 
-    badinh_btn = Button(myFrame1, text="BaDinh", font=('Bold', 20), fg='white', bg="black", bd=0,
+    # create a canvas to hold the buttons and attach the scrollbar to it
+    canvas = Canvas(myFrame1, yscrollcommand=scrollbar.set)
+    canvas.pack(side=LEFT, fill=BOTH, expand=True)
+
+    scrollbar.config(command=canvas.yview)
+
+    # create a new frame inside the canvas to hold the buttons
+    inner_frame = Frame(canvas, bg="black")
+    canvas.create_window((0, 0), window=inner_frame, anchor='nw')
+
+    bactuliem_btn = Button(inner_frame, text="BacTuLiem", font=('Bold', 20), fg='white', bg="black", bd=0,
+                           command=lambda: MyEntry3.insert(END, "BacTuLiem"))
+    bactuliem_btn.pack(fill=X, padx=50, pady=5)
+
+    badinh_btn = Button(inner_frame, text="BaDinh", font=('Bold', 20), fg='white', bg="black", bd=0,
                         command=lambda: MyEntry3.insert(END, "BaDinh"))
-    badinh_btn.place(relx=0.01, rely=0.28, relwidth=0.98, relheight=0.2)
+    badinh_btn.pack(fill=X, padx=50, pady=5)
 
-    caugiay_btn = Button(myFrame1, text="CauGiay", font=('Bold', 20), fg='white', bg="black", bd=0,
-                        command=lambda: MyEntry3.insert(END, "CauGiay"))
-    caugiay_btn.place(relx=0.01, rely=0.46, relwidth=0.98, relheight=0.2)
+    caugiay_btn = Button(inner_frame, text="CauGiay", font=('Bold', 20), fg='white', bg="black", bd=0,
+                         command=lambda: MyEntry3.insert(END, "CauGiay"))
+    caugiay_btn.pack(fill=X, padx=50, pady=5)
 
-    dongda_btn = Button(myFrame1, text="DongDa", font=('Bold', 20), fg='white', bg="black", bd=0,
+    dongda_btn = Button(inner_frame, text="DongDa", font=('Bold', 20), fg='white', bg="black", bd=0,
                         command=lambda: MyEntry3.insert(END, "DongDa"))
-    dongda_btn.place(relx=0.01, rely=0.64, relwidth=0.98, relheight=0.2)
+    dongda_btn.pack(fill=X, padx=50, pady=5)
 
-    haibatrung_btn = Button(myFrame1, text="HaiBaTrung", font=('Bold', 20), fg='white', bg="black", bd=0,
+    haibatrung_btn = Button(inner_frame, text="HaiBaTrung", font=('Bold', 20), fg='white', bg="black", bd=0,
                             command=lambda: MyEntry3.insert(END, "HaiBaTrung"))
-    haibatrung_btn.place(relx=0.01, rely=0.82, relwidth=0.98, relheight=0.2)
+    haibatrung_btn.pack(fill=X, padx=50, pady=5)
 
-    hoankien_btn = Button(myFrame1, text="HoanKiem", font=('Bold', 20), fg='white', bg="black", bd=0,
-                        command=lambda: MyEntry3.insert(END, "HoanKiem"))
-    hoankien_btn.place(relx=0.01, rely=1, relwidth=0.98, relheight=0.2)
+    hoankien_btn = Button(inner_frame, text="HoanKiem", font=('Bold', 20), fg='white', bg="black", bd=0,
+                          command=lambda: MyEntry3.insert(END, "HoanKiem"))
+    hoankien_btn.pack(fill=X, padx=50, pady=5)
 
     # update the canvas scroll region
-    myFrame1.update_idletasks()
+    inner_frame.update_idletasks()
     canvas.config(scrollregion=canvas.bbox("all"))
 
     # update the button command to close the tab
