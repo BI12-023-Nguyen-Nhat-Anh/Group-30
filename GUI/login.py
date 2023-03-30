@@ -1,30 +1,32 @@
 import tkinter as tk
-import re
+import os
 from PIL import Image, ImageTk
 
-def check_user(phone_input, email_input, password_input, confirm_password):
-    global phone, email, password, confirm 
+data=[]
+
+with open("data/user.txt","r") as f:
+    a=f.read()
+    a=a.split("\n")
+    for i in range(len(a)):
+        if(a[i]==''):
+            a.pop(i)
+        else:
+            data.append(a[i].split(","))
+
+def check_user(phone_input, id_card, password_input, confirm_password):
+    global phone, id, password, confirm 
     phone=phone_input.get()
-    email=email_input.get()
+    id=id_card.get()
     password=password_input.get()
     confirm=confirm_password.get()
-    if(phone!="") and (email!="") and (password!="") and (confirm!=""):
+    if(phone!="") and (id!="") and (password!="") and (confirm!=""):
         if(password==confirm):
-            if(formula_email(email)):
-                tk.Label(text="Wrong email template", fg="white", bg="white").place(x=225,y=86)
-                print("Phone:",phone)
-                print("Email:",email)
-                print("Password:", password)
-                root_register.destroy()
-                login()
-            else:
-                tk.Label(text="Wrong email template", fg="red", bg="white").place(x=225,y=86)
-
-def formula_email(email_input):
-    if not re.match(r"[^@]+@[^@]+\.[^@]+", email_input):
-        return False
-    else:
-        return True
+            tk.Label(text="Wrong id template", fg="white", bg="white").place(x=225,y=86)
+            with open("data/user.txt","a+") as f:
+                f.write(f"{id},{phone},{password}\n")
+            f.close()
+            root_register.destroy()
+            login()
 
 # Compare_password function to warn user when password and confirm password do not match
 def compare_password(password_input, confirm_password, x,y):
@@ -33,9 +35,17 @@ def compare_password(password_input, confirm_password, x,y):
     else:
         tk.Label(text="Password doesn't match", fg="red", bg="white").place(x=x, y=y)
 
-# check_number function ensures that when a user enters a phone number containing only 10 digits from 0 to 9
-def check_number(input):
+# check_phone_number function ensures that when a user enters a phone number containing only 10 digits from 0 to 9
+def check_phone_number(input):
     if input.isdigit() and len(phone_input.get())<10:
+        return True
+    elif input=="":
+        return True
+    else:
+        return False
+    
+def check_identity(input):
+    if input.isdigit() and len(id_card.get())<12:
         return True
     elif input=="":
         return True
@@ -57,8 +67,11 @@ def check_login(phone_input, password_input):
     phone=phone_input.get()
     password=password_input.get()
     if(phone!='') and (password!=''):
-        print(phone)
-        print(password)
+        for i in range(len(data)):
+            if(phone in data[i]) and (password in data[i]):
+                print("Login success")
+                return True
+    print("Your phone number or password is not correct")
 
 # check_reset function takes input from the user to update the new password for user
 def check_reset(phone_input, password_input, confirm_password):
@@ -79,15 +92,17 @@ def new_user():
     root_register.geometry("1000x562")
     root_register.title("Register")
     root_register.resizable(False, False)
-    img=Image.open("assets/register.png")
+    img=Image.open("assets/sign_up.png")
     img=img.resize((1000,562))
     background=ImageTk.PhotoImage(img)
     tk.Label(image=background).pack()
     
-    email_input=tk.Entry(root_register, font="assets/Space_Mono/SpaceMono-Regular.ttf 13", borderwidth=0 , background="white",width=30)
-    email_input.place(x=115,y=113)
+    identity_card=root_register.register(check_identity)
+    global id_card
+    id_card = tk.Entry(root_register, validate="key", validatecommand=(identity_card, '%S'), font="assets/Space_Mono/SpaceMono-Regular 13", borderwidth=0, background="white",width=30)
+    id_card.place(x=115, y=113)
 
-    number_input = root_register.register(check_number)
+    number_input = root_register.register(check_phone_number)
     global phone_input
     phone_input = tk.Entry(root_register, validate="key", validatecommand=(number_input, '%S'), font="assets/Space_Mono/SpaceMono-Regular 13", borderwidth=0, background="white",width=30)
     phone_input.place(x=115, y=200)
@@ -113,7 +128,7 @@ def new_user():
     img = Image.open("assets/submit.png")
     img = img.resize((321,50))
     submit = ImageTk.PhotoImage(img)
-    submit_button = tk.Button(image=submit, background="white", activebackground="white", borderwidth=0, command=lambda: check_user(phone_input, email_input, password_input, confirm_password))
+    submit_button = tk.Button(image=submit, background="white", activebackground="white", borderwidth=0, command=lambda: check_user(phone_input, id_card, password_input, confirm_password))
     submit_button.place(x=88, y=427, in_=root_register)
 
     root_register.mainloop()
@@ -133,7 +148,7 @@ def reset():
     box.create_rectangle(150,150,250,250)
     box.place(x=58,y=180)    
     tk.Label(root_reset,text="Phone number", bg="white").place(x=70,y=183)
-    number_input = root_reset.register(check_number)
+    number_input = root_reset.register(check_phone_number)
     global phone_input
     phone_input = tk.Entry(root_reset, validate="key", validatecommand=(number_input, '%S'), font="assets/Space_Mono/SpaceMono-Regular 13", borderwidth=0, background="white",width=30)
     phone_input.place(x=73, y=207)
@@ -188,7 +203,7 @@ def login():
     box.place(x=58,y=180)
 
     tk.Label(root,text="Phone number", bg="white").place(x=70,y=183)
-    number_input = root.register(check_number)
+    number_input = root.register(check_phone_number)
     global phone_input
     phone_input = tk.Entry(root, validate="key", validatecommand=(number_input, '%S'), font="assets/Space_Mono/SpaceMono-Regular 13", borderwidth=0, background="white",width=30)
     phone_input.place(x=73, y=207)
