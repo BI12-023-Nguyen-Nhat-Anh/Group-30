@@ -1,6 +1,7 @@
 import tkinter as tk
 import os
 from PIL import Image, ImageTk
+from main import list_user
 
 data=[]
 
@@ -12,6 +13,32 @@ with open("data/user.txt","r") as f:
             a.pop(i)
         else:
             data.append(a[i].split(","))
+
+# check_login function takes input from user then compare with the data 
+def check_login(phone_input, password_input):
+    global phone, password
+    phone=phone_input.get()
+    password=password_input.get()
+    if(phone!='') and (password!=''):
+        for custom in list_user:
+            if(custom.get_phone()==phone) and (custom.get_password()==password):
+                print("Login")
+                return True
+    print("Wrong")
+    return False
+
+# check_reset function takes input from the user to update the new password for user
+def check_reset(phone_input, password_input, confirm_password):
+    global phone, password, con_password
+    phone=phone_input.get()
+    password=password_input.get()
+    con_password=confirm_password.get()
+    if(con_password==password) and (phone_input.get()!=""):
+        for custom in list_user:
+            if(phone==custom.get_phone()):
+                custom.add_password(con_password)
+        root_reset.destroy()
+        login()
 
 def check_user(phone_input, id_card, password_input, confirm_password):
     global phone, id, password, confirm 
@@ -60,30 +87,6 @@ def show_password(password_input):
         password_input.config(show="")
     else:
         password_input.config(show="*")
-
-# check_login function takes input from user then compare with the data 
-def check_login(phone_input, password_input):
-    global phone, password
-    phone=phone_input.get()
-    password=password_input.get()
-    if(phone!='') and (password!=''):
-        for i in range(len(data)):
-            if(phone in data[i]) and (password in data[i]):
-                print("Login success")
-                return True
-    print("Your phone number or password is not correct")
-
-# check_reset function takes input from the user to update the new password for user
-def check_reset(phone_input, password_input, confirm_password):
-    global phone, password, con_password
-    phone=phone_input.get()
-    password=password_input.get()
-    con_password=confirm_password.get()
-    if(con_password==password) and (phone_input.get()!=""):
-        print(phone)
-        print(password)
-        root_reset.destroy()
-        login()
 
 def new_user():
     root.destroy()
