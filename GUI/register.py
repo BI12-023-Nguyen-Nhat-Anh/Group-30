@@ -4,6 +4,7 @@ from PIL import ImageTk, Image
 window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
+window.resizable(False,False)
 
 myFrame = Frame(window, width=9999, height=9999, bg="#fff")
 myFrame.pack(fill=BOTH, expand=True)
