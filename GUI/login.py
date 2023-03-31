@@ -2,7 +2,6 @@ import tkinter as tk
 import os
 from tkinter import messagebox
 from PIL import Image, ImageTk
-import tkinter.constants as tkc
 from main import list_user
 from main import admin_data
 
@@ -14,7 +13,8 @@ def check_login(phone_input, password_input):
     if(phone!='') and (password!=''):
         for custom in list_user:
             if(custom.get_phone()==phone) and (custom.get_password()==password):
-                print(custom.get_id_card())
+                root.destroy()
+                import GUI.register
                 return True
     messagebox.showerror("Invalid","Please try again!")
     root.destroy()
