@@ -72,10 +72,6 @@ def check_phone_number(input):
     else:
         return False
     
-# def on_backspace(event):
-#     if event.keysym == tkc.KEYSYM_BACKSPACE:
-#         phone_input.delete(len(phone_input.get())-1)
-    
 def check_identity(input):
     if input.isdigit() and len(id_card.get())<12:
         return True
