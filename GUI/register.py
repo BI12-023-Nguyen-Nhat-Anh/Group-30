@@ -16,70 +16,70 @@ Mylabel.place(relx=0.28, rely=0.01)
 Mylabel2 = Label(window, text="Personal information", font=50, border=10, bg="#fff")
 Mylabel2.place(relx=0.01, rely=0.05)
 
-Mylabel3 = Label(window, text="Full Name (Left click to delete text)", width=27, bg="#fff")
+Mylabel3 = Label(window, text="Full Name (Right click to delete text)", width=27, bg="#fff")
 Mylabel3.place(relx=0.02, rely=0.1)
 
-Mylabel4 = Label(window, text="Identify card name (Left click to delete text)", width=32, bg="#fff")
+Mylabel4 = Label(window, text="Identify card name (Right click to delete text)", width=33, bg="#fff")
 Mylabel4.place(relx=0.5, rely=0.1)
 
 Mylabel5 = Label(window, text="Electricity supply information", font=140, border=10, bg="#fff")
 Mylabel5.place(relx=0.01, rely=0.25)
 
-Mylabel6 = Label(window, text="Province/City (Left click to delete text)", width=28, bg="#fff")
+Mylabel6 = Label(window, text="Province/City (Right click to delete text)", width=29, bg="#fff")
 Mylabel6.place(relx=0.019, rely=0.32)
 
-Mylabel7 = Label(window, text="District (Left click to delete text)", width=28, bg="#fff")
+Mylabel7 = Label(window, text="District (Right click to delete text)", width=28, bg="#fff")
 Mylabel7.place(relx=0.335, rely=0.32)
 
-Mylabel8 = Label(window, text="Ward/ Commune (Left click to delete text)", width=31, bg="#fff")
+Mylabel8 = Label(window, text="Ward/ Commune (Right click to delete text)", width=32, bg="#fff")
 Mylabel8.place(relx=0.68, rely=0.32)
 
-Mylabel9 = Label(window, text="Electricity usage address (Left click to delete text)", width=37, bg="#fff")
+Mylabel9 = Label(window, text="Electricity usage address (Right click to delete text)", width=37, bg="#fff")
 Mylabel9.place(relx=0.02, rely=0.50)
 
-Mylabel10 = Label(window, text="Residential adress (Left click to delete text)", width=31, bg="#fff")
+Mylabel10 = Label(window, text="Residential adress (Right click to delete text)", width=32, bg="#fff")
 Mylabel10.place(relx=0.51, rely=0.5)
 
-Mylabel11 = Label(window, text="Intended use (Left click to delete text)", width=30, bg="#fff")
+Mylabel11 = Label(window, text="Intended use (Right click to delete text)", width=32, bg="#fff")
 Mylabel11.place(relx=0.01, rely=0.7)
 
-Mylabel12 = Label(window, text="Tax identification numbers (Left click to delete text)", width=38, bg="#fff")
+Mylabel12 = Label(window, text="Tax identification numbers (Left click to delete text)", width=39, bg="#fff")
 Mylabel12.place(relx=0.51, rely=0.7)
 
 MyEntry = Entry(window, borderwidth=5, font=25)
-MyEntry.bind("<Button-1>", lambda e: MyEntry.delete(0, END))
+MyEntry.bind("<Button-3>", lambda e: MyEntry.delete(0, END))
 MyEntry.place(relx=0.02, rely=0.13, relwidth=0.45, relheight=0.06)
 
 MyEntry1 = Entry(window, borderwidth=5, font=25)
-MyEntry1.bind("<Button-1>", lambda e: MyEntry1.delete(0, END))
+MyEntry1.bind("<Button-3>", lambda e: MyEntry1.delete(0, END))
 MyEntry1.place(relx=0.5, rely=0.13, relwidth=0.45, relheight=0.06)
 
 MyEntry2 = Entry(window, borderwidth=5, font=25)
-MyEntry2.bind("<Button-1>", lambda e: MyEntry2.delete(0, END))
+MyEntry2.bind("<Button-3>", lambda e: MyEntry2.delete(0, END))
 MyEntry2.place(relx=0.02, rely=0.35, relwidth=0.3, relheight=0.06)
 
 MyEntry3 = Entry(window, borderwidth=5, font=25)
-MyEntry3.bind("<Button-1>", lambda e: MyEntry3.delete(0, END))
+MyEntry3.bind("<Button-3>", lambda e: MyEntry3.delete(0, END))
 MyEntry3.place(relx=0.35, rely=0.35, relwidth=0.3, relheight=0.06)
 
 MyEntry4 = Entry(window, borderwidth=5, font=25)
-MyEntry4.bind("<Button-1>", lambda e: MyEntry4.delete(0, END))
+MyEntry4.bind("<Button-3>", lambda e: MyEntry4.delete(0, END))
 MyEntry4.place(relx=0.68, rely=0.35, relwidth=0.3, relheight=0.06)
 
 MyEntry5 = Entry(window, borderwidth=5, font=25)
-MyEntry5.bind("<Button-1>", lambda e: MyEntry5.delete(0, END))
+MyEntry5.bind("<Button-3>", lambda e: MyEntry5.delete(0, END))
 MyEntry5.place(relx=0.02, rely=0.53, relwidth=0.45, relheight=0.06)
 
 MyEntry6 = Entry(window, borderwidth=5, font=25)
-MyEntry6.bind("<Button-1>", lambda e: MyEntry6.delete(0, END))
+MyEntry6.bind("<Button-3>", lambda e: MyEntry6.delete(0, END))
 MyEntry6.place(relx=0.51, rely=0.53, relwidth=0.45, relheight=0.06)
 
 MyEntry7 = Entry(window, borderwidth=5, font=25)
-MyEntry7.bind("<Button-1>", lambda e: MyEntry7.delete(0, END))
+MyEntry7.bind("<Button-3>", lambda e: MyEntry7.delete(0, END))
 MyEntry7.place(relx=0.02, rely=0.73, relwidth=0.45, relheight=0.06)
 
 MyEntry8 = Entry(window, borderwidth=5, font=25)
-MyEntry8.bind("<Button-1>", lambda e: MyEntry8.delete(0, END))
+MyEntry8.bind("<Button-3>", lambda e: MyEntry8.delete(0, END))
 MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
 
 def Save_Data():
