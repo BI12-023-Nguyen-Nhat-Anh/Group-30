@@ -13,14 +13,18 @@ def check_login(phone_input, password_input):
     if(phone!='') and (password!=''):
         for custom in list_user:
             if(custom.get_phone()==phone):
-                if (custom.get_password()==password):
+                if(custom.get_password()==password):
                     root.destroy()
                     import GUI.register
                     return True
+        if(admin_data.get_id()==phone):
+            if(admin_data.get_password()==password):
+                root.destroy()
+                import GUI.Dashboard
+                return True
     messagebox.showerror("Invalid","Please try again!")
     root.destroy()
     login()
-    return False
 
 # check_reset function takes input from the user to update the new password for user
 def check_reset(id_card, password_input, confirm_password):
