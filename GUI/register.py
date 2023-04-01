@@ -128,13 +128,22 @@ def onClick_Province():
         MyButton.config(image=my_img)
         MyButton.config(command=onClick_Province)
 
-    
+    def on_select(envet):
+        selected = listbox.get(listbox.curselection())
+        MyEntry2.delete(0,END)
+        MyEntry2.insert(0,selected)
+
     myFrame = Frame(window, bg="#fff", borderwidth=2, relief="solid")
     myFrame.place(relx=0.02, rely=0.42, height=250, relwidth=0.26)
 
-    hanoi_btn = Button(myFrame, text="Ha Noi", font=('Bold', 20), fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                   command=lambda: MyEntry2.insert(0, hanoi_btn["text"]))
-    hanoi_btn.place(relx=0.01, rely=0.1, relwidth=0.98, relheight=0.2)
+    listbox = Listbox(myFrame,font=(20))
+    listbox.place(width=277,height=246)
+    
+    
+    listbox.insert(END, "Hanoi")
+    
+
+    listbox.bind("<<ListboxSelect>>", on_select)
 
     # update the button command to close the tab
     MyButton.config(command=Close_tab)
@@ -145,75 +154,32 @@ def onClick_District():
         MyButton1.config(image=my_img)
         MyButton1.config(command=onClick_District)
 
+    def on_select(envet):
+        selected = listbox.get(listbox.curselection())
+        MyEntry3.delete(0,END)
+        MyEntry3.insert(0,selected)
+
     myFrame1 = Frame(window, bg="#fff",borderwidth=2, relief="solid")
     myFrame1.place(relx=0.35, rely=0.42, height=250, relwidth=0.26)
 
-    # create a scrollbar for the frame
-    scrollbar = Scrollbar(myFrame1)
-    scrollbar.pack(side=RIGHT, fill=Y)
+    listbox = Listbox(myFrame1,font=(20))
+    listbox.place(width=277,height=246)
+    
 
-    # create a canvas to hold the buttons and attach the scrollbar to it
-    canvas = Canvas(myFrame1, yscrollcommand=scrollbar.set)
-    canvas.pack(side=LEFT, fill=BOTH, expand=True)
-
-    scrollbar.config(command=canvas.yview)
-
-    # create a new frame inside the canvas to hold the buttons
-    inner_frame = Frame(canvas, bg="#fff")
-    canvas.create_window((0, 0), window=inner_frame, anchor='nw')
-
-    bactuliem_btn = Button(inner_frame, text="Bac Tu Liem", font=('Bold', 20), fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                           command=lambda: MyEntry3.insert(END, "Bac Tu Liem"))
-    bactuliem_btn.pack(fill=X, padx=50, pady=5)
-
-    badinh_btn = Button(inner_frame, text="Ba Dinh", font=('Bold', 20), fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                        command=lambda: MyEntry3.insert(END, "Ba Dinh"))
-    badinh_btn.pack(fill=X, padx=50, pady=5)
-
-    caugiay_btn = Button(inner_frame, text="Cau Giay", font=('Bold', 20), fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                         command=lambda: MyEntry3.insert(END, "Cau Giay"))
-    caugiay_btn.pack(fill=X, padx=50, pady=5)
-
-    dongda_btn = Button(inner_frame, text="Dong Da", font=('Bold', 20), fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                        command=lambda: MyEntry3.insert(END, "Dong Da"))
-    dongda_btn.pack(fill=X, padx=50, pady=5)
-
-    haibatrung_btn = Button(inner_frame, text="Hai Ba Trung", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                            command=lambda: MyEntry3.insert(END, "Hai Ba Trung"))
-    haibatrung_btn.pack(fill=X, padx=50, pady=5)
-
-    hoankiem_btn = Button(inner_frame, text="Hoan Kiem", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry3.insert(END, "Hoan Kiem"))
-    hoankiem_btn.pack(fill=X, padx=50, pady=5)
-
-    hadong_btn = Button(inner_frame, text="Ha Dong", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry3.insert(END, "Ha Dong"))
-    hadong_btn.pack(fill = X, padx= 50, pady=5)
-
-    hoangmai_btn =  Button(inner_frame, text="Hoang Mai", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry3.insert(END, "Hoang Mai"))
-    hoangmai_btn.pack(fill=X, padx = 50,pady= 5)
-
-    longbien_btn =  Button(inner_frame, text="Long Bien", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry3.insert(END, "Long Bien"))
-    longbien_btn.pack(fill=X, padx = 50,pady= 5)
-
-    thanhxuan_btn = Button(inner_frame, text="Thanh Xuan", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry3.insert(END, "Thanh Xuan"))
-    thanhxuan_btn.pack(fill=X, padx = 50,pady= 5)
-
-    tayho_btn = Button(inner_frame, text="Tay Ho", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry3.insert(END, "Tay Ho"))
-    tayho_btn.pack(fill=X, padx = 50,pady= 5)
-
-    namtuliem_btn = Button(inner_frame, text="Nam Tu Liem", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry3.insert(END, "Nam Tu Liem"))
-    namtuliem_btn.pack(fill=X, padx = 50,pady= 5)
-
-    # update the canvas scroll region
-    inner_frame.update_idletasks()
-    canvas.config(scrollregion=canvas.bbox("all"))
-
+    listbox.insert(END, "Bac Tu Liem")
+    listbox.insert(END, "Ba Dinh")
+    listbox.insert(END, "Cau Giay")
+    listbox.insert(END, "Dong Da")
+    listbox.insert(END, "Hai Ba Trung")
+    listbox.insert(END, "Hoan Kiem")
+    listbox.insert(END, "Ha Dong")
+    listbox.insert(END, "Hoang Mai")
+    listbox.insert(END, "Long Bien")
+    listbox.insert(END, "Thanh Xuan")
+    listbox.insert(END, "Tay Ho")
+    listbox.insert(END, "Nam Tu Liem")
+    
+    listbox.bind("<<ListboxSelect>>", on_select)
     # update the button command to close the tab
     MyButton1.config(command=Close_tab)
 
@@ -223,58 +189,44 @@ def onClick_Ward():
         MyButton2.config(image=my_img)
         MyButton2.config(command=onClick_Ward)
 
+    def on_select(envet):
+        selected = listbox.get(listbox.curselection())
+        MyEntry4.delete(0,END)
+        MyEntry4.insert(0,selected)
+
     myFrame2 = Frame(window, bg="#fff",borderwidth=2, relief="solid")
     myFrame2.place(relx=0.68, rely=0.42, height=250, relwidth=0.26)
 
-    # create a scrollbar for the frame
-    scrollbar1 = Scrollbar(myFrame2)
-    scrollbar1.pack(side=RIGHT, fill=Y)
-
-    # create a canvas to hold the buttons and attach the scrollbar to it
-    canvas1 = Canvas(myFrame2, yscrollcommand=scrollbar1.set)
-    canvas1.pack(side=LEFT, fill=BOTH, expand=True)
-
-    scrollbar1.config(command=canvas1.yview)
-
-    # create a new frame inside the canvas to hold the buttons
-    inner_frame1 = Frame(canvas1, bg="#fff")
-    canvas1.create_window((0, 0), window=inner_frame1, anchor='nw')
-
-    dichvong_btn = Button(inner_frame1, text="Dich Vong", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry4.insert(END, "Dich Vong"))
-    dichvong_btn.pack(fill=X, padx = 50,pady= 5)
-
-    dichvonghau_btn =  Button(inner_frame1, text="Dich Vong Hau", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry4.insert(END, "Dich Vong Hau"))
-    dichvonghau_btn.pack(fill=X, padx = 50,pady= 5)
-
-    maidich_btn = Button(inner_frame1, text="Mai Dich", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry4.insert(END, "Mai Dich"))
-    maidich_btn.pack(fill=X, padx = 50,pady= 5)
-
-    nghiado_btn = Button(inner_frame1, text="Nghia Do", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry4.insert(END, "Nghia Do"))
-    nghiado_btn.pack(fill=X, padx = 50,pady= 5)
-
-    nghiatan_btn = Button(inner_frame1, text="Nghia Tan", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry4.insert(END, "Nghia Tan"))
-    nghiatan_btn.pack(fill=X, padx = 50,pady= 5)
-
-    quanhoa_btn = Button(inner_frame1, text="Quan Hoa", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry4.insert(END, "Quan Hoa"))
-    quanhoa_btn.pack(fill=X, padx = 50,pady= 5)
-
-    trunghoa_btn = Button(inner_frame1, text="Trung Hoa", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry4.insert(END, "Trung Hoa"))
-    trunghoa_btn.pack(fill=X, padx = 50,pady= 5)
-
-    yenhoa_btn = Button(inner_frame1, text="YenHoa", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry4.insert(END, "Yen Hoa"))
-    yenhoa_btn.pack(fill=X, padx = 50,pady= 5)
-
-    # update the canvas scroll region
-    inner_frame1.update_idletasks()
-    canvas1.config(scrollregion=canvas1.bbox("all"))
+    listbox = Listbox(myFrame2,font=(20))
+    listbox.place(width=277,height=246)
+    
+    
+    listbox.insert(END, "Dich Vong")
+    listbox.insert(END, "Dich Vong Hau")
+    listbox.insert(END, "Mai Dich")
+    listbox.insert(END, "Nghia Do")
+    listbox.insert(END, "Nghia Tan")
+    listbox.insert(END, "Quan Hoa")
+    listbox.insert(END, "Trung Hoa")
+    listbox.insert(END, "YenHoa")
+    listbox.insert(END, "Long Bien")
+    listbox.insert(END, "Thanh Xuan")
+    listbox.insert(END, "Tay Ho")
+    listbox.insert(END, "Nam Tu Liem")
+    listbox.insert(END, "Cong Vi")
+    listbox.insert(END, "Dien Bien")
+    listbox.insert(END, "Doi Can")
+    listbox.insert(END, "Co Nhue")
+    listbox.insert(END, "Duc Thang")
+    listbox.insert(END, "Phu Diem")
+    listbox.insert(END, "Minh Khai")
+    listbox.insert(END, "Cat Linh")
+    listbox.insert(END, "Kham Thien")
+    listbox.insert(END, "Lang Ha")
+    listbox.insert(END, "Bien Giang")
+    listbox.insert(END, "Dong Mai")
+    
+    listbox.bind("<<ListboxSelect>>", on_select)
     # update the button command to close the tab
     MyButton2.config(command=Close_tab)
 
@@ -284,43 +236,25 @@ def onClick_Intended():
         MyButton3.config(image=my_img)
         MyButton3.config(command=onClick_Intended)
 
+    def on_select(envet):
+        selected = listbox.get(listbox.curselection())
+        MyEntry7.delete(0,END)
+        MyEntry7.insert(0,selected)
+
     myFrame3 = Frame(window, bg="#fff",borderwidth=2, relief="solid")
     myFrame3.place(relx=0.02, rely=0.8, height=100, relwidth=0.40)
 
-    # create a scrollbar for the frame
-    scrollbar = Scrollbar(myFrame3)
-    scrollbar.pack(side=RIGHT, fill=Y)
-
-    # create a canvas to hold the buttons and attach the scrollbar to it
-    canvas = Canvas(myFrame3, yscrollcommand=scrollbar.set)
-    canvas.pack(side=LEFT, fill=BOTH, expand=True)
-
-    scrollbar.config(command=canvas.yview)
-
-    # create a new frame inside the canvas to hold the buttons
-    inner_frame = Frame(canvas, bg="#fff")
-    canvas.create_window((0, 0), window=inner_frame, anchor='nw')
-
-    household_btn = Button(inner_frame, text="HouseHold", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry7.insert(END, "HouseHold"))
-    household_btn.pack(fill=X, padx = 50,pady= 5)
-
-    administrativeoffices_btn = Button(inner_frame, text="Administrative Offices", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry7.insert(END, "Administrative Offices"))
-    administrativeoffices_btn.pack(fill=X, padx = 50,pady= 5)
-
-    business_btn = Button(inner_frame, text="Business", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry7.insert(END, "Business"))
-    business_btn.pack(fill=X, padx = 50,pady= 5)
-
-    manufacturingindustries_btn = Button(inner_frame, text="Manufacturing Industries", font=('Bold', 20),fg='black', bg="#fff", bd=0,activebackground="#fff",activeforeground="#fff",
-                          command=lambda: MyEntry7.insert(END, "Manufacturing Industries"))
-    manufacturingindustries_btn.pack(fill=X, padx = 50,pady= 5)
-
-    # update the canvas scroll region
-    inner_frame.update_idletasks()
-    canvas.config(scrollregion=canvas.bbox("all"))
-    # update the button to close the tab
+    listbox = Listbox(myFrame3,font=(20))
+    listbox.place(width=428, height=96)
+    
+    
+    listbox.insert(END, "HouseHold")
+    listbox.insert(END, "Administrative Offices")
+    listbox.insert(END, "Business")
+    listbox.insert(END, "Manufacturing Industries")
+    
+    
+    listbox.bind("<<ListboxSelect>>", on_select)
     MyButton3.config(command=Close_tab)
 
 my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_1.png"))
