@@ -129,9 +129,11 @@ def onClick_Province():
         MyButton.config(command=onClick_Province)
 
     def on_select(envet):
-        selected = listbox.get(listbox.curselection())
-        MyEntry2.delete(0,END)
-        MyEntry2.insert(0,selected)
+        if listbox.curselection() != ():
+                
+            selected = listbox.get(listbox.curselection())
+            MyEntry2.delete(0,END)
+            MyEntry2.insert(0,selected)
 
     myFrame = Frame(window, bg="#fff", borderwidth=2, relief="solid")
     myFrame.place(relx=0.02, rely=0.42, height=250, relwidth=0.26)
@@ -155,9 +157,10 @@ def onClick_District():
         MyButton1.config(command=onClick_District)
 
     def on_select(envet):
-        selected = listbox.get(listbox.curselection())
-        MyEntry3.delete(0,END)
-        MyEntry3.insert(0,selected)
+        if listbox.curselection() != ():
+            selected = listbox.get(listbox.curselection())
+            MyEntry3.delete(0,END)
+            MyEntry3.insert(0,selected)
 
     myFrame1 = Frame(window, bg="#fff",borderwidth=2, relief="solid")
     myFrame1.place(relx=0.35, rely=0.42, height=250, relwidth=0.26)
@@ -190,9 +193,10 @@ def onClick_Ward():
         MyButton2.config(command=onClick_Ward)
 
     def on_select(envet):
-        selected = listbox.get(listbox.curselection())
-        MyEntry4.delete(0,END)
-        MyEntry4.insert(0,selected)
+        if listbox.curselection() != ():
+            selected = listbox.get(listbox.curselection())
+            MyEntry4.delete(0,END)
+            MyEntry4.insert(0,selected)
 
     myFrame2 = Frame(window, bg="#fff",borderwidth=2, relief="solid")
     myFrame2.place(relx=0.68, rely=0.42, height=250, relwidth=0.26)
@@ -237,9 +241,10 @@ def onClick_Intended():
         MyButton3.config(command=onClick_Intended)
 
     def on_select(envet):
-        selected = listbox.get(listbox.curselection())
-        MyEntry7.delete(0,END)
-        MyEntry7.insert(0,selected)
+        if listbox.curselection() != ():
+            selected = listbox.get(listbox.curselection())
+            MyEntry7.delete(0,END)
+            MyEntry7.insert(0,selected)
 
     myFrame3 = Frame(window, bg="#fff",borderwidth=2, relief="solid")
     myFrame3.place(relx=0.02, rely=0.8, height=100, relwidth=0.40)
