@@ -12,10 +12,11 @@ def check_login(phone_input, password_input):
     password=password_input.get()
     if(phone!='') and (password!=''):
         for custom in list_user:
-            if(custom.get_phone()==phone) and (custom.get_password()==password):
-                root.destroy()
-                import GUI.register
-                return True
+            if(custom.get_phone()==phone):
+                if (custom.get_password()==password):
+                    root.destroy()
+                    import GUI.register
+                    return True
     messagebox.showerror("Invalid","Please try again!")
     root.destroy()
     login()
