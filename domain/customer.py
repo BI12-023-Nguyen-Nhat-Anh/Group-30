@@ -49,7 +49,7 @@ class customer(person):
         return self.__tax
 
 # Test class customer
-test=customer(1,"nanh","So 1 am phu","0829032003","test",1)
+test=customer(1,"nanh","So 1 am phu","0829032003","test@gmail.com",1)
 print(test.get_id())
 print(test.get_name())
 print(test.get_email())

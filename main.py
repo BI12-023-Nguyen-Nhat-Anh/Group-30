@@ -18,10 +18,8 @@ if os.path.exists("data/user.txt"):
     f.close()
     for i in range(len(data)):
         if("admin" in data[i]):
-            k=admin(data[i][0], data[i][1])
+            admin_data=admin(data[i][0], data[i][1])
         else:
             k=user(data[i][0],data[i][1],data[i][2])
             list_user.append(k)
 
-for custom in list_user:
-    print(f"{custom.get_id_card()} {custom.get_phone()} {custom.get_password()}")

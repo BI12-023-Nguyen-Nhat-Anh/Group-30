@@ -1,18 +1,9 @@
 import tkinter as tk
 import os
+from tkinter import messagebox
 from PIL import Image, ImageTk
 from main import list_user
-
-data=[]
-
-with open("data/user.txt","r") as f:
-    a=f.read()
-    a=a.split("\n")
-    for i in range(len(a)):
-        if(a[i]==''):
-            a.pop(i)
-        else:
-            data.append(a[i].split(","))
+from main import admin_data
 
 # check_login function takes input from user then compare with the data 
 def check_login(phone_input, password_input):
@@ -21,22 +12,33 @@ def check_login(phone_input, password_input):
     password=password_input.get()
     if(phone!='') and (password!=''):
         for custom in list_user:
-            if(custom.get_phone()==phone) and (custom.get_password()==password):
-                print("Login")
-                return True
-    print("Wrong")
+            if(custom.get_phone()==phone):
+                if (custom.get_password()==password):
+                    root.destroy()
+                    import GUI.register
+                    return True
+    messagebox.showerror("Invalid","Please try again!")
+    root.destroy()
+    login()
     return False
 
 # check_reset function takes input from the user to update the new password for user
-def check_reset(phone_input, password_input, confirm_password):
-    global phone, password, con_password
-    phone=phone_input.get()
+def check_reset(id_card, password_input, confirm_password):
+    global id, password, con_password
+    id=id_card.get()
     password=password_input.get()
     con_password=confirm_password.get()
-    if(con_password==password) and (phone_input.get()!=""):
+    if(con_password==password) and (id!=""):
         for custom in list_user:
-            if(phone==custom.get_phone()):
+            if(id==custom.get_id_card()):
                 custom.add_password(con_password)
+                with open("data/user.txt","w") as f:
+                    f.write(f"{admin_data.get_id()},{admin_data.get_password()}\n")
+                    for custom in list_user:
+                        print(f"{custom.get_id_card()},{custom.get_phone()},{custom.get_password()}")
+                        f.write(f"{custom.get_id_card()},{custom.get_phone()},{custom.get_password()}\n")
+                f.close()
+                break
         root_reset.destroy()
         login()
 
@@ -150,11 +152,12 @@ def reset():
     box=tk.Canvas(root_reset, width=321, height=55, highlightbackground="black", background="white")
     box.create_rectangle(150,150,250,250)
     box.place(x=58,y=180)    
-    tk.Label(root_reset,text="Phone number", bg="white").place(x=70,y=183)
-    number_input = root_reset.register(check_phone_number)
-    global phone_input
-    phone_input = tk.Entry(root_reset, validate="key", validatecommand=(number_input, '%S'), font="assets/Space_Mono/SpaceMono-Regular 13", borderwidth=0, background="white",width=30)
-    phone_input.place(x=73, y=207)
+    tk.Label(root_reset,text="Identity card number", bg="white").place(x=70,y=183)
+
+    identity_card=root_reset.register(check_identity)
+    global id_card
+    id_card = tk.Entry(root_reset, validate="key", validatecommand=(identity_card, '%S'), font="assets/Space_Mono/SpaceMono-Regular 13", borderwidth=0, background="white",width=30)
+    id_card.place(x=73, y=207)
 
     box=tk.Canvas(root_reset, width=321, height=55, highlightbackground="black", background="white")
     box.create_rectangle(150,150,250,250)
@@ -187,7 +190,7 @@ def reset():
     sign_up = Image.open("assets/update.png")
     sign_up = sign_up.resize((321,50))
     sign_up_button = ImageTk.PhotoImage(sign_up)
-    update_button = tk.Button(image=sign_up_button, text="Update", background="white", activebackground="white", borderwidth=0, command=lambda: check_reset(phone_input, password_input, confirm_password))
+    update_button = tk.Button(image=sign_up_button, text="Update", background="white", activebackground="white", borderwidth=0, command=lambda: check_reset(id_card, password_input, confirm_password))
     update_button.place(x=60, y=480, in_=root_reset)
 
     root_reset.mainloop()
