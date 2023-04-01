@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
-
+from tkinter import messagebox
 window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
@@ -83,17 +83,22 @@ def Save_Data():
     residental_adress = MyEntry6.get()
     intended_use = MyEntry7.get()
     tax = MyEntry8.get()
-    with open("data_register.txt",'w') as wf:
-        write = wf.write(f"[{name}, {identify}]: {province};{district};{ward};{electricity_usage};{residental_adress};{intended_use};{tax}")
-        if write == "":
-            write.pop()
-        
-    if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != "") and (tax != ""):
-        with open("register.txt", 'a') as af:
-            with open("data_register.txt",'r') as r:
-                read = r.read()
-            r.close()
-            af.write(str(read)+ "\n")
+    if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
+        messagebox.showerror("Error!","You need to fill in all the blank!")
+    else:
+
+        with open("data_register.txt",'w') as wf:
+            write = wf.write(f"[{name}, {identify}]: {province};{district};{ward};{electricity_usage};{residental_adress};{intended_use};{tax}")
+            if write == "":
+                write.pop()
+            
+        if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != "") and (tax != ""):
+            with open("register.txt", 'a') as af:
+                with open("data_register.txt",'r') as r:
+                    read = r.read()
+                r.close()
+                af.write(str(read)+ "\n")
+        window.quit()
     
 def Clear_Data():
     MyEntry.delete(0,END)
