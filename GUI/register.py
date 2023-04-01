@@ -43,7 +43,7 @@ Mylabel10.place(relx=0.51, rely=0.5)
 Mylabel11 = Label(window, text="Intended use (Right click to delete text)", width=32, bg="#fff")
 Mylabel11.place(relx=0.01, rely=0.7)
 
-Mylabel12 = Label(window, text="Tax identification numbers (Left click to delete text)", width=39, bg="#fff")
+Mylabel12 = Label(window, text="Tax identification numbers (Right click to delete text)", width=40, bg="#fff")
 Mylabel12.place(relx=0.51, rely=0.7)
 
 MyEntry = Entry(window, borderwidth=5, font=25)
