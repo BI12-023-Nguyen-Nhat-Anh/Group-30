@@ -10,7 +10,7 @@ root.geometry("1440x769")
 root.pack_propagate(False)
 root.resizable(0, 0)  # makes the root window fixed in size.
 # set the background image
-img = PhotoImage(file="Dashboard.png")
+img = PhotoImage(file="assets/Dashboard.png")
 label = Label(root, image=img)
 label.place(x=0, y=0)
 
