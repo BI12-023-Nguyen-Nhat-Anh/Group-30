@@ -32,7 +32,7 @@ canvas.tag_bind(rect_cus, "<Button-1>", lambda event: switch_window_customer())
 
 def switch_window_dashboard():
     root.destroy()
-    import dashboard
+    import Dashboard
 
 
 def switch_window_customer():
