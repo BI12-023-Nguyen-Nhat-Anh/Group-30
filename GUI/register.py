@@ -2,16 +2,17 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 import os
-from domain.user import user
 from main import list_user
-from GUI.login import check_login
+from GUI.login import phone, password
 window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
 window.resizable(False,False)
 def get_identity():
-    user = check_login
-    MyEntry1.insert(user.get_id_card())
+    for custom in list_user:
+        if(custom.get_phone()==phone):
+            if(custom.get_password()==password):
+                MyEntry1.insert(0,custom.get_id_card())
 
 
 myFrame = Frame(window, width=9999, height=9999, bg="#fff")
@@ -58,9 +59,9 @@ MyEntry.bind("<Button-3>", lambda e: MyEntry.delete(0, END))
 MyEntry.place(relx=0.02, rely=0.13, relwidth=0.45, relheight=0.06)
 
 MyEntry1 = Entry(window, borderwidth=5, font=25)
-MyEntry1.bind("<Button-3>", lambda e: get_identity)
+MyEntry1.bind("<Button-3>", lambda e: MyEntry.delete(0, END))
 MyEntry1.place(relx=0.5, rely=0.13, relwidth=0.45, relheight=0.06)
-
+get_identity()
 MyEntry2 = Entry(window, borderwidth=5, font=25)
 MyEntry2.bind("<Button-3>", lambda e: MyEntry2.delete(0, END))
 MyEntry2.place(relx=0.02, rely=0.35, relwidth=0.3, relheight=0.06)
