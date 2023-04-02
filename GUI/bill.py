@@ -2,20 +2,20 @@ from tkinter import *
 from tkinter.font import Font
 import openpyxl
 
-root = Tk()
-root.title('Customer list')
+root_bill = Tk()
+root_bill.title('Customer list')
 
 # adjust size
-root.geometry("1280x719")
+root_bill.geometry("1280x719")
 # tells the root to not let the widgets inside it determine its size.
-root.pack_propagate(False)
-root.resizable(0, 0)  # makes the root window fixed in size.
+root_bill.pack_propagate(False)
+root_bill.resizable(0, 0)  # makes the root window fixed in size.
 
 # set the background image
 img = PhotoImage(file="assets/Bill.png")
 
 # create a canvas on top of the label to make it clickable
-canvas = Canvas(root, width=img.width(), height=img.height())
+canvas = Canvas(root_bill, width=img.width(), height=img.height())
 canvas.place(x=0, y=0)
 
 # display the image on the canvas
@@ -31,13 +31,13 @@ canvas.tag_bind(rect_cus, "<Button-1>", lambda event: switch_window_customer())
 
 
 def switch_window_dashboard():
-    root.destroy()
-    import Dashboard
+    root_bill.destroy()
+    import GUI.dashboard
 
 
 def switch_window_customer():
-    root.destroy()
-    import customer
+    root_bill.destroy()
+    import GUI.customer
 
 
-root.mainloop()
+root_bill.mainloop()
