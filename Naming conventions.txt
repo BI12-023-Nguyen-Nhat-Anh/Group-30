@@ -2,7 +2,7 @@
 
 - Quy ước đặt tên biến:
 + Đối với các biến thuộc private: thì tên hàm là get và set không viết hoa (ví dụ get_id và set_id)
-+ Đặt tên biến thì phụ thuộc vào bảng flowchart và không viết hoa nếu có nhiều hơn 1 từ thì dúng dấu "_" (Ví dụ total_bill, late_fee,....)
++ Đặt tên biến thì phụ thuộc vào bảng flowchart và không viết hoa nếu có nhiều hơn 1 từ thì dúng dấu "_" (Ví dụ total_bill, late_fee,..)
 + Tên class là tên mỗi mục tiêu đề lớn trong flowchart
 + Sử dụng dictionary để lưu trữ dữ liệu trong quá trình chạy
 + Nhớ comment mỗi function để người sau đọc lại
