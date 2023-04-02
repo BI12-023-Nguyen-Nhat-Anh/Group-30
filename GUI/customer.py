@@ -12,7 +12,7 @@ root.pack_propagate(False)
 root.resizable(0, 0)  # makes the root window fixed in size.
 
 # set the background image
-img = PhotoImage(file="assets/Customers.png")
+img = PhotoImage(file="assets/customer.png")
 
 # create a canvas on top of the label to make it clickable
 canvas = Canvas(root, width=img.width(), height=img.height())
