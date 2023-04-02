@@ -104,13 +104,13 @@ def Save_Data():
                 write.pop()
             
         if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != "") and (tax != ""):
-            with open("register.txt", 'a') as af:
+            with open("data/register.txt", 'a') as af:
                 with open("data_register.txt",'r') as r:
                     read = r.read()
                 r.close()
                 af.write(str(read)+ "\n")
         os.remove("data_register.txt")
-        window.quit()
+        window.destroy()
     
 def Save_data_for_HousHold():
     name = MyEntry.get()
@@ -132,13 +132,13 @@ def Save_data_for_HousHold():
                 write.pop()
             
         if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != ""):
-            with open("register.txt", 'a') as af:
+            with open("data/register.txt", 'a') as af:
                 with open("data_register.txt",'r') as r:
                     read = r.read()
                 r.close()
                 af.write(str(read)+ "\n")
         os.remove("data_register.txt")
-        window.quit()
+        window.destroy()
     
 def Clear_Data():
     MyEntry.delete(0,END)
