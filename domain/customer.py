@@ -15,17 +15,13 @@ class person:
         return self.__tax
 
 class customer(person):
-    def __init__(self,id,name,address,phone_number,email,type):
+    def __init__(self,id,name,address,phone_number,type):
         super().__init__(id,name)
         self.__address=address
         if not re.match(r"^[0-9]{10}$", phone_number):    # Similar to tax number check if phone_number has the right formula
             self.__phone_number=False
         else:
             self.__phone_number=phone_number
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):    # Similar to tax number check the formula of email
-            self.__email=False
-        else:
-            self.__email=email
         self.__type=type
 
     def get_address(self):
