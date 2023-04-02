@@ -4,6 +4,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 from main import list_user
 from main import admin_data
+import openpyxl as xl
 
 # check_login function takes input from user then compare with the data 
 def check_login(phone_input, password_input):
@@ -16,7 +17,7 @@ def check_login(phone_input, password_input):
                 if(custom.get_password()==password):
                     root.destroy()
                     import GUI.register
-                    return True
+                    return custom
         if(admin_data.get_id()==phone):
             if(admin_data.get_password()==password):
                 root.destroy()
@@ -42,7 +43,6 @@ def check_reset(id_card, password_input, confirm_password):
                         print(f"{custom.get_id_card()},{custom.get_phone()},{custom.get_password()}")
                         f.write(f"{custom.get_id_card()},{custom.get_phone()},{custom.get_password()}\n")
                 f.close()
-                break
         root_reset.destroy()
         login()
 
