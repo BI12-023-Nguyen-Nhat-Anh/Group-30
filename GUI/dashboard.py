@@ -57,7 +57,7 @@ def switch_window_bill():
 family_font = Font(family="Space Mono", size=30, weight="normal")
 
 # access the excel
-path = "D:\Group-30\data\Dashboard.xlsx"
+path = "data\Dashboard.xlsx"
 workbook = openpyxl.load_workbook(path)
 all_customer = workbook["Customer"]
 
