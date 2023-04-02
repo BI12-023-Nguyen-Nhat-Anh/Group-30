@@ -1,14 +1,12 @@
 # from customer import customer
 import os.path
+from domain.customer import customer
 
 class user:
     def __init__(self, identity, phone_input, password_input):
         self.__phone=phone_input
         self.__id_card=identity
         self.__password=password_input
-    
-    def add_phone(self, new_phone):
-        self.__phone=new_phone
 
     def get_phone(self):
         return self.__phone
