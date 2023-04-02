@@ -49,6 +49,6 @@ class MeterReading:
             for row in reader:
                 if row['MeterReadingID'] == meter_reading_id:
                     return MeterReading(row['CustomerID'], row['MeterReadingID'], row['Time'], row['Date'], row['Month'], row['Year'], row['Reading Amount'])
-        else:
-            # no matching MeterReading found
-            raise ValueError('MeterReadingID not found')
+                else:
+                    # no matching MeterReading found
+                    raise ValueError('MeterReadingID not found')
