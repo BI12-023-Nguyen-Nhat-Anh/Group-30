@@ -32,12 +32,12 @@ canvas.tag_bind(rect_bill, "<Button-1>", lambda event: switch_window_bill())
 
 def switch_window_dashboard():
     root.destroy()
-    import dashboard
+    import GUI.dashboard
 
 
 def switch_window_bill():
     root.destroy()
-    import bill
+    import GUI.bill
 
 
 root.mainloop()

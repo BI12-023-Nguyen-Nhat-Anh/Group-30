@@ -45,12 +45,12 @@ canvas.tag_bind(rect_bill_image, "<Button-1>",
 
 def switch_window_customer():
     root.destroy()
-    import customer
+    import GUI.customer
 
 
 def switch_window_bill():
     root.destroy()
-    import bill
+    import GUI.bill
 
 
 # set the font
