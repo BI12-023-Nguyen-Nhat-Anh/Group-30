@@ -2,20 +2,20 @@ from tkinter import *
 from tkinter.font import Font
 import openpyxl
 
-root = Tk()
-root.title('Dashboard')
+root_dashboard = Tk()
+root_dashboard.title('Dashboard')
 
 # adjust size
-root.geometry("1280x719")
+root_dashboard.geometry("1280x719")
 # tells the root to not let the widgets inside it determine its size.
-root.pack_propagate(False)
-root.resizable(0, 0)  # makes the root window fixed in size.
+root_dashboard.pack_propagate(False)
+root_dashboard.resizable(0, 0)  # makes the root window fixed in size.
 
 # set the background image
 img = PhotoImage(file="assets/dashboard.png")
 
 # create a canvas on top of the label to make it clickable
-canvas = Canvas(root, width=img.width(), height=img.height())
+canvas = Canvas(root_dashboard, width=img.width(), height=img.height())
 canvas.place(x=0, y=0)
 
 # display the image on the canvas
@@ -44,12 +44,12 @@ canvas.tag_bind(rect_bill_image, "<Button-1>",
 
 
 def switch_window_customer():
-    root.destroy()
+    root_dashboard.destroy()
     import GUI.customer
 
 
 def switch_window_bill():
-    root.destroy()
+    root_dashboard.destroy()
     import GUI.bill
 
 
@@ -65,7 +65,7 @@ all_customer = workbook["Customer"]
 num_customer = all_customer.max_row - 1
 
 # display number of customers
-num_customer = Label(root, text=f"{num_customer}",
+num_customer = Label(root_dashboard, text=f"{num_customer}",
                      font=family_font, bg="#EAF5FE", fg="#333536")
 num_customer.place(x=234.36, y=139.01, width=49, height=40)
 
@@ -76,7 +76,7 @@ num_active_customer = 0
 for row in all_customer.iter_rows(min_row=2, values_only=True):
     if row[all_customer[f"{cus_status_col}1"].column - 1].lower() == "active":
         num_active_customer += 1
-num_active_customer = Label(root, text=f"{num_active_customer}",
+num_active_customer = Label(root_dashboard, text=f"{num_active_customer}",
                             font=family_font, bg="#F4F0FF", fg="#333536")
 num_active_customer.place(x=594.36, y=139.01, width=49, height=40)
 
@@ -85,7 +85,7 @@ num_inactive_customer = 0
 for row in all_customer.iter_rows(min_row=2, values_only=True):
     if row[all_customer[f"{cus_status_col}1"].column - 1].lower() == "inactive":
         num_inactive_customer += 1
-num_inactive_customer = Label(root, text=f"{num_inactive_customer}",
+num_inactive_customer = Label(root_dashboard, text=f"{num_inactive_customer}",
                               font=family_font, bg="#FEF1EF", fg="#333536")
 num_inactive_customer.place(x=954.36, y=143.01, width=49, height=40)
 
@@ -96,7 +96,7 @@ all_bill = workbook["Bill"]
 num_bill = all_bill.max_row - 1
 
 # display number of customers
-num_bill = Label(root, text=f"{num_bill}",
+num_bill = Label(root_dashboard, text=f"{num_bill}",
                  font=family_font, bg="#FEF6E8", fg="#333536")
 num_bill.place(x=234.36, y=447.01, width=64, height=49.67)
 
@@ -107,7 +107,7 @@ num_paid_bill = 0
 for row in all_bill.iter_rows(min_row=2, values_only=True):
     if row[all_bill[f"{bill_status_col}1"].column - 1].lower() == "paid":
         num_paid_bill += 1
-num_paid_bill = Label(root, text=f"{num_paid_bill}",
+num_paid_bill = Label(root_dashboard, text=f"{num_paid_bill}",
                       font=family_font, bg="#FEFBE5", fg="#333536")
 num_paid_bill.place(x=594.36, y=447.01, width=64, height=49.67)
 
@@ -116,8 +116,8 @@ num_overdue_bill = 0
 for row in all_bill.iter_rows(min_row=2, values_only=True):
     if row[all_bill[f"{bill_status_col}1"].column - 1].lower() == "overdue":
         num_overdue_bill += 1
-num_overdue_bill = Label(root, text=f"{num_overdue_bill}",
+num_overdue_bill = Label(root_dashboard, text=f"{num_overdue_bill}",
                          font=family_font, bg="#E4FEF4", fg="#333536")
 num_overdue_bill.place(x=954.36, y=447.01, width=64, height=49.67)
 
-root.mainloop()
+root_dashboard.mainloop()
