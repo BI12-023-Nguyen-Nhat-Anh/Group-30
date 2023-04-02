@@ -17,6 +17,7 @@ def check_login(phone_input, password_input):
                 if(custom.get_password()==password):
                     root.destroy()
                     import GUI.register
+                    print(custom)
                     return custom
         if(admin_data.get_id()==phone):
             if(admin_data.get_password()==password):
