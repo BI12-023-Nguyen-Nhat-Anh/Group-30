@@ -4,7 +4,8 @@ from tkinter import messagebox
 import os
 from main import list_user
 from GUI.login import phone, password
-from domain.customer import customer,person
+from domain.customer import customer
+import pandas as pd
 window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
@@ -92,8 +93,8 @@ MyEntry8 = Entry(window, borderwidth=5, font=25)
 MyEntry8.bind("<Button-3>", lambda e: MyEntry8.delete(0, END))
 MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
 
-
 def Save_Data():
+    df = pd.read_excel('data/data_customer.xlsx', sheet_name='Sheet1')
     #Take the data from user input
     name = MyEntry.get()
     identify = MyEntry1.get()
@@ -105,16 +106,13 @@ def Save_Data():
     intended_use = MyEntry7.get()
     tax = MyEntry8.get()
     # Take the information to customer file
-    my_name = customer()
-    my_identify = customer()
-    my_residental_adress = customer()
-    my_intended_use = customer()
-    my_tax = customer()
-    my_name.get_name(name)
-    my_identify.get_id(identify)
-    my_residental_adress.get_address(residental_adress)
-    my_intended_use.get_type(intended_use)
-    my_tax.get_tax(tax)
+    get_customer = customer(identify,name,residental_adress,intended_use,tax)
+    ident = get_customer.get_id()
+    name_cus = get_customer.get_name()
+    address = get_customer.get_address()
+    type_cus = get_customer.get_type()
+    tax_cus = get_customer.get_tax()
+    
     if intended_use == "HouseHold":
         name = MyEntry.get()
         identify = MyEntry1.get()
@@ -125,11 +123,17 @@ def Save_Data():
         residental_adress = MyEntry6.get()
         intended_use = MyEntry7.get()
         MyEntry8.insert(0,"None")
-        my_name.get_name(name)
-        my_identify.get_id(identify)
-        my_residental_adress.get_address(residental_adress)
-        my_intended_use.get_type(intended_use)
         tax = MyEntry8.get()
+
+        ident = get_customer.get_id()
+        name_cus = get_customer.get_name()
+        address = get_customer.get_address()
+        type_cus = get_customer.get_type()
+        tax_cus = get_customer.get_tax()
+
+        new_data = {'ID': ident,'Name':name_cus,'Address': address,'Residential Address': residental_adress,'Tax':tax_cus,'Type': type_cus }
+        df = df.append(new_data, ignore_index=True)
+        df.to_excel('data/data_customer.xlsx', sheet_name='Sheet1', index=False)
         if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
@@ -157,11 +161,16 @@ def Save_Data():
         residental_adress = MyEntry6.get()
         intended_use = MyEntry7.get()
         tax = MyEntry8.get()
-        my_name.get_name(name)
-        my_identify.get_id(identify)
-        my_residental_adress.get_address(residental_adress)
-        my_intended_use.get_type(intended_use)
-        my_tax.get_tax(tax)
+        
+        ident = get_customer.get_id()
+        name_cus = get_customer.get_name()
+        address = get_customer.get_address()
+        type_cus = get_customer.get_type()
+        tax_cus = get_customer.get_tax()
+        
+        new_data = {'ID': ident,'Name':name_cus,'Address': address,'Residential Address': residental_adress,'Tax':tax_cus,'Type': type_cus }
+        df = df.append(new_data, ignore_index=True)
+        df.to_excel('data/data_customer.xlsx', sheet_name='Sheet1', index=False)
         if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
@@ -178,6 +187,10 @@ def Save_Data():
                     af.write(str(read)+ "\n")
             os.remove("data_register.txt")
             window.destroy()
+    
+    print(ident,name_cus,address,type_cus,tax_cus)
+    
+    
     
     
 def Clear_Data():
