@@ -131,7 +131,7 @@ def Save_Data():
         type_cus = get_customer.get_type()
         tax_cus = get_customer.get_tax()
 
-        new_data = {'ID': ident,'Name':name_cus,'Address': address,'Residential Address': residental_adress,'Tax':tax_cus,'Type': type_cus }
+        new_data = {'ID': ident,'Name':name_cus,'Address': address,'Residential Address': residental_adress,'Phone number': phone,'Tax':tax_cus,'Type': type_cus }
         df = df.append(new_data, ignore_index=True)
         df.to_excel('data/data_customer.xlsx', sheet_name='Sheet1', index=False)
         if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
@@ -168,7 +168,7 @@ def Save_Data():
         type_cus = get_customer.get_type()
         tax_cus = get_customer.get_tax()
         
-        new_data = {'ID': ident,'Name':name_cus,'Address': address,'Residential Address': residental_adress,'Tax':tax_cus,'Type': type_cus }
+        new_data = {'ID': ident,'Name':name_cus,'Address': address,'Residential Address': residental_adress,'Phone number': phone,'Tax':tax_cus,'Type': type_cus }
         df = df.append(new_data, ignore_index=True)
         df.to_excel('data/data_customer.xlsx', sheet_name='Sheet1', index=False)
         if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
@@ -188,7 +188,6 @@ def Save_Data():
             os.remove("data_register.txt")
             window.destroy()
     
-    print(ident,name_cus,address,type_cus,tax_cus)
     
     
     
