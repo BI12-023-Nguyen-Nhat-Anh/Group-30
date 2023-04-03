@@ -4,7 +4,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 from main import list_user
 from main import admin_data
-import openpyxl as xl
+from domain.user import user
 
 # check_login function takes input from user then compare with the data 
 def check_login(phone_input, password_input):
@@ -58,6 +58,8 @@ def check_user(phone_input, id_card, password_input, confirm_password):
             with open("data/user.txt","a+") as f:
                 f.write(f"{id},{phone},{password}\n")
             f.close()
+            k=user(id,phone,password)
+            list_user.append(k)
             root_register.destroy()
             login()
 
