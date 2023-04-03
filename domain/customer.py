@@ -19,6 +19,7 @@ class customer(person):
         super().__init__(id,name)
         self.__address=address
         self.__type=type
+        self.__tax=False
 
     def get_address(self):
         return self.__address
@@ -32,10 +33,8 @@ class customer(person):
     def get_type(self):
         return self.__type
 
+    def add_tax(self,tax):
+        self.__tax=tax
+    
     def get_tax(self):
-        self.__tax=False
-        if(self.get_type()!="HouseHold"): # Only when the user chooses a different type of electricity than domestic electricity
-            tax=input("Your tax number is: ")
-            if re.match(r"^[0-9]{10}$", tax):   # Check if tax number have the right formula 10 digits contain from 0-9 
-                self.__tax=tax
         return self.__tax
