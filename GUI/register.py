@@ -93,7 +93,6 @@ MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
 
 
 def Save_Data():
-    
     name = MyEntry.get()
     identify = MyEntry1.get()
     province = MyEntry2.get()
@@ -103,51 +102,61 @@ def Save_Data():
     residental_adress = MyEntry6.get()
     intended_use = MyEntry7.get()
     tax = MyEntry8.get()
-    if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
-        messagebox.showerror("Error!","You need to fill in all the blank!")
-    else:
+    if intended_use == "HouseHold":
+        name = MyEntry.get()
+        identify = MyEntry1.get()
+        province = MyEntry2.get()
+        district = MyEntry3.get()
+        ward = MyEntry4.get()
+        electricity_usage = MyEntry5.get()
+        residental_adress = MyEntry6.get()
+        intended_use = MyEntry7.get()
+        MyEntry8.insert(0,"None")
+        tax = MyEntry8.get()
+        if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
+            messagebox.showerror("Error!","You need to fill in all the blank!")
+        else:
 
-        with open("data_register.txt",'w') as wf:
-            write = wf.write(f"[{name}, {identify}]: {province};{district};{ward};{electricity_usage};{residental_adress};{intended_use};{tax}")
-            if write == "":
-                write.pop()
-            
-        if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != "") and (tax != ""):
-            with open("data/register.txt", 'a') as af:
-                with open("data_register.txt",'r') as r:
-                    read = r.read()
-                r.close()
-                af.write(str(read)+ "\n")
-        os.remove("data_register.txt")
-        window.destroy()
-    
-def Save_data_for_HousHold():
-    name = MyEntry.get()
-    identify = MyEntry1.get()
-    province = MyEntry2.get()
-    district = MyEntry3.get()
-    ward = MyEntry4.get()
-    electricity_usage = MyEntry5.get()
-    residental_adress = MyEntry6.get()
-    intended_use = MyEntry7.get()
-    
-    if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == ""):
-        messagebox.showerror("Error!","You need to fill in all the blank!")
+            with open("data_register.txt",'w') as wf:
+                write = wf.write(f"[{name}, {identify}]: {province};{district};{ward};{electricity_usage};{residental_adress};{intended_use};{tax}")
+                if write == "":
+                    write.pop()
+                
+            if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != ""):
+                with open("data/register.txt", 'a') as af:
+                    with open("data_register.txt",'r') as r:
+                        read = r.read()
+                    r.close()
+                    af.write(str(read)+ "\n")
+            os.remove("data_register.txt")
+            window.destroy()
     else:
-
-        with open("data_register.txt",'w') as wf:
-            write = wf.write(f"[{name}, {identify}]: {province};{district};{ward};{electricity_usage};{residental_adress};{intended_use}")
-            if write == "":
-                write.pop()
-            
-        if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != ""):
-            with open("data/register.txt", 'a') as af:
-                with open("data_register.txt",'r') as r:
-                    read = r.read()
-                r.close()
-                af.write(str(read)+ "\n")
-        os.remove("data_register.txt")
-        window.destroy()
+        name = MyEntry.get()
+        identify = MyEntry1.get()
+        province = MyEntry2.get()
+        district = MyEntry3.get()
+        ward = MyEntry4.get()
+        electricity_usage = MyEntry5.get()
+        residental_adress = MyEntry6.get()
+        intended_use = MyEntry7.get()
+        tax = MyEntry8.get()
+        if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
+            messagebox.showerror("Error!","You need to fill in all the blank!")
+        else:
+            with open("data_register.txt",'w') as wf:
+                write = wf.write(f"[{name}, {identify}]: {province};{district};{ward};{electricity_usage};{residental_adress};{intended_use};{tax}")
+                if write == "":
+                    write.pop()
+                
+            if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != "") and (tax != ""):
+                with open("data/register.txt", 'a') as af:
+                    with open("data_register.txt",'r') as r:
+                        read = r.read()
+                    r.close()
+                    af.write(str(read)+ "\n")
+            os.remove("data_register.txt")
+            window.destroy()
+    
     
 def Clear_Data():
     MyEntry.delete(0,END)
@@ -250,7 +259,7 @@ def onClick_Ward():
     listbox.insert(END, "Nghia Tan")
     listbox.insert(END, "Quan Hoa")
     listbox.insert(END, "Trung Hoa")
-    listbox.insert(END, "YenHoa")
+    listbox.insert(END, "Yen Hoa")
     listbox.insert(END, "Long Bien")
     listbox.insert(END, "Thanh Xuan")
     listbox.insert(END, "Tay Ho")
@@ -285,35 +294,37 @@ def onClick_Intended():
             MyEntry7.insert(0,selected)
             
             if selected == "HouseHold":
-                 global MyEntry8
-                 global MyLabel14
-                 MyLabel14 = Label(window, text="You cannot type here",bg="#fff")
-                 MyLabel14.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
-                 MyEntry8.destroy()
+                 
+                global MyLabel14
+                MyLabel14 = Label(window, text="You cannot type here",bg="#fff")
+                MyLabel14.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
+                 
             elif selected == "Administrative Offices":
-                selected = listbox.get(listbox.curselection())
-                MyEntry7.delete(0,END)
-                MyEntry7.insert(0,selected)
-                MyLabel14.destroy()
-                MyEntry8 = Entry(window, borderwidth=5, font=25)
-                MyEntry8.bind("<Button-3>", lambda e: MyEntry8.delete(0, END))
-                MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
+                
+                if Mylabel4.winfo_exists():
+                    MyLabel14.destroy()
+                    selected = listbox.get(listbox.curselection())
+                    MyEntry7.delete(0,END)
+                    MyEntry7.insert(0,selected)
+                
             elif selected == "Business":
-                selected = listbox.get(listbox.curselection())
-                MyEntry7.delete(0,END)
-                MyEntry7.insert(0,selected)
-                MyLabel14.destroy()
-                MyEntry8 = Entry(window, borderwidth=5, font=25)
-                MyEntry8.bind("<Button-3>", lambda e: MyEntry8.delete(0, END))
-                MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
+                
+                if Mylabel4.winfo_exists():
+                    MyLabel14.destroy()
+                    selected = listbox.get(listbox.curselection())
+                    MyEntry7.delete(0,END)
+                    MyEntry7.insert(0,selected)
+                
+                
             elif selected == "Manufacturing Industries":
-                selected = listbox.get(listbox.curselection())
-                MyEntry7.delete(0,END)
-                MyEntry7.insert(0,selected)
-                MyLabel14.destroy()
-                MyEntry8 = Entry(window, borderwidth=5, font=25)
-                MyEntry8.bind("<Button-3>", lambda e: MyEntry8.delete(0, END))
-                MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
+                
+                if Mylabel4.winfo_exists():
+                    MyLabel14.destroy()
+                    selected = listbox.get(listbox.curselection())
+                    MyEntry7.delete(0,END)
+                    MyEntry7.insert(0,selected)
+                
+                
             else:
                 return False
                 
@@ -353,12 +364,10 @@ command=onClick_Intended)
 MyButton3.place(relx=0.425, rely=0.74, relwidth=0.04, relheight=0.036)
 
 MyButton4 = Button(window, text="Save",bg="#fff", activebackground="#fff", activeforeground="white",command=Save_Data)
-MyButton4.place(relx= 0.28,rely= 0.9, relwidth= 0.1, relheight= 0.05)
+MyButton4.place(relx= 0.35,rely= 0.9, relwidth= 0.1, relheight= 0.05)
 
 MyButton5 = Button(window, text="Clear",bg="#fff", activebackground="#fff", activeforeground="white",command=Clear_Data)
-MyButton5.place(relx= 0.42,rely= 0.9, relwidth= 0.1, relheight= 0.05)
+MyButton5.place(relx= 0.50,rely= 0.9, relwidth= 0.1, relheight= 0.05)
 
-MyButton6 = Button(window, text="Save(for HouseHold)",bg="#fff", activebackground="#fff", activeforeground="white",command=Save_data_for_HousHold)
-MyButton6.place(relx= 0.55,rely= 0.9, relwidth= 0.15, relheight= 0.05)
 
 window.mainloop()
