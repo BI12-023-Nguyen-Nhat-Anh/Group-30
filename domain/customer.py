@@ -15,10 +15,11 @@ class person:
         return self.__tax
 
 class customer(person):
-    def __init__(self,id,name,address,type):
+    def __init__(self,id,name,address,type,tax):
         super().__init__(id,name)
         self.__address=address
         self.__type=type
+        self.__tax=tax
 
     def get_address(self):
         return self.__address
@@ -31,9 +32,6 @@ class customer(person):
     
     def get_type(self):
         return self.__type
-
-    def add_tax(self,tax):
-        self.__tax=tax
     
     def get_tax(self):
         return self.__tax
