@@ -19,7 +19,6 @@ class customer(person):
         super().__init__(id,name)
         self.__address=address
         self.__type=type
-        self.__tax=False
 
     def get_address(self):
         return self.__address
