@@ -4,6 +4,7 @@ from tkinter import messagebox
 import os
 from main import list_user
 from GUI.login import phone, password
+from domain.customer import customer,person
 window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
@@ -93,6 +94,7 @@ MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
 
 
 def Save_Data():
+    #Take the data from user input
     name = MyEntry.get()
     identify = MyEntry1.get()
     province = MyEntry2.get()
@@ -102,6 +104,17 @@ def Save_Data():
     residental_adress = MyEntry6.get()
     intended_use = MyEntry7.get()
     tax = MyEntry8.get()
+    # Take the information to customer file
+    my_name = customer()
+    my_identify = customer()
+    my_residental_adress = customer()
+    my_intended_use = customer()
+    my_tax = customer()
+    my_name.get_name(name)
+    my_identify.get_id(identify)
+    my_residental_adress.get_address(residental_adress)
+    my_intended_use.get_type(intended_use)
+    my_tax.get_tax(tax)
     if intended_use == "HouseHold":
         name = MyEntry.get()
         identify = MyEntry1.get()
@@ -112,6 +125,10 @@ def Save_Data():
         residental_adress = MyEntry6.get()
         intended_use = MyEntry7.get()
         MyEntry8.insert(0,"None")
+        my_name.get_name(name)
+        my_identify.get_id(identify)
+        my_residental_adress.get_address(residental_adress)
+        my_intended_use.get_type(intended_use)
         tax = MyEntry8.get()
         if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
@@ -140,6 +157,11 @@ def Save_Data():
         residental_adress = MyEntry6.get()
         intended_use = MyEntry7.get()
         tax = MyEntry8.get()
+        my_name.get_name(name)
+        my_identify.get_id(identify)
+        my_residental_adress.get_address(residental_adress)
+        my_intended_use.get_type(intended_use)
+        my_tax.get_tax(tax)
         if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
