@@ -3,3 +3,5 @@
 [Vo Van C, 15799157515]: Ha Noi;BaDinh;QuanHoa;1017 Ngo Gia THirn;45 DDDDDffffff;Administrative Offices;1564895
 [Dao Van D, 1547814602]: Ha Noi;TayHo;YenHoa;dasdadafsdf;hgfhfghfg3433;Manufacturing Industries;5243234242534
 [Dinh Van K, 4321352443654]: Hanoi;Thanh Xuan;Lang Ha;fefdafdsacdsv;ewqfcwe3q4fq;Administrative Offices;43211432543
+[Trinh Van G, 121110987654]: Hanoi;Cau Giay;Quan Hoa;cdsfsdf34rf34f3;gfeg44g5r;HouseHold;None
+[Le Van F, 121110987654]: Hanoi;Hai Ba Trung;Nghia Do;defewf34few;rgfdg4rgevre;HouseHold;None
