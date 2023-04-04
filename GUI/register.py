@@ -94,7 +94,7 @@ MyEntry8.bind("<Button-3>", lambda e: MyEntry8.delete(0, END))
 MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
 
 def Save_Data():
-    df = pd.read_excel('data/data_customer.xlsx', sheet_name='Sheet1')
+    df = pd.read_excel('data/data_customer.xlsx', sheet_name='data_customer')
     #Take the data from user input
     name = MyEntry.get()
     identify = MyEntry1.get()
@@ -131,9 +131,10 @@ def Save_Data():
         type_cus = get_customer.get_type()
         tax_cus = get_customer.get_tax()
 
-        new_data = {'ID': ident,'Name':name_cus,'Address': address,'Residential Address': residental_adress,'Phone Number': phone,'Tax':tax_cus,'Type': type_cus }
-        df = df.append(new_data, ignore_index=True)
-        df.to_excel('data/data_customer.xlsx', sheet_name='Sheet1', index=False)
+        new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Tax':tax_cus,'Type': type_cus }
+        df_new = pd.DataFrame(new_data,index=[0])
+        updated_df = pd.concat([df,df_new], ignore_index=True)
+        updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
         if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
@@ -168,9 +169,10 @@ def Save_Data():
         type_cus = get_customer.get_type()
         tax_cus = get_customer.get_tax()
         
-        new_data = {'ID': ident,'Name':name_cus,'Address': address,'Residential Address': residental_adress,'Phone number': phone,'Tax':tax_cus,'Type': type_cus }
-        df = df.append(new_data, ignore_index=True)
-        df.to_excel('data/data_customer.xlsx', sheet_name='Sheet1', index=False)
+        new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Tax':tax_cus,'Type': type_cus }
+        df_new = pd.DataFrame(new_data,index=[0])
+        updated_df = pd.concat([df,df_new], ignore_index=True)
+        updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
         if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
