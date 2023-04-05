@@ -1,9 +1,10 @@
 import re # The re library provides tools to use regular expressions in Python
 
 class person:
-    def __init__(self,id,name):
+    def __init__(self,id,name,mail):
         self.__id=id
         self.__name=name
+        self.__mail=mail
     
     def get_name(self):
         return self.__name
@@ -12,11 +13,11 @@ class person:
         return self.__id
         
     def get_tax(self):
-        return self.__tax
+        return self.__mail
 
 class customer(person):
-    def __init__(self,id,name,address,type,tax):
-        super().__init__(id,name)
+    def __init__(self,id,name,mail,address,type,tax):
+        super().__init__(id,name,mail)
         self.__address=address
         self.__type=type
         self.__tax=tax
