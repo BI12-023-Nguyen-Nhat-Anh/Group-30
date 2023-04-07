@@ -12,7 +12,7 @@ class person:
     def get_id(self):
         return self.__id
         
-    def get_tax(self):
+    def get_mail(self):
         return self.__mail
 
 class customer(person):
