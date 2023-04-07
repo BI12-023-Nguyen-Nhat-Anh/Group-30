@@ -11,6 +11,11 @@ window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
 window.resizable(False,False)
+def delete_showerror():
+    delete = messagebox.showerror("Error!","Your email is not correct! Try again.")
+    if delete == "ok":
+        delete.destroy()
+
 def get_identity():
     for custom in list_user:
         if(custom.get_phone()==phone):
@@ -19,9 +24,10 @@ def get_identity():
 
 def formula_email(email):
     if not re.match(r"[^@]+@[^@]+\.[^@]+",email):
-        return False
-    else:
-        return True
+        return delete_showerror()
+
+
+    
 myFrame = Frame(window, width=9999, height=9999, bg="#fff")
 myFrame.pack(fill=BOTH, expand=True)
 
@@ -74,7 +80,6 @@ MyEntry.place(relx=0.02, rely=0.13, relwidth=0.45, relheight=0.06)
 
 MyEntry1 = Entry(window, borderwidth=5, font=25)
 MyEntry1.bind("<Button-3>", lambda e: MyEntry.delete(0, END))
-MyEntry1.bind("<KeyRelease>",lambda event: formula_email(MyEntry1.get()))
 MyEntry1.place(relx=0.5, rely=0.13, relwidth=0.45, relheight=0.06)
 
 
@@ -124,6 +129,7 @@ def Save_Data():
         if(custom.get_phone()==phone):
             if(custom.get_password()==password):
                 ident = custom.get_id_card()
+    
     # Take the information to customer file
     get_customer = customer(ident,name,email,residental_adress,intended_use,tax)
     
@@ -138,13 +144,11 @@ def Save_Data():
         electricity_usage = MyEntry5.get()
         residental_adress = MyEntry6.get()
         intended_use = MyEntry7.get()
-        MyEntry8.insert(0,"None")
-        tax = MyEntry8.get()
+        
         for custom in list_user:
             if(custom.get_phone()==phone):
                 if(custom.get_password()==password):
                     ident = custom.get_id_card()
-
         ident = get_customer.get_id()
         name_cus = get_customer.get_name()
         address = get_customer.get_address()
@@ -153,27 +157,18 @@ def Save_Data():
         mail = get_customer.get_mail()
 
 
-        new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Email': mail,'Tax':tax,'Type': type_cus }
-        df_new = pd.DataFrame(new_data,index=[0])
-        updated_df = pd.concat([df,df_new], ignore_index=True)
-        updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
-        if (name == "") or (email == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
+        
+        if (name == "") or (email == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
-
-            with open("data_register.txt",'w') as wf:
-                write = wf.write(f"[{name}, {ident}]: {province};{district};{ward};{electricity_usage};{residental_adress};{mail};{intended_use};{tax}")
-                if write == "":
-                    write.pop()
-                
-            if (name != "") and (email != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != ""):
-                with open("data/register.txt", 'a') as af:
-                    with open("data_register.txt",'r') as r:
-                        read = r.read()
-                    r.close()
-                    af.write(str(read)+ "\n")
-            os.remove("data_register.txt")
-            window.destroy()
+            if formula_email(email) == False:
+                formula_email(email)
+            else:
+                new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Email': mail,'Tax':'None','Type': type_cus }
+                df_new = pd.DataFrame(new_data,index=[0])
+                updated_df = pd.concat([df,df_new], ignore_index=True)
+                updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
+                window.destroy()
     else:
         
         name = MyEntry.get()
@@ -189,7 +184,6 @@ def Save_Data():
             if(custom.get_phone()==phone):
                 if(custom.get_password()==password):
                     ident = custom.get_id_card()
-        
         ident = get_customer.get_id()
         name_cus = get_customer.get_name()
         address = get_customer.get_address()
@@ -197,26 +191,19 @@ def Save_Data():
         tax_cus = get_customer.get_tax()
         mail = get_customer.get_mail()
         
-        new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Email': mail,'Tax':tax_cus,'Type': type_cus }
-        df_new = pd.DataFrame(new_data,index=[0])
-        updated_df = pd.concat([df,df_new], ignore_index=True)
-        updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
+        
         if (name == "") or (email == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
-            with open("data_register.txt",'w') as wf:
-                write = wf.write(f"[{name}, {ident}]: {province};{district};{ward};{electricity_usage};{residental_adress};{mail};{intended_use};{tax}")
-                if write == "":
-                    write.pop()
-                
-            if (name != "") and (email != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != "") and (tax != ""):
-                with open("data/register.txt", 'a') as af:
-                    with open("data_register.txt",'r') as r:
-                        read = r.read()
-                    r.close()
-                    af.write(str(read)+ "\n")
-            os.remove("data_register.txt")
-            window.destroy()
+            
+            if formula_email(email) == False:
+                formula_email(email)
+            else:
+                new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Email': mail,'Tax':tax,'Type': type_cus }
+                df_new = pd.DataFrame(new_data,index=[0])
+                updated_df = pd.concat([df,df_new], ignore_index=True)
+                updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
+                window.destroy()
     
     
     
@@ -235,17 +222,20 @@ def Clear_Data():
 
 def onClick_Province():
     def Close_tab():
+        listbox.destroy()
         myFrame.destroy()
         MyButton.config(image=my_img)
         MyButton.config(command=onClick_Province)
 
-    def on_select(envet):
-        if listbox.curselection() != ():
-                
-            selected = listbox.get(listbox.curselection())
-            MyEntry2.delete(0,END)
-            MyEntry2.insert(0,selected)
-
+    def on_select(event):
+        widget = event.widget
+        selection = widget.curselection()
+        if selection:
+            value = widget.get(selection)
+            MyEntry2.delete(0, END)
+            MyEntry2.insert(0, value)
+            myFrame.destroy()
+            listbox.destroy()
     myFrame = Frame(window, bg="#fff", borderwidth=2, relief="solid")
     myFrame.place(relx=0.02, rely=0.42, height=30, relwidth=0.26)
 
@@ -263,16 +253,21 @@ def onClick_Province():
 
 def onClick_District():
     def Close_tab():
+        listbox.destroy()
         myFrame1.destroy()
         MyButton1.config(image=my_img)
         MyButton1.config(command=onClick_District)
 
-    def on_select(envet):
-        if listbox.curselection() != ():
-            selected = listbox.get(listbox.curselection())
-            MyEntry3.delete(0,END)
-            MyEntry3.insert(0,selected)
-
+    def on_select(event):
+        widget = event.widget
+        selection = widget.curselection()
+        if selection:
+            value = widget.get(selection)
+            MyEntry3.delete(0, END)
+            MyEntry3.insert(0, value)
+            listbox.destroy()
+            myFrame1.destroy()
+        
     myFrame1 = Frame(window, bg="#fff",borderwidth=2, relief="solid")
     myFrame1.place(relx=0.35, rely=0.42, height=250, relwidth=0.26)
 
@@ -299,16 +294,21 @@ def onClick_District():
 
 def onClick_Ward():
     def Close_tab():
+        listbox.destroy()
         myFrame2.destroy()
         MyButton2.config(image=my_img)
         MyButton2.config(command=onClick_Ward)
 
-    def on_select(envet):
-        if listbox.curselection() != ():
-            selected = listbox.get(listbox.curselection())
-            MyEntry4.delete(0,END)
-            MyEntry4.insert(0,selected)
-
+    def on_select(event):
+        widget = event.widget
+        selection = widget.curselection()
+        if selection:
+            value = widget.get(selection)
+            MyEntry4.delete(0, END)
+            MyEntry4.insert(0, value)
+            listbox.destroy()
+            myFrame2.destroy()
+        
     myFrame2 = Frame(window, bg="#fff",borderwidth=2, relief="solid")
     myFrame2.place(relx=0.68, rely=0.42, height=250, relwidth=0.26)
 
@@ -351,42 +351,56 @@ def onClick_Intended():
         MyButton3.config(image=my_img)
         MyButton3.config(command=onClick_Intended)
 
-    def on_select(envet):
+    def on_select(event):
         if listbox.curselection() != ():
-            selected = listbox.get(listbox.curselection())
+            selection = listbox.get(listbox.curselection())
             MyEntry7.delete(0,END)
-            MyEntry7.insert(0,selected)
+            MyEntry7.insert(0,selection)
+            listbox.destroy()
+            myFrame3.destroy()
             
-            if selected == "HouseHold":
+            if selection == "HouseHold":
                  
                 global MyLabel14
                 MyLabel14 = Label(window, text="You cannot type here",bg="#fff")
                 MyLabel14.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
                  
-            elif selected == "Administrative Offices":
+            elif selection == "Administrative Offices":
                 
                 if Mylabel4.winfo_exists():
                     MyLabel14.destroy()
-                    selected = listbox.get(listbox.curselection())
+                    selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)
-                    MyEntry7.insert(0,selected)
+                    MyEntry7.insert(0,selection)
+                else:
+                    selection = listbox.get(listbox.curselection())
+                    MyEntry7.delete(0,END)
+                    MyEntry7.insert(0,selection)
                 
-            elif selected == "Business":
+            elif selection == "Business":
                 
                 if Mylabel4.winfo_exists():
                     MyLabel14.destroy()
-                    selected = listbox.get(listbox.curselection())
+                    selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)
-                    MyEntry7.insert(0,selected)
+                    MyEntry7.insert(0,selection)
+                else:
+                    selection = listbox.get(listbox.curselection())
+                    MyEntry7.delete(0,END)
+                    MyEntry7.insert(0,selection)
                 
                 
-            elif selected == "Manufacturing Industries":
+            elif selection == "Manufacturing Industries":
                 
                 if Mylabel4.winfo_exists():
                     MyLabel14.destroy()
-                    selected = listbox.get(listbox.curselection())
+                    selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)
-                    MyEntry7.insert(0,selected)
+                    MyEntry7.insert(0,selection)
+                else:
+                    selection = listbox.get(listbox.curselection())
+                    MyEntry7.delete(0,END)
+                    MyEntry7.insert(0,selection)
                 
                 
             else:
