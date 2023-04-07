@@ -6,6 +6,7 @@ from main import list_user
 from GUI.login import phone, password
 from domain.customer import customer
 import pandas as pd
+import re
 window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
@@ -14,9 +15,13 @@ def get_identity():
     for custom in list_user:
         if(custom.get_phone()==phone):
             if(custom.get_password()==password):
-                MyEntry1.insert(0,custom.get_id_card())
+                MyLabel15.config(text= custom.get_id_card())
 
-
+def formula_email(email):
+    if not re.match(r"[^@]+@[^@]+\.[^@]+",email):
+        return False
+    else:
+        return True
 myFrame = Frame(window, width=9999, height=9999, bg="#fff")
 myFrame.pack(fill=BOTH, expand=True)
 
@@ -29,7 +34,7 @@ Mylabel2.place(relx=0.01, rely=0.05)
 Mylabel3 = Label(window, text="Full Name (Right click to delete text)", width=27, bg="#fff")
 Mylabel3.place(relx=0.02, rely=0.1)
 
-Mylabel4 = Label(window, text="Identify card name (Right click to delete text)", width=33, bg="#fff")
+Mylabel4 = Label(window, text="Email (Right click to delete text)", width=25, bg="#fff")
 Mylabel4.place(relx=0.5, rely=0.1)
 
 Mylabel5 = Label(window, text="Electricity supply information", font=140, border=10, bg="#fff")
@@ -56,14 +61,23 @@ Mylabel11.place(relx=0.01, rely=0.7)
 Mylabel12 = Label(window, text="Tax identification numbers (Right click to delete text)", width=40, bg="#fff")
 Mylabel12.place(relx=0.51, rely=0.7)
 
+Mylabel13 = Label(window, text= "Identify card: ",width=13, bg = "#fff",font=('Bold',15))
+Mylabel13.place(relx= 0.69,rely=0.95)
+
+MyLabel15 = Label(window, text = "",bg = "#fff",font=(15))
+MyLabel15.place(relx=0.81, rely=0.94, relwidth=0.15, relheight=0.06)
+get_identity()
+
 MyEntry = Entry(window, borderwidth=5, font=25)
 MyEntry.bind("<Button-3>", lambda e: MyEntry.delete(0, END))
 MyEntry.place(relx=0.02, rely=0.13, relwidth=0.45, relheight=0.06)
 
 MyEntry1 = Entry(window, borderwidth=5, font=25)
 MyEntry1.bind("<Button-3>", lambda e: MyEntry.delete(0, END))
+MyEntry1.bind("<KeyRelease>",lambda event: formula_email(MyEntry1.get()))
 MyEntry1.place(relx=0.5, rely=0.13, relwidth=0.45, relheight=0.06)
-get_identity()
+
+
 MyEntry2 = Entry(window, borderwidth=5, font=25)
 MyEntry2.bind("<Button-3>", lambda e: MyEntry2.delete(0, END))
 MyEntry2.place(relx=0.02, rely=0.35, relwidth=0.3, relheight=0.06)
@@ -93,11 +107,12 @@ MyEntry8 = Entry(window, borderwidth=5, font=25)
 MyEntry8.bind("<Button-3>", lambda e: MyEntry8.delete(0, END))
 MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
 
+
 def Save_Data():
     df = pd.read_excel('data/data_customer.xlsx', sheet_name='data_customer')
     #Take the data from user input
     name = MyEntry.get()
-    identify = MyEntry1.get()
+    email = MyEntry1.get()
     province = MyEntry2.get()
     district = MyEntry3.get()
     ward = MyEntry4.get()
@@ -105,17 +120,18 @@ def Save_Data():
     residental_adress = MyEntry6.get()
     intended_use = MyEntry7.get()
     tax = MyEntry8.get()
+    for custom in list_user:
+        if(custom.get_phone()==phone):
+            if(custom.get_password()==password):
+                ident = custom.get_id_card()
     # Take the information to customer file
-    get_customer = customer(identify,name,residental_adress,intended_use,tax)
-    ident = get_customer.get_id()
-    name_cus = get_customer.get_name()
-    address = get_customer.get_address()
-    type_cus = get_customer.get_type()
-    tax_cus = get_customer.get_tax()
+    get_customer = customer(ident,name,email,residental_adress,intended_use,tax)
+    
     
     if intended_use == "HouseHold":
+        
         name = MyEntry.get()
-        identify = MyEntry1.get()
+        email = MyEntry1.get()
         province = MyEntry2.get()
         district = MyEntry3.get()
         ward = MyEntry4.get()
@@ -124,27 +140,33 @@ def Save_Data():
         intended_use = MyEntry7.get()
         MyEntry8.insert(0,"None")
         tax = MyEntry8.get()
+        for custom in list_user:
+            if(custom.get_phone()==phone):
+                if(custom.get_password()==password):
+                    ident = custom.get_id_card()
 
         ident = get_customer.get_id()
         name_cus = get_customer.get_name()
         address = get_customer.get_address()
         type_cus = get_customer.get_type()
         tax_cus = get_customer.get_tax()
+        mail = get_customer.get_mail()
 
-        new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Tax':tax_cus,'Type': type_cus }
+
+        new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Email': mail,'Tax':tax,'Type': type_cus }
         df_new = pd.DataFrame(new_data,index=[0])
         updated_df = pd.concat([df,df_new], ignore_index=True)
         updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
-        if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
+        if (name == "") or (email == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
 
             with open("data_register.txt",'w') as wf:
-                write = wf.write(f"[{name}, {identify}]: {province};{district};{ward};{electricity_usage};{residental_adress};{intended_use};{tax}")
+                write = wf.write(f"[{name}, {ident}]: {province};{district};{ward};{electricity_usage};{residental_adress};{mail};{intended_use};{tax}")
                 if write == "":
                     write.pop()
                 
-            if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != ""):
+            if (name != "") and (email != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != ""):
                 with open("data/register.txt", 'a') as af:
                     with open("data_register.txt",'r') as r:
                         read = r.read()
@@ -153,8 +175,9 @@ def Save_Data():
             os.remove("data_register.txt")
             window.destroy()
     else:
+        
         name = MyEntry.get()
-        identify = MyEntry1.get()
+        email = MyEntry1.get()
         province = MyEntry2.get()
         district = MyEntry3.get()
         ward = MyEntry4.get()
@@ -162,26 +185,31 @@ def Save_Data():
         residental_adress = MyEntry6.get()
         intended_use = MyEntry7.get()
         tax = MyEntry8.get()
+        for custom in list_user:
+            if(custom.get_phone()==phone):
+                if(custom.get_password()==password):
+                    ident = custom.get_id_card()
         
         ident = get_customer.get_id()
         name_cus = get_customer.get_name()
         address = get_customer.get_address()
         type_cus = get_customer.get_type()
         tax_cus = get_customer.get_tax()
+        mail = get_customer.get_mail()
         
-        new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Tax':tax_cus,'Type': type_cus }
+        new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Email': mail,'Tax':tax_cus,'Type': type_cus }
         df_new = pd.DataFrame(new_data,index=[0])
         updated_df = pd.concat([df,df_new], ignore_index=True)
         updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
-        if (name == "") or (identify == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
+        if (name == "") or (email == "") or (province == "") or (district == "") or (ward == "") or (residental_adress == "") or (intended_use == "") or (tax == ""):
             messagebox.showerror("Error!","You need to fill in all the blank!")
         else:
             with open("data_register.txt",'w') as wf:
-                write = wf.write(f"[{name}, {identify}]: {province};{district};{ward};{electricity_usage};{residental_adress};{intended_use};{tax}")
+                write = wf.write(f"[{name}, {ident}]: {province};{district};{ward};{electricity_usage};{residental_adress};{mail};{intended_use};{tax}")
                 if write == "":
                     write.pop()
                 
-            if (name != "") and (identify != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != "") and (tax != ""):
+            if (name != "") and (email != "") and (province != "") and (district != "") and (ward != "") and (residental_adress != "") and (intended_use != "") and (tax != ""):
                 with open("data/register.txt", 'a') as af:
                     with open("data_register.txt",'r') as r:
                         read = r.read()
@@ -219,10 +247,10 @@ def onClick_Province():
             MyEntry2.insert(0,selected)
 
     myFrame = Frame(window, bg="#fff", borderwidth=2, relief="solid")
-    myFrame.place(relx=0.02, rely=0.42, height=250, relwidth=0.26)
+    myFrame.place(relx=0.02, rely=0.42, height=30, relwidth=0.26)
 
     listbox = Listbox(myFrame,font=(20))
-    listbox.place(width=277,height=246)
+    listbox.place(width=277,height=25)
     
     
     listbox.insert(END, "Hanoi")
