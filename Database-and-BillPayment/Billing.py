@@ -1,6 +1,7 @@
 import openpyxl
 import os
-import Bill_Calculate
+import datetime
+from Bill_Calculate import Household, Manufacturing_industries, Administrative_offices, Business
 
 class Billing:
     '''The Billing class now includes the following methods:
@@ -9,52 +10,29 @@ search_billing_by_customer_id(CustomerID): Searches for billing records by a cus
 auto_calculate_billing(): Automatically calculates billing amounts and appends the data to the Billing.xlsx file.
 auto_check_status_and_update(): Automatically checks the billing status and updates the late fee and status in the Billing.xlsx file.'''
 
-    def __init__(self, meter_reading_file):
-        self.meter_reading_file = meter_reading_file
-        if not os.path.exists(self.meter_reading_file):
+    def __init__(self, billing_file, consumption_file, customer_file):
+        self.billing_file = billing_file
+        self.consumption_file = consumption_file
+        self.customer_file = customer_file
+
+        if not os.path.exists(self.billing_file):
             wb = openpyxl.Workbook()
             ws = wb.active
-            ws.append(["MeterReadingID", "CustomerID", "Time", "Date", "Month", "Year", "ReadingAmount"])
-            wb.save(self.meter_reading_file)
+            ws.append(["BillingID", "CustomerID", "ConsumptionID", "BillingDeadline", "Month", "Year", "BillingAmount",
+                       "LateFee", "TotalBill", "Status"])
+            wb.save(self.billing_file)
 
-    def create_meter_reading(self, customer_id):
-        wb = openpyxl.load_workbook(self.meter_reading_file)
-        ws = wb.active
-        meter_reading_id = ws.max_row
-        new_entry = [meter_reading_id, customer_id, "", "", "", "", ""]
-        ws.append(new_entry)
-        wb.save(self.meter_reading_file)
-        return meter_reading_id
-
-    def input_data_reading(self, meter_reading_id, hour, date, month, year, reading_amount):
-        wb = openpyxl.load_workbook(self.meter_reading_file)
-        ws = wb.active
-        found = False
-        for row in ws.iter_rows(min_row=2, values_only=True):
-            if row[0] == meter_reading_id:
-                found = True
-                ws.cell(row=row[0], column=3, value=hour)
-                ws.cell(row=row[0], column=4, value=date)
-                ws.cell(row=row[0], column=5, value=month)
-                ws.cell(row=row[0], column=6, value=year)
-                ws.cell(row=row[0], column=7, value=reading_amount)
-                break
-        if not found:
-            print("MeterReadingID not found")
-        else:
-            wb.save(self.meter_reading_file)
-
-    def search_meter_reading(self, meter_reading_id):
-        wb = openpyxl.load_workbook(self.meter_reading_file)
+    def search_billing(self, billing_id):
+        wb = openpyxl.load_workbook(self.billing_file)
         ws = wb.active
         data = []
         for row in ws.iter_rows(min_row=2, values_only=True):
-            if row[0] == meter_reading_id:
+            if row[0] == billing_id:
                 data.append(row)
         return data
 
-    def search_meter_reading_by_customer_id(self, customer_id):
-        wb = openpyxl.load_workbook(self.meter_reading_file)
+    def search_billing_by_customer_id(self, customer_id):
+        wb = openpyxl.load_workbook(self.billing_file)
         ws = wb.active
         data = []
         for row in ws.iter_rows(min_row=2, values_only=True):
@@ -62,85 +40,83 @@ auto_check_status_and_update(): Automatically checks the billing status and upda
                 data.append(row)
         return data
 
-    def update_meter_reading(self, meter_reading_id, operation):
-        wb = openpyxl.load_workbook(self.meter_reading_file)
+    def auto_calculate_billing(self):
+        customer_types = {}
+        wb_customer = openpyxl.load_workbook(self.customer_file)
+        ws_customer = wb_customer.active
+        for row in ws_customer.iter_rows(min_row=2, values_only=True):
+            customer_id = row[0]
+            customer_type = row[7]
+            customer_types[customer_id] = customer_type
+
+        wb_consumption = openpyxl.load_workbook(self.consumption_file)
+        ws_consumption = wb_consumption.active
+        for row in ws_consumption.iter_rows(min_row=2, values_only=True):
+            consumption_id = row[0]
+            customer_id = row[1]
+            month = row[2]
+            year = row[3]
+            consumption_amount = row[4]
+
+            customer_type = customer_types.get(customer_id)
+            if customer_type is None:
+                print(f"Customer type not found for CustomerID {customer_id}. Skipping this record.")
+                continue
+
+            billing_amount = 0
+            if customer_type == "Household":
+                billing_amount = Household(consumption_amount)
+            elif customer_type == "Manufacturing_industries":
+                billing_amount = Manufacturing_industries(consumption_amount)
+            elif customer_type == "Administrative_offices":
+                billing_amount = Administrative_offices(consumption_amount)
+            elif customer_type == "Business":
+                billing_amount = Business(consumption_amount)
+
+            deadline_month = month + 1
+            deadline_year = year
+            if deadline_month > 12:
+                deadline_month = 1
+                deadline_year += 1
+
+            billing_deadline = f"{deadline_year}-{deadline_month:02d}-05"
+            late_fee = 0
+            total_bill = billing_amount + late_fee
+            status = "Pending"
+
+            self._append_billing_data(consumption_id, customer_id, billing_deadline, month, year, billing_amount,
+                                      late_fee, total_bill, status)
+
+    def _append_billing_data(self, consumption_id, customer_id, billing_deadline, month, year, billing_amount, late_fee,
+                             total_bill, status):
+        wb = openpyxl.load_workbook(self.billing_file)
         ws = wb.active
-        if operation.lower() == "delete":
-            rows_to_delete = []
-            for row in ws.iter_rows(min_row=2, values_only=True):
-                if row[0] == meter_reading_id:
-                    rows_to_delete.append(row)
-            for row in rows_to_delete:
-                ws.delete_rows(row[0])
-            wb.save(self.meter_reading_file)
-        elif operation.lower() == "modify":
-            print("Enter new data for the meter reading")
-            hour = input("Hour: ")
-            date = input("Date: ")
-            month = input("Month: ")
-            year = input("Year: ")
-            reading_amount = float(input("Reading Amount: "))
-            self.input_data_reading(meter_reading_id, hour, date, month, year, reading_amount)
-        else:
-            print("Invalid operation. Please choose 'delete' or 'modify'.")
+        billing_id = ws.max_row - 1
+        new_entry = [billing_id, customer_id, consumption_id, billing_deadline, month, year, billing_amount, late_fee,
+                     total_bill, status]
+        ws.append(new_entry)
+        wb.save(self.billing_file)
 
-def main():
-    meter_reading_file = "MeterReading.xlsx"
-    meter_reading = MeterReading(meter_reading_file)
+    def auto_check_status_and_update(self):
+        today = datetime.date.today()
+        wb_billing = openpyxl.load_workbook(self.billing_file)
+        ws_billing = wb_billing.active
+        updated = False
 
-    while True:
-        print("\n--- Meter Reading Management ---")
-        print("1. Create Meter Reading")
-        print("2. Input Data Reading")
-        print("3. Search Meter Reading by ID")
-        print("4. Search Meter Reading by Customer ID")
-        print("5. Update Meter Reading")
-        print("6. Exit")
-        choice = input("Choose an option: ")
+        for row in ws_billing.iter_rows(min_row=2):
+            status = row[9].value
+            if status == "Paid":
+                continue
 
-        if choice == "1":
-            customer_id = int(input("Enter Customer ID: "))
-            meter_reading.create_meter_reading(customer_id)
-            print("Meter Reading created successfully.")
-        elif choice == "2":
-            meter_reading_id = int(input("Enter Meter Reading ID: "))
-            hour = input("Enter Hour: ")
-            date = input("Enter Date: ")
-            month = input("Enter Month: ")
-            year = input("Enter Year: ")
-            reading_amount = float(input("Enter Reading Amount: "))
-            meter_reading.input_data_reading(meter_reading_id, hour, date, month, year, reading_amount)
-            print("Data reading added successfully.")
-        elif choice == "3":
-            meter_reading_id = int(input("Enter Meter Reading ID: "))
-            results = meter_reading.search_meter_reading(meter_reading_id)
-            if results:
-                print("\nResults:")
-                print("MeterReadingID, CustomerID, Time, Date, Month, Year, ReadingAmount")
-                for result in results:
-                    print(result)
-            else:
-                print("No matching Meter Reading ID found.")
-        elif choice == "4":
-            customer_id = int(input("Enter Customer ID: "))
-            results = meter_reading.search_meter_reading_by_customer_id(customer_id)
-            if results:
-                print("\nResults:")
-                print("MeterReadingID, CustomerID, Time, Date, Month, Year, ReadingAmount")
-                for result in results:
-                    print(result)
-            else:
-                print("No matching Customer ID found.")
-        elif choice == "5":
-            meter_reading_id = int(input("Enter Meter Reading ID: "))
-            operation = input("Choose operation: delete or modify: ")
-            meter_reading.update_meter_reading(meter_reading_id, operation)
-            print("Meter Reading updated successfully.")
-        elif choice == "6":
-            print("Exiting...")
-            break
-        else:
-            print("Invalid choice. Please try again.")
+            billing_deadline = datetime.datetime.strptime(row[3].value, "%Y-%m-%d").date()
+            if today > billing_deadline:
+                billing_amount = row[6].value
+                late_fee = billing_amount * 0.1
+                total_bill = billing_amount + late_fee
+                row[7].value = late_fee
+                row[8].value = total_bill
+                row[9].value = "Overdue"
+                updated = True
 
-if __name__ == "__main__":
-    main()
+        if updated:
+            wb_billing.save(self.billing_file)
