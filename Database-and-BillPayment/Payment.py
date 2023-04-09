@@ -7,7 +7,7 @@ search_payment(PaymentID): Searches for a payment record by its ID.
 search_payment_by_customer_id(CustomerID): Searches for payment records by a customer ID.
 create_payment(): Creates a new payment record and appends it to the Payments.csv file.
 The user inputs the CustomerID, BillingID, Payment Date, and Payment Amount.
-The method checks if the BillingID and CustomerID match and if the Payment Amount matches the TotalBill in the Billing.csv file.'''
+The method checks if the BillingID and CustomerID match and if the Payment Amount matches the TotalBill in the Billing.xlsx file.'''
 
     def __init__(self, payment_file, billing_file):
         self.payment_file = payment_file

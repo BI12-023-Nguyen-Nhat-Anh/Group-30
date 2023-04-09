@@ -1,96 +1,140 @@
-import csv
+import openpyxl
 import os
 
+
 class MeterReading:
-    def __init__(self, CustomerID, MeterReadingID, Time, Date, Month, Year, ReadingAmount):
-        self.CustomerID = CustomerID
-        self.MeterReadingID = MeterReadingID
-        self.Time = Time
-        self.Date = Date
-        self.Month = Month
-        self.Year = Year
-        self.ReadingAmount = ReadingAmount
+    def __init__(self, meter_reading_file):
+        self.meter_reading_file = meter_reading_file
+        if not os.path.exists(self.meter_reading_file):
+            wb = openpyxl.Workbook()
+            ws = wb.active
+            ws.append(["MeterReadingID", "CustomerID", "Time", "Date", "Month", "Year", "ReadingAmount"])
+            wb.save(self.meter_reading_file)
 
-    @staticmethod
-    def create_meter_reading(CustomerID, Time, Date, Month, Year, ReadingAmount):
-        # Search for the customer
-        with open('Customer.csv', 'r') as f:
-            reader = csv.reader(f)
-            for row in reader:
-                if row[0] == str(CustomerID):
-                    # Auto-increase the MeterReadingID
-                    with open('MeterReading.csv', 'r') as f_reading:
-                        lines = f_reading.readlines()
-                        MeterReadingID = len(lines)
-                    # Append the data as a line to the CSV file
-                    with open('MeterReading.csv', 'a') as f_reading:
-                        writer = csv.writer(f_reading)
-                        writer.writerow([MeterReadingID, CustomerID, Time, Date, Month, Year, ReadingAmount])
-                    break
+    def create_meter_reading(self, customer_id):
+        wb = openpyxl.load_workbook(self.meter_reading_file)
+        ws = wb.active
+        meter_reading_id = ws.max_row
+        new_entry = [meter_reading_id, customer_id, "", "", "", "", ""]
+        ws.append(new_entry)
+        wb.save(self.meter_reading_file)
+        return meter_reading_id
 
-    @staticmethod
-    def input_data_reading(MeterReadingID, Hour, Date, Month, Year, ReadingAmount):
-        # Check if the MeterReadingID exists and if the month and year are not duplicates
-        with open('MeterReading.csv', 'r') as f:
-            reader = csv.reader(f)
-            data_exists = False
-            for row in reader:
-                if row[0] == str(MeterReadingID):
-                    data_exists = True
-                if row[4] == str(Month) and row[5] == str(Year):
-                    data_exists = False
-                    break
-            if not data_exists:
-                return
-        # Append the data as a line to the CSV file
-        with open('MeterReading.csv', 'a') as f:
-            writer = csv.writer(f)
-            writer.writerow([MeterReadingID, Hour, Date, Month, Year, ReadingAmount])
-
-    @staticmethod
-    def search_meter_reading(MeterReadingID):
-        with open('MeterReading.csv', 'r') as f:
-            reader = csv.reader(f)
-            for row in reader:
-                if row[0] == str(MeterReadingID):
-                    return row
-        return None
-
-    @staticmethod
-    def search_meter_reading_by_customer_id(CustomerID):
-        results = []
-        with open('MeterReading.csv', 'r') as f:
-            reader = csv.reader(f)
-            for row in reader:
-                if row[1] == str(CustomerID):
-                    results.append(row)
-        return results
-
-    @staticmethod
-    def update_meter_reading(MeterReadingID, action):
-        # Read the existing meter readings
-        with open('MeterReading.csv', 'r') as f:
-            reader = csv.reader(f)
-            rows = [row for row in reader]
-
-        # Perform the specified action
-        if action.lower() == "delete":
-            rows = [row for row in rows if row[0] != str(MeterReadingID)]
-        elif action.lower() == "modify":
-            row_to_modify = MeterReading.search_meter_reading(MeterReadingID)
-            if row_to_modify:
-                rows.remove(row_to_modify)
-                new_data = input("Enter the new data as MeterReadingID, Hour, Date, Month, Year, ReadingAmount: ").split
-                # Collect the new data
-                new_data = input("Enter the new data as Hour, Date, Month, Year, ReadingAmount: ").split(',')
-                # Append the new data to the rows
-                new_data.insert(0, MeterReadingID)
-                rows.append(new_data)
+    def input_data_reading(self, meter_reading_id, hour, date, month, year, reading_amount):
+        wb = openpyxl.load_workbook(self.meter_reading_file)
+        ws = wb.active
+        found = False
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if row[0] == meter_reading_id:
+                found = True
+                ws.cell(row=row[0], column=3, value=hour)
+                ws.cell(row=row[0], column=4, value=date)
+                ws.cell(row=row[0], column=5, value=month)
+                ws.cell(row=row[0], column=6, value=year)
+                ws.cell(row=row[0], column=7, value=reading_amount)
+                break
+        if not found:
+            print("MeterReadingID not found")
         else:
-            print("Invalid action. Please choose 'delete' or 'modify'.")
-            return
+            wb.save(self.meter_reading_file)
 
-        # Write the updated rows back to the CSV file
-        with open('MeterReading.csv', 'w') as f:
-            writer = csv.writer(f)
-            writer.writerows(rows)
+    def search_meter_reading(self, meter_reading_id):
+        wb = openpyxl.load_workbook(self.meter_reading_file)
+        ws = wb.active
+        data = []
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if row[0] == meter_reading_id:
+                data.append(row)
+        return data
+
+    def search_meter_reading_by_customer_id(self, customer_id):
+        wb = openpyxl.load_workbook(self.meter_reading_file)
+        ws = wb.active
+        data = []
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if row[1] == customer_id:
+                data.append(row)
+        return data
+
+    def update_meter_reading(self, meter_reading_id, operation):
+        wb = openpyxl.load_workbook(self.meter_reading_file)
+        ws = wb.active
+        if operation.lower() == "delete":
+            rows_to_delete = []
+            for row in ws.iter_rows(min_row=2, values_only=True):
+                if row[0] == meter_reading_id:
+                    rows_to_delete.append(row)
+            for row in rows_to_delete:
+                ws.delete_rows(row[0])
+            wb.save(self.meter_reading_file)
+        elif operation.lower() == "modify":
+            print("Enter new data for the meter reading")
+            hour = input("Hour: ")
+            date = input("Date: ")
+            month = input("Month: ")
+            year = input("Year: ")
+            reading_amount = float(input("Reading Amount: "))
+            self.input_data_reading(meter_reading_id, hour, date, month, year, reading_amount)
+        else:
+            print("Invalid operation. Please choose 'delete' or 'modify'.")
+
+def main():
+    meter_reading_file = "MeterReading.xlsx"
+    meter_reading = MeterReading(meter_reading_file)
+
+    while True:
+        print("\n--- Meter Reading Management ---")
+        print("1. Create Meter Reading")
+        print("2. Input Data Reading")
+        print("3. Search Meter Reading by ID")
+        print("4. Search Meter Reading by Customer ID")
+        print("5. Update Meter Reading")
+        print("6. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            customer_id = int(input("Enter Customer ID: "))
+            meter_reading.create_meter_reading(customer_id)
+            print("Meter Reading created successfully.")
+        elif choice == "2":
+            meter_reading_id = int(input("Enter Meter Reading ID: "))
+            hour = input("Enter Hour: ")
+            date = input("Enter Date: ")
+            month = input("Enter Month: ")
+            year = input("Enter Year: ")
+            reading_amount = float(input("Enter Reading Amount: "))
+            meter_reading.input_data_reading(meter_reading_id, hour, date, month, year, reading_amount)
+            print("Data reading added successfully.")
+        elif choice == "3":
+            meter_reading_id = int(input("Enter Meter Reading ID: "))
+            results = meter_reading.search_meter_reading(meter_reading_id)
+            if results:
+                print("\nResults:")
+                print("MeterReadingID, CustomerID, Time, Date, Month, Year, ReadingAmount")
+                for result in results:
+                    print(result)
+            else:
+                print("No matching Meter Reading ID found.")
+        elif choice == "4":
+            customer_id = int(input("Enter Customer ID: "))
+            results = meter_reading.search_meter_reading_by_customer_id(customer_id)
+            if results:
+                print("\nResults:")
+                print("MeterReadingID, CustomerID, Time, Date, Month, Year, ReadingAmount")
+                for result in results:
+                    print(result)
+            else:
+                print("No matching Customer ID found.")
+        elif choice == "5":
+            meter_reading_id = int(input("Enter Meter Reading ID: "))
+            operation = input("Choose operation: delete or modify: ")
+            meter_reading.update_meter_reading(meter_reading_id, operation)
+            print("Meter Reading updated successfully.")
+        elif choice == "6":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
