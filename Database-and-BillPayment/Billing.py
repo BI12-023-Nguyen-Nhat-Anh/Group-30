@@ -7,7 +7,7 @@ class Billing:
 search_billing(BillingID): Searches for a billing record by its ID.
 search_billing_by_customer_id(CustomerID): Searches for billing records by a customer ID.
 auto_calculate_billing(): Automatically calculates billing amounts and appends the data to the Billing.xlsx file.
-auto_check_status_and_update(): Automatically checks the billing status and updates the late fee and status in the Billing.csv file.'''
+auto_check_status_and_update(): Automatically checks the billing status and updates the late fee and status in the Billing.xlsx file.'''
 
     def __init__(self, meter_reading_file):
         self.meter_reading_file = meter_reading_file
