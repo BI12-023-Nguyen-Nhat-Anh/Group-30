@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 from main import list_user
 from main import admin_data
 from domain.user import user
+from assets.set_logo import logo as icon
 
 # check_login function takes input from user then compare with the data 
 def check_login(phone_input, password_input):
@@ -100,6 +101,7 @@ def new_user():
     root.destroy()
     global root_register
     root_register=tk.Tk()
+    icon(root_register)
     root_register.geometry("1000x562")
     root_register.title("Register")
     root_register.resizable(False, False)
@@ -148,6 +150,7 @@ def reset():
     root.destroy()  # when run form reset, form login will straightway close to open form reset
     global root_reset
     root_reset=tk.Tk()
+    icon(root_reset)
     root_reset.geometry("438x574")
     root_reset.resizable(False, False)
     root_reset.config(bg="white")
@@ -204,6 +207,7 @@ def reset():
 def login():
     global root
     root=tk.Tk()
+    icon(root)
     root.geometry("438x574")
     root.resizable(False, False)
     root.config(bg="white")
