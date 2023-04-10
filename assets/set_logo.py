@@ -1,11 +1,11 @@
 from PIL import Image, ImageTk
 
 def logo(root):
-    # Tải ảnh đầu vào từ tệp tin, ví dụ ảnh png
-    img = Image.open('assets/logo.png')
+    # Upload logo from folder assets 
+    img = Image.open('assetslogo.png')
 
-    # Chuyển đổi ảnh sang định dạng PhotoImage
+    # Convert photos to PhotoImage format
     icon = ImageTk.PhotoImage(img)
 
-    # Thiết lập biểu tượng của ứng dụng bằng ảnh png
+    # Set app icon with png image
     root.call('wm', 'iconphoto', root._w, icon)
