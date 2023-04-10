@@ -5,12 +5,14 @@ import os
 from main import list_user
 from GUI.login import phone, password
 from domain.customer import customer
+from assets.set_logo import logo
 import pandas as pd
 import re
 window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
 window.resizable(False,False)
+logo(window)
 def delete_showerror():
     delete = messagebox.showerror("Error!","Your email is not correct! Try again.")
     if delete == "ok":
