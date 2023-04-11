@@ -2,13 +2,17 @@ import tkinter as tk
 import openpyxl
 from tkinter import ttk
 import os
+from assets.set_logo import logo
 
 root = tk.Tk()
+icon = logo(root)
+root.iconphoto(False, icon)
 root.title('Customer list')
 root.option_add("*tearOff", False)
 root.pack_propagate(False)
 root.geometry("1280x720")
 root.resizable(0, 0)
+
 # Create a style
 style = ttk.Style(root)
 # Import the tcl file
