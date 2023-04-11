@@ -1,4 +1,4 @@
-numbers = {}
+numbers = []
 def Household(count):
 
     # Seperate the total consumption electric for each stage
@@ -54,9 +54,8 @@ def Household(count):
         amount4 = 100
         amount5 = 100 
         amount = (amount1 * 1.678) + (amount2 * 1.734) + (amount3 * 2.014) +(amount4 * 2.536)+ (amount5 * 2.834) + (count5 * 2.927)
-    print(f"{amount}")
-    name = "Household: "
-    numbers[name] = amount
+    
+    numbers.append(amount)
 
 def Manufacturing_industries(count):
     count1 = count - 600
@@ -78,10 +77,10 @@ def Manufacturing_industries(count):
     else:
         amount1 = 600
         amount2 = 1600
-        amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442
-    print(f"{amount}")
-    name = "Manufacturing_industries: "
-    numbers[name] = amount
+        amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442 
+    
+    numbers.append(amount)
+
 def Administrative_offices(count):
     count1 = count - 600
     count2 = count1 - 1600
@@ -103,9 +102,8 @@ def Administrative_offices(count):
         amount1 = 600
         amount2 = 1600
         amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442
-    print(f"{amount}")
-    name = "Administrative_offices: "
-    numbers[name] = amount
+    
+    numbers.append(amount)
 
 
 def Business(count):
@@ -129,9 +127,8 @@ def Business(count):
         amount1 = 600
         amount2 = 1600
         amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442
-    print(f"{amount}")
-    name = "Business: "
-    numbers[name] = amount
+    
+    numbers.append(amount)
 
 
 
@@ -141,6 +138,18 @@ Business(1500)
 Manufacturing_industries(1700)
 
 
-print("Late Fee")
-for name in numbers:
-    print(f"{numbers[name] * 10/100}")
+
+def late_fee_HouseHold():
+   late_fee = numbers[0]+(numbers[0]*(10/100))
+   print(round(late_fee),2)
+def late_fee_Administrative_offices():
+    late_fee = numbers[1]+(numbers[1]*(10/100))
+    print(round(late_fee),2)
+def late_fee_Business():
+    late_fee = numbers[2]+(numbers[2]*(10/100))
+    print(round(late_fee),2)
+def late_fee_Manufacturing_industries():
+    late_fee = numbers[3]+(numbers[3]*(10/100))
+    print(round(late_fee),2)
+
+
