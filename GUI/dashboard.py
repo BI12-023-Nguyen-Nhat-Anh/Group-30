@@ -50,7 +50,7 @@ def switch_window_customer():
 
 def switch_window_bill():
     root_dashboard.destroy()
-    import GUI.bill
+    # import GUI.bill
 
 
 # set the font
