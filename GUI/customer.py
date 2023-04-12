@@ -5,8 +5,7 @@ import os
 from assets.set_logo import logo
 
 root = tk.Tk()
-icon = logo(root)
-root.iconphoto(False, icon)
+logo(root)
 root.title('Customer list')
 root.option_add("*tearOff", False)
 root.pack_propagate(False)

@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter.font import Font
 import openpyxl
+from assets.set_logo import logo
 
 root_dashboard = Tk()
+logo(root_dashboard)
 root_dashboard.title('Dashboard')
 
 # adjust size
