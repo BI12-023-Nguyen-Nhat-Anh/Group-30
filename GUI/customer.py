@@ -1,7 +1,6 @@
 import tkinter as tk
 import openpyxl
 from tkinter import ttk
-import os
 from assets.set_logo import logo
 
 root = tk.Tk()
@@ -15,9 +14,7 @@ root.resizable(0, 0)
 # Create a style
 style = ttk.Style(root)
 # Import the tcl file
-theme_path = os.path.join(os.path.dirname(
-    __file__), '..', 'assets', 'forest-dark.tcl')
-
+theme_path = "assets/forest-dark.tcl"
 # Load the theme file
 root.tk.call("source", theme_path)
 
@@ -68,8 +65,7 @@ treeview.bind('<Button-1>', lambda event: on_treeview_select(event))
 treeview.pack(fill="both", expand=True)
 treeScrolly.config(command=treeview.yview)
 
-path = os.path.join(os.path.dirname(__file__), '..',
-                    'data', 'data_customer.xlsx')
+path = "data/data_customer.xlsx"
 workbook = openpyxl.load_workbook(path)
 sheet = workbook["filtered_data"]
 
@@ -227,8 +223,7 @@ def on_treeview_select(event):
     if selection:
         selected_item = treeview.focus()
         chosen_id = treeview.item(selected_item)['values'][0]
-        path = os.path.join(os.path.dirname(__file__), '..',
-                            'data', 'data_customer.xlsx')
+        path = "data/data_customer.xlsx"
         workbook = openpyxl.load_workbook(path)
         sheet2 = workbook["data_customer"]
         cols2 = ("Customer Code", "Name", "Electricity usage address", "Residential address", "Phone Number", "Email",

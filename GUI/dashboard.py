@@ -46,12 +46,11 @@ canvas.tag_bind(rect_bill_image, "<Button-1>",
 
 
 def switch_window_customer():
-    root_dashboard.destroy()
     import GUI.customer
 
 
 def switch_window_bill():
-    root_dashboard.destroy()
+    print("The bill window will be updated soon")
     # import GUI.bill
 
 
@@ -59,9 +58,9 @@ def switch_window_bill():
 family_font = Font(family="Space Mono", size=30, weight="normal")
 
 # access the excel
-path = "data\Dashboard.xlsx"
+path = "data/data_customer.xlsx"
 workbook = openpyxl.load_workbook(path)
-all_customer = workbook["Customer"]
+all_customer = workbook["data_customer"]
 
 # Get the number of customers in the worksheet
 num_customer = all_customer.max_row - 1
@@ -71,7 +70,7 @@ num_customer = Label(root_dashboard, text=f"{num_customer}",
                      font=family_font, bg="#EAF5FE", fg="#333536")
 num_customer.place(x=234.36, y=139.01, width=49, height=40)
 
-cus_status_col = "E"
+cus_status_col = "J"
 
 # display number of active customers
 num_active_customer = 0
@@ -91,6 +90,8 @@ num_inactive_customer = Label(root_dashboard, text=f"{num_inactive_customer}",
                               font=family_font, bg="#FEF1EF", fg="#333536")
 num_inactive_customer.place(x=954.36, y=143.01, width=49, height=40)
 
+
+""" WAIT FOR BILL.PY
 # access the Bill excel
 all_bill = workbook["Bill"]
 
@@ -121,5 +122,6 @@ for row in all_bill.iter_rows(min_row=2, values_only=True):
 num_overdue_bill = Label(root_dashboard, text=f"{num_overdue_bill}",
                          font=family_font, bg="#E4FEF4", fg="#333536")
 num_overdue_bill.place(x=954.36, y=447.01, width=64, height=49.67)
+"""
 
 root_dashboard.mainloop()
