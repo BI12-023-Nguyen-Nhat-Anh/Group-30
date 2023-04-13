@@ -1,17 +1,23 @@
 import tkinter as tk
 import openpyxl
 from tkinter import ttk
+from assets.set_logo import logo
 
 root = tk.Tk()
+logo(root)
 root.title('Customer list')
 root.option_add("*tearOff", False)
 root.pack_propagate(False)
 root.geometry("1280x720")
 root.resizable(0, 0)
+
 # Create a style
 style = ttk.Style(root)
 # Import the tcl file
-root.tk.call("source", "forest-dark.tcl")
+theme_path = "assets/forest-dark.tcl"
+# Load the theme file
+root.tk.call("source", theme_path)
+
 # Set the theme with the theme_use method
 style.theme_use("forest-dark")
 
@@ -59,7 +65,7 @@ treeview.bind('<Button-1>', lambda event: on_treeview_select(event))
 treeview.pack(fill="both", expand=True)
 treeScrolly.config(command=treeview.yview)
 
-path = "D:/tesst/data_customer.xlsx"
+path = "data/data_customer.xlsx"
 workbook = openpyxl.load_workbook(path)
 sheet = workbook["filtered_data"]
 
@@ -88,11 +94,11 @@ search_frame.columnconfigure(index=0, weight=1)
 search_frame.pack_propagate(False)
 # ID
 id_entry = ttk.Entry(search_frame)
-id_entry.insert(0, "ID")
+id_entry.insert(0, "Customer Code")
 # double left-click on entry and the default text disappears, right-click to get the default text
 id_entry.bind("<Double-Button-1>", lambda e: id_entry.delete(0, "end"))
 id_entry.bind("<Button-3>", lambda e: id_entry.insert(
-    0, "ID") if not id_entry.get() else None)
+    0, "Customer Code") if not id_entry.get() else None)
 id_entry.grid(row=1, column=0, columnspan=2, pady=10, sticky="ew")
 
 
@@ -158,8 +164,18 @@ def search(event):
     # Filter the data based on the search inputs
     filtered_data = []
     for value_tuple in list_values[1:]:
-        if (id_value == "ID" or id_value in value_tuple[0]) and (name_value == "Name" or name_value in value_tuple[1].lower() and (all(word in value_tuple[1].lower() for word in name_value))) and (type_value == "Type" or type_value in value_tuple[6]) and (status_value == "Status" or status_value in value_tuple[7]):
-            filtered_data.append(value_tuple)
+        if (id_value == "Customer Code" or id_value in value_tuple[0]) or (name_value == "Name" or name_value in value_tuple[1].lower() and (all(word in value_tuple[1].lower() for word in name_value))):
+            if type_value == "Type" and status_value == "Status":
+                filtered_data.append(value_tuple)
+            elif type_value != "Type" and status_value == "Status":
+                if type_value in value_tuple[6]:
+                    filtered_data.append(value_tuple)
+            elif type_value == "Type" and status_value != "Status":
+                if status_value in value_tuple[7]:
+                    filtered_data.append(value_tuple)
+            elif type_value != "Type" and status_value != "Status":
+                if type_value in value_tuple[6] and status_value in value_tuple[7]:
+                    filtered_data.append(value_tuple)
 
     # Update the treeview with the filtered data
     for value_tuple in filtered_data:
@@ -168,13 +184,14 @@ def search(event):
 
 def reset(event):
     id_entry.delete(0, "end")
-    id_entry.insert(0, "Name")
+    id_entry.insert(0, "Customer Code")
     name_entry.delete(0, "end")
     name_entry.insert(0, "Name")
     type_combo.set("Type")
     status_combo.set("Status")
     treeview.delete(*treeview.get_children())
-    for value_tuple in list_values:
+    # ensure a row of headers is not added in the treeview
+    for value_tuple in list_values[1:]:
         treeview.insert("", tk.END, values=value_tuple)
 
 
@@ -198,10 +215,6 @@ notebook.pack(fill=tk.BOTH, expand=True)
 
 # Tab #1
 tab_1 = ttk.Frame(notebook)
-tab_1.columnconfigure(index=0, weight=1)
-tab_1.columnconfigure(index=1, weight=1)
-tab_1.rowconfigure(index=0, weight=1)
-tab_1.rowconfigure(index=1, weight=1)
 notebook.add(tab_1, text="Details")
 
 
@@ -210,7 +223,7 @@ def on_treeview_select(event):
     if selection:
         selected_item = treeview.focus()
         chosen_id = treeview.item(selected_item)['values'][0]
-        path = "D:/tesst/data_customer.xlsx"
+        path = "data/data_customer.xlsx"
         workbook = openpyxl.load_workbook(path)
         sheet2 = workbook["data_customer"]
         cols2 = ("Customer Code", "Name", "Electricity usage address", "Residential address", "Phone Number", "Email",
@@ -230,11 +243,12 @@ def on_treeview_select(event):
             for j, header in enumerate(cols2):
                 header = cols2[j]
                 ttk.Label(tab_1, text=header + ":").grid(
-                    column=0, row=j, sticky="w", pady=5, padx=4)
+                    column=0, row=j, sticky="w", pady=5, padx=10)
                 ttk.Label(tab_1, text=row[j].value).grid(
-                    column=1, row=j, sticky="w", pady=5, padx=4)
+                    column=1, row=j, sticky="w", pady=5, padx=10)
 
 
+# center window
 root.update()
 root.minsize(root.winfo_width(), root.winfo_height())
 x_cordinate = int((root.winfo_screenwidth()/2) - (root.winfo_width()/2))

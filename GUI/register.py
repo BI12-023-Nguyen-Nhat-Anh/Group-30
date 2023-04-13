@@ -6,13 +6,16 @@ from main import list_user
 from GUI.login import phone, password
 from domain.customer import customer
 from assets.set_logo import logo
+from themes.theme import theme
 import pandas as pd
 import re
+
 window = Tk()
 window.title("Electric")
 window.geometry("1080x720")
 window.resizable(False,False)
 logo(window)
+theme(window)
 def delete_showerror():
     delete = messagebox.showerror("Error!","Your email is not correct! Try again.")
     if delete == "ok":
@@ -30,49 +33,49 @@ def formula_email(email):
 
 
     
-myFrame = Frame(window, width=9999, height=9999, bg="#fff")
+myFrame = Frame(window, width=9999, height=9999, )
 myFrame.pack(fill=BOTH, expand=True)
 
-Mylabel = Label(window, text="REGISTER FOR ELECTRIC PURCHASE", height=1, font=('bold', 25), border=10, bg="#fff")
+Mylabel = Label(window, text="REGISTER FOR ELECTRIC PURCHASE", height=1, font=('bold', 25), border=10, fg="#fff")
 Mylabel.place(relx=0.28, rely=0.01)
 
-Mylabel2 = Label(window, text="Personal information", font=50, border=10, bg="#fff")
+Mylabel2 = Label(window, text="Personal information", font=50, border=10, fg="#fff")
 Mylabel2.place(relx=0.01, rely=0.05)
 
-Mylabel3 = Label(window, text="Full Name (Right click to delete text)", width=27, bg="#fff")
+Mylabel3 = Label(window, text="Full Name (Right click to delete text)", width=27, fg="#fff")
 Mylabel3.place(relx=0.02, rely=0.1)
 
-Mylabel4 = Label(window, text="Email (Right click to delete text)", width=25, bg="#fff")
+Mylabel4 = Label(window, text="Email (Right click to delete text)", width=25, fg="#fff")
 Mylabel4.place(relx=0.5, rely=0.1)
 
-Mylabel5 = Label(window, text="Electricity supply information", font=140, border=10, bg="#fff")
+Mylabel5 = Label(window, text="Electricity supply information", font=140, border=10, fg="#fff")
 Mylabel5.place(relx=0.01, rely=0.25)
 
-Mylabel6 = Label(window, text="Province/City (Right click to delete text)", width=29, bg="#fff")
+Mylabel6 = Label(window, text="Province/City (Right click to delete text)", width=29, fg="#fff")
 Mylabel6.place(relx=0.019, rely=0.32)
 
-Mylabel7 = Label(window, text="District (Right click to delete text)", width=28, bg="#fff")
+Mylabel7 = Label(window, text="District (Right click to delete text)", width=28, fg="#fff")
 Mylabel7.place(relx=0.335, rely=0.32)
 
-Mylabel8 = Label(window, text="Ward/ Commune (Right click to delete text)", width=32, bg="#fff")
+Mylabel8 = Label(window, text="Ward/ Commune (Right click to delete text)", width=32, fg="#fff")
 Mylabel8.place(relx=0.68, rely=0.32)
 
-Mylabel9 = Label(window, text="Electricity usage address (Right click to delete text)", width=37, bg="#fff")
+Mylabel9 = Label(window, text="Electricity usage address (Right click to delete text)", width=37, fg="#fff")
 Mylabel9.place(relx=0.02, rely=0.50)
 
-Mylabel10 = Label(window, text="Residential adress (Right click to delete text)", width=32, bg="#fff")
+Mylabel10 = Label(window, text="Residential adress (Right click to delete text)", width=32, fg="#fff")
 Mylabel10.place(relx=0.51, rely=0.5)
 
-Mylabel11 = Label(window, text="Intended use (Right click to delete text)", width=32, bg="#fff")
+Mylabel11 = Label(window, text="Intended use (Right click to delete text)", width=32, fg="#fff")
 Mylabel11.place(relx=0.01, rely=0.7)
 
-Mylabel12 = Label(window, text="Tax identification numbers (Right click to delete text)", width=40, bg="#fff")
+Mylabel12 = Label(window, text="Tax identification numbers (Right click to delete text)", width=40, fg="#fff")
 Mylabel12.place(relx=0.51, rely=0.7)
 
-Mylabel13 = Label(window, text= "Identify card: ",width=13, bg = "#fff",font=('Bold',15))
+Mylabel13 = Label(window, text= "Identify card: ",width=13, fg = "#fff",font=('Bold',15))
 Mylabel13.place(relx= 0.69,rely=0.95)
 
-MyLabel15 = Label(window, text = "",bg = "#fff",font=(15))
+MyLabel15 = Label(window, text = "",fg = "#fff",font=(15))
 MyLabel15.place(relx=0.81, rely=0.94, relwidth=0.15, relheight=0.06)
 get_identity()
 
@@ -81,7 +84,7 @@ MyEntry.bind("<Button-3>", lambda e: MyEntry.delete(0, END))
 MyEntry.place(relx=0.02, rely=0.13, relwidth=0.45, relheight=0.06)
 
 MyEntry1 = Entry(window, borderwidth=5, font=25)
-MyEntry1.bind("<Button-3>", lambda e: MyEntry.delete(0, END))
+MyEntry1.bind("<Button-3>", lambda e: MyEntry1.delete(0, END))
 MyEntry1.place(relx=0.5, rely=0.13, relwidth=0.45, relheight=0.06)
 
 
@@ -364,7 +367,7 @@ def onClick_Intended():
             if selection == "HouseHold":
                  
                 global MyLabel14
-                MyLabel14 = Label(window, text="You cannot type here",bg="#fff")
+                MyLabel14 = Label(window, text="You cannot type here",bg="#313131")
                 MyLabel14.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
                  
             elif selection == "Administrative Offices":
@@ -425,28 +428,28 @@ def onClick_Intended():
     listbox.bind("<<ListboxSelect>>", on_select)
     MyButton3.config(command=Close_tab)
 
-my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_1.png"))
+my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_5.png"))
 
-MyButton = Button(image=my_img, bg="#fff", bd=0, activebackground="#fff", activeforeground="white",
+MyButton = Button(image=my_img, fg="#313131", bd=0, activebackground="#313131", activeforeground="#313131",
 command=onClick_Province)
 MyButton.place(relx=0.276, rely=0.36, relwidth=0.04, relheight=0.036)
 
-MyButton1 = Button(image=my_img, bg="#fff", bd=0, activebackground="#fff", activeforeground="white",
+MyButton1 = Button(image=my_img, fg="#313131", bd=0, activebackground="#313131", activeforeground="#313131",
 command=onClick_District)
 MyButton1.place(relx=0.605, rely=0.36, relwidth=0.04, relheight=0.036)
 
-MyButton2 = Button(image=my_img, bg="#fff", bd=0, activebackground="#fff", activeforeground="white",
+MyButton2 = Button(image=my_img, fg="#313131", bd=0, activebackground="#313131", activeforeground="#313131",
 command=onClick_Ward)
 MyButton2.place(relx=0.935, rely=0.36, relwidth=0.04, relheight=0.036)
 
-MyButton3 = Button(image=my_img, bg="#fff", bd=0, activebackground="#fff", activeforeground="white",
+MyButton3 = Button(image=my_img, fg="#313131", bd=0, activebackground="#313131", activeforeground="#313131",
 command=onClick_Intended)
 MyButton3.place(relx=0.425, rely=0.74, relwidth=0.04, relheight=0.036)
 
-MyButton4 = Button(window, text="Save",bg="#fff", activebackground="#fff", activeforeground="white",command=Save_Data)
+MyButton4 = Button(window, text="Save",fg="#fff", activebackground="#313131", activeforeground="#313131",command=Save_Data)
 MyButton4.place(relx= 0.35,rely= 0.9, relwidth= 0.1, relheight= 0.05)
 
-MyButton5 = Button(window, text="Clear",bg="#fff", activebackground="#fff", activeforeground="white",command=Clear_Data)
+MyButton5 = Button(window, text="Clear",fg="#fff", activebackground="#313131", activeforeground="#313131",command=Clear_Data)
 MyButton5.place(relx= 0.50,rely= 0.9, relwidth= 0.1, relheight= 0.05)
 
 
