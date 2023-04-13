@@ -1,4 +1,5 @@
 import re # The re library provides tools to use regular expressions in Python
+import random
 
 class person:
     def __init__(self,id,name,mail):
@@ -21,6 +22,15 @@ class customer(person):
         self.__address=address
         self.__type=type
         self.__tax=tax
+        num=''
+
+    def set_customer_id(self):
+        for i in range(4):
+            num+=str(random.randint(1,9))
+        self.__customer_id=f"CH00120300{num}"
+
+    def get_customer_id(self):
+        return self.__customer_id
 
     def get_address(self):
         return self.__address
