@@ -22,9 +22,9 @@ class customer(person):
         self.__address=address
         self.__type=type
         self.__tax=tax
-        num=''
 
     def set_customer_id(self):
+        num=''
         for i in range(4):
             num+=str(random.randint(1,9))
         self.__customer_id=f"CH00120300{num}"
