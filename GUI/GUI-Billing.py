@@ -66,10 +66,8 @@ treeScrolly = ttk.Scrollbar(treeFrame)
 treeScrolly.pack(side="right", fill="y")
 
 # contents
-cols = ("BillingID", "CustomerID", "ConsumptionID", "BillingDeadline", "Month", "Year", "BillingAmount",
-        "LateFee", "TotalBill", "Status")
-treeview = ttk.Treeview(treeFrame, show="headings",
-                        yscrollcommand=treeScrolly.set, columns=cols, height=13)
+cols = ("BillingID", "CustomerID", "ConsumptionID", "BillingDeadline", "Month", "Year", "BillingAmount","LateFee", "TotalBill", "Status")
+treeview = ttk.Treeview(treeFrame, show="headings",yscrollcommand=treeScrolly.set, columns=cols, height=13)
 
 treeview.column("BillingID", width=120, anchor="center")
 treeview.column("CustomerID", width=120, anchor="center")
@@ -87,29 +85,23 @@ treeview.pack(fill="both", expand=True)
 treeScrolly.config(command=treeview.yview)
 
 # Search & filter
-search_frame = ttk.LabelFrame(
-    root, text="Search and filter", padding=(20, 10))
-search_frame.grid(row=1, column=0, padx=(15, 10),
-                  pady=(10, 10), columnspan=2, sticky="nsew")
+search_frame = ttk.LabelFrame(root, text="Search and filter", padding=(20, 10))
+search_frame.grid(row=1, column=0, padx=(15, 10),pady=(10, 10), columnspan=2, sticky="nsew")
 search_frame.columnconfigure(index=0, weight=1)
 search_frame.pack_propagate(False)
 
 # BillingID
 billing_id_entry = ttk.Entry(search_frame)
 billing_id_entry.insert(0, "BillingID")
-billing_id_entry.bind("<Double-Button-1>",
-                      lambda e: billing_id_entry.delete(0, "end"))
-billing_id_entry.bind("<Button-3>", lambda e: billing_id_entry.insert(
-    0, "BillingID") if not billing_id_entry.get() else None)
+billing_id_entry.bind("<Double-Button-1>", lambda e: billing_id_entry.delete(0, "end"))
+billing_id_entry.bind("<Button-3>", lambda e: billing_id_entry.insert(0, "BillingID") if not billing_id_entry.get() else None)
 billing_id_entry.grid(row=1, column=0, columnspan=2, padx=(5, 5), pady=(5, 5))
 
 # CustomerID
 customer_id_entry = ttk.Entry(search_frame)
 customer_id_entry.insert(0, "CustomerID")
-customer_id_entry.bind("<Double-Button-1>",
-                       lambda e: customer_id_entry.delete(0, "end"))
-customer_id_entry.bind("<Button-3>", lambda e: customer_id_entry.insert(
-    0, "CustomerID") if not customer_id_entry.get() else None)
+customer_id_entry.bind("<Double-Button-1>", lambda e: customer_id_entry.delete(0, "end"))
+customer_id_entry.bind("<Button-3>", lambda e: customer_id_entry.insert(0, "CustomerID") if not customer_id_entry.get() else None)
 customer_id_entry.grid(row=1, column=2, columnspan=2, padx=(5, 5), pady=(5, 5))
 
 # Search Button
@@ -117,8 +109,7 @@ search_button = ttk.Button(search_frame, text="Search", command=search_data)
 search_button.grid(row=1, column=4, padx=(5, 5), pady=(5, 5))
 
 # Reset Button
-reset_button = ttk.Button(
-    search_frame, text="Reset", command=reset_treeview)
+reset_button = ttk.Button(search_frame, text="Reset", command=reset_treeview)
 reset_button.grid(row=1, column=5, padx=(5, 5), pady=(5, 5))
 
 # Populate the treeview

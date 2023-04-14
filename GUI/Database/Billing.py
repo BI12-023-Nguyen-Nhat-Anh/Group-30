@@ -1,7 +1,7 @@
 import openpyxl
 import os
 import datetime
-from Bill_Calculate import Household, Manufacturing_industries, Administrative_offices, Business
+from Bill_Caculate import Household, Manufacturing_industries, Administrative_offices, Business
 
 class Billing:
     '''The Billing class now includes the following methods:
@@ -119,42 +119,3 @@ auto_check_status_and_update(): Automatically checks the billing status and upda
                 updated = True
         if updated:
             wb_billing.save(self.billing_file)
-
-def test():
-    payment = Payment('Payments.xlsx', 'Billing.xlsx')
-
-    while True:
-        print("1. Search Payment by Payment ID")
-        print("2. Search Payment by Customer ID")
-        print("3. Create Payment")
-        print("4. Exit")
-
-        choice = int(input("Enter your choice: "))
-
-        if choice == 1:
-            payment_id = int(input("Enter Payment ID: "))
-            results = payment.search_payment(payment_id)
-            print("Results:")
-            for result in results:
-                print(result)
-        elif choice == 2:
-            customer_id = int(input("Enter Customer ID: "))
-            results = payment.search_payment_by_customer_id(customer_id)
-            print("Results:")
-            for result in results:
-                print(result)
-        elif choice == 3:
-            customer_id = int(input("Enter Customer ID: "))
-            billing_id = int(input("Enter Billing ID: "))
-            payment_date = input("Enter Payment Date (YYYY-MM-DD): ")
-            month = int(input("Enter Month: "))
-            year = int(input("Enter Year: "))
-            payment_amount = float(input("Enter Payment Amount: "))
-            payment.create_payment(customer_id, billing_id, payment_date, month, year, payment_amount)
-            print("Payment has been created.")
-        elif choice == 4:
-            break
-        else:
-            print("Invalid choice. Please try again.")
-
-test()
