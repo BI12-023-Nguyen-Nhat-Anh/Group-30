@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import openpyxl
-from Billing import Billing
+from Database import Billing
 
 def search_data():
     billing_id = billing_id_entry.get()
