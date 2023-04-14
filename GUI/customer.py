@@ -1,8 +1,7 @@
 import tkinter as tk
 import openpyxl
 from tkinter import ttk
-from assets.set_logo import logo
-from tkinter import PhotoImage
+from tkinter import *
 
 root = tk.Tk()
 root.title('Customer list')
@@ -258,5 +257,4 @@ y_cordinate = int((root.winfo_screenheight()/2) - (root.winfo_height()/2))
 root.geometry("+{}+{}".format(x_cordinate, y_cordinate))
 
 load_data()
-logo(root)
 root.mainloop()
