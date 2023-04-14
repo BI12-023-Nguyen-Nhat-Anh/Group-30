@@ -5,7 +5,7 @@ def logo(root):
     img = Image.open('assets/logo.png')
 
     # Convert photos to PhotoImage format
-    icon = ImageTk.PhotoImage(img)
+    root.icon = ImageTk.PhotoImage(img)
 
     # Set app icon with png image
-    root.call('wm', 'iconphoto', root._w, icon)
+    root.call('wm', 'iconphoto', root._w, root.icon)
