@@ -9,6 +9,7 @@ from assets.set_logo import logo
 from themes.theme import theme
 import pandas as pd
 import re
+import random
 
 window = Tk()
 window.title("Electric")
@@ -16,6 +17,10 @@ window.geometry("1080x720")
 window.resizable(False,False)
 logo(window)
 theme(window)
+random_number = random.randint(10**9, 10**10-1)
+
+
+
 def delete_showerror():
     delete = messagebox.showerror("Error!","Your email is not correct! Try again.")
     if delete == "ok":
@@ -120,6 +125,11 @@ MyEntry8.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
 
 def Save_Data():
     df = pd.read_excel('data/data_customer.xlsx', sheet_name='data_customer')
+
+    df1 = pd.read_excel('data/data_customer.xlsx', sheet_name='filtered_data')
+
+    writer = pd.ExcelWriter('data/data_customer.xlsx', engine='openpyxl')
+   
     #Take the data from user input
     name = MyEntry.get()
     email = MyEntry1.get()
@@ -169,10 +179,15 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Email': mail,'Tax':'None','Type': type_cus }
+                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': phone,'Email': mail,'Identity number': ident,'Tax Code':'None','Type': type_cus }
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
-                updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
+                updated_df.to_excel(writer, sheet_name='data_customer', index=False)
+
+                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': phone,'Identity number': ident,'Tax Code': 'None','Type': type_cus}
+                df1_new = pd.DataFrame(new_data_1,index=[0])
+                updated_df_1 = pd.concat([df1,df1_new], ignore_index=True)
+                updated_df_1.to_excel(writer, sheet_name='filtered_data', index=False)
                 window.destroy()
     else:
         
@@ -204,12 +219,17 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'ID': ident,'Name':name_cus,'Address': electricity_usage,'Residential Address': address,'Phone Number': phone,'Email': mail,'Tax':tax,'Type': type_cus }
+                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': phone,'Email': mail,'Identity number': ident,'Tax Code':tax,'Type': type_cus}
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
-                updated_df.to_excel('data/data_customer.xlsx', sheet_name='data_customer', index=False)
+                updated_df.to_excel(writer, sheet_name='data_customer', index=False)
+
+                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': phone,'Identity number': ident,'Tax Code': tax,'Type': type_cus}
+                df1_new = pd.DataFrame(new_data_1,index=[0])
+                updated_df_1 = pd.concat([df1,df1_new], ignore_index=True)
+                updated_df_1.to_excel(writer, sheet_name='filtered_data', index=False)
                 window.destroy()
-    
+    writer.book.save('data/data_customer.xlsx')
     
     
     
