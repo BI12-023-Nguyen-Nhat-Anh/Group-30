@@ -2,6 +2,7 @@ import tkinter as tk
 import openpyxl
 from tkinter import ttk
 from assets.set_logo import logo
+from tkinter import PhotoImage
 
 root = tk.Tk()
 root.title('Customer list')
@@ -20,6 +21,8 @@ root.tk.call("source", theme_path)
 # Set the theme with the theme_use method
 style.theme_use("forest-dark")
 
+p1 = PhotoImage(file='assets/logo.png')
+root.iconphoto(False, p1)
 
 """
 =================TREEVIEW======================================
