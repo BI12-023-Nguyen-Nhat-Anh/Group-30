@@ -3,6 +3,34 @@ from tkinter import ttk
 import openpyxl
 from Billing import Billing
 
+def search_data():
+    billing_id = billing_id_entry.get()
+    customer_id = customer_id_entry.get()
+
+    if billing_id != "BillingID":
+        results = billing.search_billing(billing_id)
+    elif customer_id != "CustomerID":
+        results = billing.search_billing_by_customer_id(customer_id)
+    else:
+        results = []
+
+    reset_treeview()
+
+    for row in results:
+        treeview.insert("", "end", values=row)
+
+
+def reset_treeview():
+    for row in treeview.get_children():
+        treeview.delete(row)
+
+    for row in billing.search_billing_by_customer_id("*"):
+        treeview.insert("", "end", values=row)
+
+
+def on_treeview_select(event):
+    pass  # Add any action to be performed when selecting a row in the treeview
+
 billing = Billing("Billing.xlsx", "Consumption.xlsx", "Customer.xlsx")
 
 root = tk.Tk()
@@ -92,36 +120,6 @@ search_button.grid(row=1, column=4, padx=(5, 5), pady=(5, 5))
 reset_button = ttk.Button(
     search_frame, text="Reset", command=reset_treeview)
 reset_button.grid(row=1, column=5, padx=(5, 5), pady=(5, 5))
-
-
-def search_data():
-    billing_id = billing_id_entry.get()
-    customer_id = customer_id_entry.get()
-
-    if billing_id != "BillingID":
-        results = billing.search_billing(billing_id)
-    elif customer_id != "CustomerID":
-        results = billing.search_billing_by_customer_id(customer_id)
-    else:
-        results = []
-
-    reset_treeview()
-
-    for row in results:
-        treeview.insert("", "end", values=row)
-
-
-def reset_treeview():
-    for row in treeview.get_children():
-        treeview.delete(row)
-
-    for row in billing.search_billing_by_customer_id("*"):
-        treeview.insert("", "end", values=row)
-
-
-def on_treeview_select(event):
-    pass  # Add any action to be performed when selecting a row in the treeview
-
 
 # Populate the treeview
 reset_treeview()
