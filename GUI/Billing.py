@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import openpyxl
-from Billing import Billing
+from Database import Billing
 
 billing = Billing("Billing.xlsx", "Consumption.xlsx", "Customer.xlsx")
 
