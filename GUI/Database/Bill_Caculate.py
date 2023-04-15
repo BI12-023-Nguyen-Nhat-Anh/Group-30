@@ -13,7 +13,7 @@ def Household(count):
     # If consumption electric are in 0-50kWh
     elif (count - 50) <= 0:
         amount1 = count
-        amount = amount1 * 1.678
+        amount = amount1 * 1.678    
         count1 = count - 50
     # If consumption electric are in 51-100 kWh
     elif (count1 - 50) <= 0:
@@ -132,7 +132,7 @@ def Business(count):
 
 
 
-print(Household(500))
+
 Administrative_offices(2000)
 Business(1500)
 Manufacturing_industries(1700)
@@ -153,3 +153,4 @@ def late_fee_Manufacturing_industries():
     print(round(late_fee),2)
 
 
+print(Household(500))

@@ -1,7 +1,72 @@
 import tkinter as tk
 from tkinter import ttk
+from assets.set_logo import logo
 import openpyxl
 from Database import Billing
+root = tk.Tk()
+logo(root)
+root.title('Billing list')
+root.option_add("*tearOff", False)
+root.pack_propagate(False)
+root.geometry("1280x720")
+root.resizable(0, 0)
+
+# Create a style
+style = ttk.Style(root)
+# Import the tcl file
+theme_path = "assets/forest-dark.tcl"
+# Load the theme file
+root.tk.call("source", "forest-dark.tcl")
+
+# Set the theme with the theme_use method
+style.theme_use("forest-dark")
+
+
+"""
+=================TREEVIEW======================================
+===============================================================
+"""
+# Panedwindow
+paned = ttk.PanedWindow(root)
+paned.grid(row=0, column=0, columnspan=10, padx=(10, 20),
+           pady=(10, 10), sticky="nsew")
+paned.pack_propagate(False)
+
+# Pane #1
+pane_1 = ttk.Frame(paned)
+paned.add(pane_1, weight=1)
+
+
+# tree frame
+treeFrame = ttk.Frame(pane_1)
+treeFrame.grid(row=0, column=0, padx=5, pady=5)
+
+
+# scroll ball
+treeScrolly = ttk.Scrollbar(treeFrame)
+treeScrolly.pack(side="right", fill="y")
+
+# contents
+cols = ("BillingID", "CustomerID", "ConsumptionID", "BillingDeadline", "Month", "Year", "BillingAmount","LateFee", "TotalBill", "Status")
+
+treeview = ttk.Treeview(treeFrame, show="headings",yscrollcommand=treeScrolly.set, columns=cols, height=13)
+
+treeview.column("BillingID", width=120, anchor="center")
+treeview.column("CustomerID", width=120, anchor="center")
+treeview.column("ConsumptionID", width=120, anchor="center")
+treeview.column("BillingDeadline", width=120, anchor="center")
+treeview.column("Month", width=120, anchor="center")
+treeview.column("Year", width=120, anchor="center")
+treeview.column("BillingAmount", width=120, anchor="center")
+treeview.column("LateFee", width=120, anchor="center")
+treeview.column("TotalBill", width=120, anchor="center")
+treeview.column("Status", width=120, anchor="center")
+treeview.bind('<Button-1>', lambda event: on_treeview_select(event))
+
+treeview.pack(fill="both", expand=True)
+treeScrolly.config(command=treeview.yview)
+
+path = "data/data_customer.xlsx"
 
 def search_data():
     billing_id = billing_id_entry.get()
@@ -33,57 +98,10 @@ def on_treeview_select(event):
 
 billing = Billing("Billing.xlsx", "Consumption.xlsx", "Customer.xlsx")
 
-root = tk.Tk()
-root.title('Billing list')
-root.option_add("*tearOff", False)
-root.pack_propagate(False)
-root.geometry("1280x720")
-root.resizable(0, 0)
-
-# Create a style
-style = ttk.Style(root)
-# Import the tcl file
-root.tk.call("source", "forest-dark.tcl")
-# Set the theme with the theme_use method
-style.theme_use("forest-dark")
-
-# Panedwindow
-paned = ttk.PanedWindow(root)
-paned.grid(row=0, column=0, columnspan=10, padx=(10, 20),
-           pady=(10, 10), sticky="nsew")
-paned.pack_propagate(False)
-
-# Pane #1
-pane_1 = ttk.Frame(paned)
-paned.add(pane_1, weight=1)
-
-# tree frame
-treeFrame = ttk.Frame(pane_1)
-treeFrame.grid(row=0, column=0, padx=5, pady=5)
-
-# scroll ball
-treeScrolly = ttk.Scrollbar(treeFrame)
-treeScrolly.pack(side="right", fill="y")
-
-# contents
-cols = ("BillingID", "CustomerID", "ConsumptionID", "BillingDeadline", "Month", "Year", "BillingAmount","LateFee", "TotalBill", "Status")
-treeview = ttk.Treeview(treeFrame, show="headings",yscrollcommand=treeScrolly.set, columns=cols, height=13)
-
-treeview.column("BillingID", width=120, anchor="center")
-treeview.column("CustomerID", width=120, anchor="center")
-treeview.column("ConsumptionID", width=120, anchor="center")
-treeview.column("BillingDeadline", width=120, anchor="center")
-treeview.column("Month", width=120, anchor="center")
-treeview.column("Year", width=120, anchor="center")
-treeview.column("BillingAmount", width=120, anchor="center")
-treeview.column("LateFee", width=120, anchor="center")
-treeview.column("TotalBill", width=120, anchor="center")
-treeview.column("Status", width=120, anchor="center")
-treeview.bind('<Button-1>', lambda event: on_treeview_select(event))
-
-treeview.pack(fill="both", expand=True)
-treeScrolly.config(command=treeview.yview)
-
+"""
+=================Search and filter======================================
+===============================================================
+"""
 # Search & filter
 search_frame = ttk.LabelFrame(root, text="Search and filter", padding=(20, 10))
 search_frame.grid(row=1, column=0, padx=(15, 10),pady=(10, 10), columnspan=2, sticky="nsew")
