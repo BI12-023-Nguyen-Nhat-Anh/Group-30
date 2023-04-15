@@ -1,11 +1,10 @@
 import tkinter as tk
 import openpyxl
 from tkinter import ttk
-from tkinter import *
+# from PIL import ImageTk, Image
 
 root = tk.Tk()
 root.title('Customer list')
-root.option_add("*tearOff", False)
 root.pack_propagate(False)
 root.geometry("1280x720")
 root.resizable(0, 0)
@@ -20,8 +19,9 @@ root.tk.call("source", theme_path)
 # Set the theme with the theme_use method
 style.theme_use("forest-dark")
 
-p1 = PhotoImage(file='assets/logo.png')
-root.iconphoto(False, p1)
+# img = ImageTk.PhotoImage(file='assets/logo.png')
+# root.iconphoto(False, img)
+
 
 """
 =================TREEVIEW======================================
