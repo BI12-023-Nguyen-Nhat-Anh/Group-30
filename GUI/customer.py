@@ -94,13 +94,13 @@ search_frame.grid(row=1, column=0, padx=(15, 10),
 search_frame.columnconfigure(index=0, weight=1)
 search_frame.pack_propagate(False)
 # ID
-id_entry = ttk.Entry(search_frame)
-id_entry.insert(0, "Customer Code")
+code_entry = ttk.Entry(search_frame)
+code_entry.insert(0, "Customer Code")
 # double left-click on entry and the default text disappears, right-click to get the default text
-id_entry.bind("<Double-Button-1>", lambda e: id_entry.delete(0, "end"))
-id_entry.bind("<Button-3>", lambda e: id_entry.insert(
-    0, "Customer Code") if not id_entry.get() else None)
-id_entry.grid(row=1, column=0, columnspan=2, pady=10, sticky="ew")
+code_entry.bind("<Double-Button-1>", lambda e: code_entry.delete(0, "end"))
+code_entry.bind("<Button-3>", lambda e: code_entry.insert(
+    0, "Customer Code") if not code_entry.get() else None)
+code_entry.grid(row=1, column=0, columnspan=2, pady=10, sticky="ew")
 
 
 # Name
@@ -154,7 +154,7 @@ search_button.bind("<Button-1>", lambda event: search(event))
 
 def search(event):
     # Get the values from the search inputs
-    id_value = id_entry.get()
+    code_value = code_entry.get()
     name_value = name_entry.get().lower()
     type_value = type_combo.get()
     status_value = status_combo.get()
@@ -165,18 +165,15 @@ def search(event):
     # Filter the data based on the search inputs
     filtered_data = []
     for value_tuple in list_values[1:]:
-        if (id_value == "Customer Code" or id_value in value_tuple[0]) or (name_value == "Name" or name_value in value_tuple[1].lower() and (all(word in value_tuple[1].lower() for word in name_value))):
+        if ((name_value == "Name" or name_value in value_tuple[1].lower() and (any(word in value_tuple[1].lower() for word in name_value))) and (code_value == "Customer Code" or code_value in value_tuple[0])):
             if type_value == "Type" and status_value == "Status":
                 filtered_data.append(value_tuple)
-            elif type_value != "Type" and status_value == "Status":
-                if type_value in value_tuple[6]:
-                    filtered_data.append(value_tuple)
-            elif type_value == "Type" and status_value != "Status":
-                if status_value in value_tuple[7]:
-                    filtered_data.append(value_tuple)
-            elif type_value != "Type" and status_value != "Status":
-                if type_value in value_tuple[6] and status_value in value_tuple[7]:
-                    filtered_data.append(value_tuple)
+            elif type_value in value_tuple[6]:
+                filtered_data.append(value_tuple)
+            elif status_value in value_tuple[7]:
+                filtered_data.append(value_tuple)
+            else:
+                filtered_data.append(value_tuple)
 
     # Update the treeview with the filtered data
     for value_tuple in filtered_data:
@@ -184,8 +181,8 @@ def search(event):
 
 
 def reset(event):
-    id_entry.delete(0, "end")
-    id_entry.insert(0, "Customer Code")
+    code_entry.delete(0, "end")
+    code_entry.insert(0, "Customer Code")
     name_entry.delete(0, "end")
     name_entry.insert(0, "Name")
     type_combo.set("Type")
