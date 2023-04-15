@@ -1,11 +1,11 @@
 from PIL import Image, ImageTk
 
 def logo(root):
-    # Upload logo from folder assets 
+    # Upload logo from folder assets
     img = Image.open('assets/logo.png')
 
     # Convert photos to PhotoImage format
-    root.icon = ImageTk.PhotoImage(img)
+    icon = ImageTk.PhotoImage(img)
 
     # Set app icon with png image
-    root.call('wm', 'iconphoto', root._w, root.icon)
+    root.iconphoto(True, icon)
