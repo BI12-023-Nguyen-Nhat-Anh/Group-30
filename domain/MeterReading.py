@@ -12,11 +12,9 @@ class MeterReading:
             if(custom.get_phone()==phone):
                 if(custom.get_password()==password):
                     self.__customer_id=int(custom.get_id_card())
-
                     # Read data_customer to get all information of that account
                     data=pd.read_excel("data/data_customer.xlsx",sheet_name="filtered_data")
                     data_meterreading=pd.read_excel("data/data_meterreading.xlsx",sheet_name="MeterReading")
-
                     # Take status of that account to check
                     status=data.loc[data["Identity number"]==self.__customer_id,"Status"].values[0]
                     if(status=="Active"):
@@ -60,3 +58,4 @@ class MeterReading:
         global user_meterreading
         user_meterreading=data.loc[data["Customer Code"]==self.__customer_code, "MeterReading"].values[0]
         return user_meterreading
+MeterReading()
