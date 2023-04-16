@@ -1,7 +1,5 @@
 from main import list_user
 from GUI.login import phone, password
-from openpyxl.utils.dataframe import dataframe_to_rows
-import openpyxl
 import random
 import pandas as pd
 from tkinter import messagebox
@@ -9,6 +7,7 @@ from tkinter import messagebox
 class MeterReading:
     def __init__(self):
         # Check with which account the user is logged in to register electricity
+        global amount
         for custom in list_user:
             if(custom.get_phone()==phone):
                 if(custom.get_password()==password):
@@ -24,7 +23,7 @@ class MeterReading:
                         # Get the data in which line has the same Customer_id as the logged in account
                         name=data.loc[data["Identity number"]==self.__customer_id,"Name"].values[0]
                         id_customer=data.loc[data["Identity number"]==self.__customer_id,"Customer Code"].values[0]
-                        # # Give id_customer = id_customer to have the account check variable in the get_MeterReading function because meter reading 
+                        # Give id_customer = id_customer to have the account check variable in the get_MeterReading function because meter reading 
                         # only takes the customer code
                         self.__customer_code=id_customer
                         type=data.loc[data["Identity number"]==self.__customer_id,"Type"].values[0]
@@ -58,5 +57,6 @@ class MeterReading:
     def get_MeterReading(self):
         # Take the data by the Customer Code in the data_MeterReading file
         data=pd.read_excel("data/data_meterreading.xlsx",sheet_name="MeterReading")
-        global user_data
-        user_data=data.loc[data["Customer Code"]==self.__customer_code, "MeterReading"].values[0]
+        global user_meterreading
+        user_meterreading=data.loc[data["Customer Code"]==self.__customer_code, "MeterReading"].values[0]
+        return user_meterreading
