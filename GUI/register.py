@@ -149,7 +149,7 @@ def Save_Data():
     get_customer = customer(ident,name,email,residental_adress,intended_use,tax)
     
     
-    if intended_use == "HouseHold":
+    if intended_use == "Household":
         
         name = MyEntry.get()
         email = MyEntry1.get()
@@ -383,13 +383,13 @@ def onClick_Intended():
             listbox.destroy()
             myFrame3.destroy()
             
-            if selection == "HouseHold":
+            if selection == "Household":
                  
                 global MyLabel14
                 MyLabel14 = Label(window, text="You cannot type here",bg="#313131")
                 MyLabel14.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
                  
-            elif selection == "Administrative Offices":
+            elif selection == "Administrative office":
                 
                 if Mylabel4.winfo_exists():
                     MyLabel14.destroy()
@@ -414,7 +414,7 @@ def onClick_Intended():
                     MyEntry7.insert(0,selection)
                 
                 
-            elif selection == "Manufacturing Industries":
+            elif selection == "Manufacturing industry":
                 
                 if Mylabel4.winfo_exists():
                     MyLabel14.destroy()
@@ -438,10 +438,10 @@ def onClick_Intended():
     listbox.place(width=428, height=96)
     
     
-    listbox.insert(END, "HouseHold")
-    listbox.insert(END, "Administrative Offices")
+    listbox.insert(END, "Household")
+    listbox.insert(END, "Administrative office")
     listbox.insert(END, "Business")
-    listbox.insert(END, "Manufacturing Industries")
+    listbox.insert(END, "Manufacturing industry")
     
     
     listbox.bind("<<ListboxSelect>>", on_select)
