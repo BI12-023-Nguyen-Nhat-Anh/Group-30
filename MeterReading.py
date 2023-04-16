@@ -1,54 +1,58 @@
-import csv
+from main import list_user
+from GUI.login import phone, password
+from openpyxl.utils.dataframe import dataframe_to_rows
+import openpyxl
+import random
+import pandas as pd
+from tkinter import messagebox
 
 class MeterReading:
-    def __init__(self, customer_id, meter_reading_id, time, date, month, year, reading_amount):
-        self.customer_id = customer_id
-        self.meter_reading_id = meter_reading_id
-        self.time = time
-        self.date = date
-        self.month = month
-        self.year = year
-        self.reading_amount = reading_amount
+    def __init__(self):
+        # write=pd.ExcelWriter("data/data_meterreading.xlsx", engine="openpyxl")
+        for custom in list_user:
+            if(custom.get_phone()==phone):
+                if(custom.get_password()==password):
+                    self.__customer_id=int(custom.get_id_card())
+                    print(f"Customer id={self.__customer_id}")
+                    data=pd.read_excel("data/data_customer.xlsx",sheet_name="filtered_data")
+                    data_meterreading=pd.read_excel("data/data_meterreading.xlsx",sheet_name="MeterReading")
+                    # write=pd.ExcelWriter("data/data.xlsx",engine="openpyxl")
+                    status=data.loc[data["Identity number"]==self.__customer_id,"Status"].values[0]
+                    if(status=="Active"):
+                        name=data.loc[data["Identity number"]==self.__customer_id,"Name"].values[0]
+                        id_customer=data.loc[data["Identity number"]==self.__customer_id,"Customer Code"].values[0]
+                        self.__customer_code=id_customer
+                        type=data.loc[data["Identity number"]==self.__customer_id,"Type"].values[0]
+                    else:
+                        messagebox.showerror("Error!","Your account is invalid due to late payment of fees")
 
-    def create_meter_reading(self, customer_id):
-        # search the CustomerID in the Customer.csv file
-        with open('Customer.csv', 'r') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                if row['CustomerID'] == customer_id:
-                    # customer_id found, create the MeterReading object
-                    self.customer_id = customer_id
-                    self.meter_reading_id = 0  # autocreate the MeterReadingID as 0
-                    break
-            else:
-                # customer_id not found, cannot create MeterReading object
-                raise ValueError('CustomerID not found in Customer.csv')
+                    new_data={"Customer Code": id_customer, "Name": name, "MeterReading": "","Type": type, "Status": status}
+                    df=pd.DataFrame(new_data,index=[0])
+                    update=pd.concat([data_meterreading,df])
+                    update.to_excel("data/data_meterreading.xlsx", index=False, sheet_name="MeterReading")
 
-    def update_data_reading(self, meter_reading_id, time, date, month, year, reading_amount):
-        # Input the MeterReadingID, Hour, Date, Month, Year, and Reading Amount
-        # If not have MeterReading, break
-        if self.meter_reading_id != meter_reading_id:
-            raise ValueError('MeterReadingID not found')
+    def set_MeterReading(self):
+        # Random amount of electricity used by the customer 
+        data=pd.read_excel("data/data_meterreading.xlsx",sheet_name="MeterReading")
+        type=data.loc[data["Customer Code"]==self.__customer_code, "Type"].values[0]
+        if(type=="Household"):
+            data.loc[data["Customer Code"]==self.__customer_code, "MeterReading"]=random.randint(50,400)
+            data.to_excel("data/data_meterreading.xlsx", sheet_name="MeterReading",index=False)
+        elif(type=="Manufacturing industries"):
+            data.loc[data["Customer Code"]==self.__customer_code, "MeterReading"]=random.randint(400,1000)
+            data.to_excel("data/data_meterreading.xlsx", sheet_name="MeterReading",index=False)
+        elif(type=="Business"):
+            data.loc[data["Customer Code"]==self.__customer_code, "MeterReading"]=random.randint(200,700)
+            data.to_excel("data/data_meterreading.xlsx", sheet_name="MeterReading",index=False)
+        elif(type=="Administrative offices"):
+            data.loc[data["Customer Code"]==self.__customer_code, "MeterReading"]=random.randint(200,700)
+            data.to_excel("data/data_meterreading.xlsx", sheet_name="MeterReading",index=False)
 
-        # if month+year duplicate, break
-        if self.month == month and self.year == year:
-            raise ValueError('Duplicate month+year')
+    def get_MeterReading(self):
+        # Take the data by the CustomerID in the data_customer file
+        data=pd.read_excel("data/data_customer.xlsx",sheet_name="filtered_data")
+        user_data=data.loc[data["Customer Code"]==self.__self.__customer_id, "MeterReading"].values[0]
+        
 
-        # update the MeterReading object
-        self.time = time
-        self.date = date
-        self.month = month
-        self.year = year
-        self.reading_amount = reading_amount
-
-    @staticmethod
-    def search_meter_reading(meter_reading_id):
-        # Input the MeterReadingID, output: All data with match MeterReading
-        with open('MeterReading.csv', 'r') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                if row['MeterReadingID'] == meter_reading_id:
-                    return MeterReading(row['CustomerID'], row['MeterReadingID'], row['Time'], row['Date'], row['Month'], row['Year'], row['Reading Amount'])
-                else:
-                    # no matching MeterReading found
-                    raise ValueError('MeterReadingID not found')
+k=MeterReading()
+k.set_MeterReading()

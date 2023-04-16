@@ -17,7 +17,7 @@ def check_login(phone_input, password_input):
             if(custom.get_phone()==phone):
                 if(custom.get_password()==password):
                     root.destroy()
-                    import GUI.register
+                    import MeterReading
                     return custom.get_id_card()
         if(admin_data.get_id()==phone):
             if(admin_data.get_password()==password):
