@@ -52,6 +52,8 @@ class MeterReading:
                     update=pd.concat([data_meterreading,df])
                     update.to_excel("data/data_meterreading.xlsx", index=False, sheet_name="MeterReading")
         
+    def get_customer_code(self):
+        return self.__customer_code
 
     def get_MeterReading(self):
         # Take the data by the Customer Code in the data_MeterReading file
