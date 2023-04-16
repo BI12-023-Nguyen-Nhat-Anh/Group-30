@@ -179,12 +179,12 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': phone,'Email': mail,'Identity number': ident,'Tax Code':'None','Type': type_cus }
+                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': phone,'Email': mail,'Identity number': ident,'Tax Code':'None','Type': type_cus, 'Status': "Active" }
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
                 updated_df.to_excel(writer, sheet_name='data_customer', index=False)
 
-                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': phone,'Identity number': ident,'Tax Code': 'None','Type': type_cus}
+                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': phone,'Identity number': ident,'Tax Code': 'None','Type': type_cus, 'Status': "Active"}
                 df1_new = pd.DataFrame(new_data_1,index=[0])
                 updated_df_1 = pd.concat([df1,df1_new], ignore_index=True)
                 updated_df_1.to_excel(writer, sheet_name='filtered_data', index=False)
@@ -219,18 +219,18 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': phone,'Email': mail,'Identity number': ident,'Tax Code':tax,'Type': type_cus}
+                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': phone,'Email': mail,'Identity number': ident,'Tax Code':tax,'Type': type_cus, 'Status': "Active"}
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
                 updated_df.to_excel(writer, sheet_name='data_customer', index=False)
 
-                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': phone,'Identity number': ident,'Tax Code': tax,'Type': type_cus}
+                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': phone,'Identity number': ident,'Tax Code': tax,'Type': type_cus, 'Status': "Active"}
                 df1_new = pd.DataFrame(new_data_1,index=[0])
                 updated_df_1 = pd.concat([df1,df1_new], ignore_index=True)
                 updated_df_1.to_excel(writer, sheet_name='filtered_data', index=False)
                 window.destroy()
     writer.book.save('data/data_customer.xlsx')
-    
+    import domain.MeterReading
     
     
     
