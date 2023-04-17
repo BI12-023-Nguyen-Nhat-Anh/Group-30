@@ -67,7 +67,7 @@ def load_data():
 # Search and filter
 search_frame = ttk.LabelFrame(
     root, text="Search and filter", padding=(20, 10))
-search_frame.grid(row=1, column=0, padx=(15, 10),
+search_frame.grid(row=0, column=1, padx=(15, 10),
                   pady=(10, 10), columnspan=2, sticky="nsew")
 search_frame.columnconfigure(index=0, weight=1)
 search_frame.pack_propagate(False)
@@ -152,7 +152,7 @@ def reset(event):
 """
 
 paned2 = ttk.PanedWindow(root)
-paned2.grid(row=1, column=2, padx=(10, 0),
+paned2.grid(row=1, column=1, padx=(10, 0),
             pady=(18, 0), columnspan=7, sticky="nsew")
 # Pane #2
 pane_2 = ttk.Frame(paned)
