@@ -70,22 +70,19 @@ num_customer = Label(root_dashboard, text=f"{num_customer}",
                      font=family_font, bg="#EAF5FE", fg="#333536")
 num_customer.place(x=234.36, y=139.01, width=49, height=40)
 
-cus_status_col = "J"
-
-# display number of active customers
+# display number of active and inactive customers
+num_inactive_customer = 0
 num_active_customer = 0
-for row in all_customer.iter_rows(min_row=2, values_only=True):
-    if row[all_customer[f"{cus_status_col}1"].column - 1].lower() == "active":
-        num_active_customer += 1
+for row in all_customer.iter_rows(min_row=2, min_col=10):
+    for cell in row:
+        if cell.value == "Active":
+            num_active_customer += 1
+        if cell.value == "Inactive":
+            num_inactive_customer += 1
 num_active_customer = Label(root_dashboard, text=f"{num_active_customer}",
                             font=family_font, bg="#F4F0FF", fg="#333536")
 num_active_customer.place(x=594.36, y=139.01, width=49, height=40)
 
-# display number of inactive customers
-num_inactive_customer = 0
-for row in all_customer.iter_rows(min_row=2, values_only=True):
-    if row[all_customer[f"{cus_status_col}1"].column - 1].lower() == "inactive":
-        num_inactive_customer += 1
 num_inactive_customer = Label(root_dashboard, text=f"{num_inactive_customer}",
                               font=family_font, bg="#FEF1EF", fg="#333536")
 num_inactive_customer.place(x=954.36, y=143.01, width=49, height=40)

@@ -149,7 +149,7 @@ def Save_Data():
     get_customer = customer(ident,name,email,residental_adress,intended_use,tax)
     
     
-    if intended_use == "HouseHold":
+    if intended_use == "Household":
         
         name = MyEntry.get()
         email = MyEntry1.get()
@@ -179,12 +179,12 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': phone,'Email': mail,'Identity number': ident,'Tax Code':'None','Type': type_cus }
+                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':'None','Type': type_cus, 'Status': "Active" }
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
                 updated_df.to_excel(writer, sheet_name='data_customer', index=False)
 
-                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': phone,'Identity number': ident,'Tax Code': 'None','Type': type_cus}
+                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': str(phone),'Identity number': str(ident),'Tax Code': 'None','Type': type_cus, 'Status': "Active"}
                 df1_new = pd.DataFrame(new_data_1,index=[0])
                 updated_df_1 = pd.concat([df1,df1_new], ignore_index=True)
                 updated_df_1.to_excel(writer, sheet_name='filtered_data', index=False)
@@ -219,19 +219,18 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': phone,'Email': mail,'Identity number': ident,'Tax Code':tax,'Type': type_cus}
+                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':tax,'Type': type_cus, 'Status': "Active"}
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
                 updated_df.to_excel(writer, sheet_name='data_customer', index=False)
 
-                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': phone,'Identity number': ident,'Tax Code': tax,'Type': type_cus}
+                new_data_1 = {'Customer Code': f'CH{str(random_number)}','Name': name_cus,'Electricity usage address': electricity_usage,'Phone Number': str(phone),'Identity number': str(ident),'Tax Code': tax,'Type': type_cus, 'Status': "Active"}
                 df1_new = pd.DataFrame(new_data_1,index=[0])
                 updated_df_1 = pd.concat([df1,df1_new], ignore_index=True)
                 updated_df_1.to_excel(writer, sheet_name='filtered_data', index=False)
                 window.destroy()
     writer.book.save('data/data_customer.xlsx')
-    
-    
+    import domain.MeterReading
     
     
 def Clear_Data():
@@ -384,13 +383,13 @@ def onClick_Intended():
             listbox.destroy()
             myFrame3.destroy()
             
-            if selection == "HouseHold":
+            if selection == "Household":
                  
                 global MyLabel14
                 MyLabel14 = Label(window, text="You cannot type here",bg="#313131")
                 MyLabel14.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
                  
-            elif selection == "Administrative Offices":
+            elif selection == "Administrative office":
                 
                 if Mylabel4.winfo_exists():
                     MyLabel14.destroy()
@@ -415,7 +414,7 @@ def onClick_Intended():
                     MyEntry7.insert(0,selection)
                 
                 
-            elif selection == "Manufacturing Industries":
+            elif selection == "Manufacturing industry":
                 
                 if Mylabel4.winfo_exists():
                     MyLabel14.destroy()
@@ -439,10 +438,10 @@ def onClick_Intended():
     listbox.place(width=428, height=96)
     
     
-    listbox.insert(END, "HouseHold")
-    listbox.insert(END, "Administrative Offices")
+    listbox.insert(END, "Household")
+    listbox.insert(END, "Administrative office")
     listbox.insert(END, "Business")
-    listbox.insert(END, "Manufacturing Industries")
+    listbox.insert(END, "Manufacturing industry")
     
     
     listbox.bind("<<ListboxSelect>>", on_select)
