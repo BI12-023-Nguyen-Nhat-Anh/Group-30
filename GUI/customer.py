@@ -4,7 +4,7 @@ from tkinter import ttk
 from PIL import ImageTk
 
 root = tk.Tk()
-root.title('Customer list')
+root.title('Details')
 root.geometry("1280x720")
 # Do not allow the window to be resizable
 root.resizable(0, 0)
@@ -19,8 +19,11 @@ root.tk.call("source", theme_path)
 # Set the theme with the theme_use method
 style.theme_use("forest-dark")
 
+"""
+I don't know why whenever I set logo, this logo won't run...
 img = ImageTk.PhotoImage(file='assets/logo.png')
 root.iconphoto(False, img)
+"""
 
 
 """
@@ -215,7 +218,7 @@ notebook.pack(fill=tk.BOTH, expand=True)
 
 # Tab #1
 tab_1 = ttk.Frame(notebook)
-notebook.add(tab_1, text="Details")
+notebook.add(tab_1, text="Customer Information")
 
 # Tab #2
 tab_2 = ttk.Frame(notebook)
