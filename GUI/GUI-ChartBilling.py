@@ -96,7 +96,7 @@ def main_app():
             return toggle_line_visibility
 
         lines = []  # Store line objects for the custom legend
-        for year in filtered_data["Year"].unique()[-3:]:
+        for year in filtered_data["Year"].unique()[-4:]:
             year_data = filtered_data[filtered_data["Year"] == year]
             months = year_data["Month"].tolist()
             values = year_data[chart_type.get()].tolist()
