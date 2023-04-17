@@ -1,5 +1,7 @@
 from domain.customer import customer
 from domain.MeterReading import amount
+from main import list_user
+from GUI.login import phone, password
 numbers = []
 numbers1 = []
 numbers2 = []
@@ -139,8 +141,11 @@ def Business(count):
     
     numbers3.append(amount)
 
-
-if customer.get_type() == "HouseHold":
+for custom in list_user:
+    if(custom.get_phone()==phone):
+        if(custom.get_password()==password):
+            type_electric = custom.get_type()
+if type_electric == "HouseHold":
 
     Household(amount)
     def late_fee_HouseHold():
@@ -148,21 +153,21 @@ if customer.get_type() == "HouseHold":
          late_fee = (numbers[0]*(10/100))
          price = numbers[0]
         
-elif customer.get_type() == "Administrative_offices":
+elif type_electric == "Administrative_offices":
     Administrative_offices(amount)
     def late_fee_Administrative_offices():
          numbers1[0]+(numbers1[0]*(10/100))
          late_fee = (numbers1[0]*(10/100))
          price = numbers1[0]
         
-elif customer.get_type() == "Business":
+elif type_electric == "Business":
     Business(amount)
     def late_fee_Business():
          numbers2[0]+(numbers2[0]*(10/100))
          late_fee = (numbers2[0]*(10/100))
          price = numbers2[0]
         
-elif customer.get_type() == "Manufacturing_industries":
+elif type_electric == "Manufacturing_industries":
     Manufacturing_industries(amount)
     def late_fee_Manufacturing_industries():
          numbers3[0]+(numbers3[0]*(10/100))
