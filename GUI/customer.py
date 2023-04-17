@@ -1,6 +1,7 @@
 import tkinter as tk
 import openpyxl
 from tkinter import ttk
+from PIL import ImageTk
 
 root = tk.Tk()
 root.title('Customer list')
@@ -18,8 +19,8 @@ root.tk.call("source", theme_path)
 # Set the theme with the theme_use method
 style.theme_use("forest-dark")
 
-# img = ImageTk.PhotoImage(file='assets/logo.png')
-# root.iconphoto(False, img)
+img = ImageTk.PhotoImage(file='assets/logo.png')
+root.iconphoto(False, img)
 
 
 """
