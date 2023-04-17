@@ -10,9 +10,8 @@ from themes.theme import theme
 import pandas as pd
 import re
 import random
-from Bill_Caculate import late_fee,price
-from domain.MeterReading import amount
-from Billing_Payments import total,status,due,payment
+
+
 
 window = Tk()
 window.title("Electric")
@@ -183,7 +182,7 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'Customer Code': f'CH00120300{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':'None','Type': type_cus, 'Status': "Active",'Total consumption':amount,'Price': price,'Late fee amount': late_fee,"Total Payment Amount": total,"Due Date": due,"Payment Date": payment,"Bill Status":status}
+                new_data = {'Customer Code': f'CH00120300{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':'None','Type': type_cus, 'Status': "Active"}
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
                 updated_df.to_excel(writer, sheet_name='data_customer', index=False)
@@ -223,7 +222,7 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'Customer Code': f'CH00120300{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':tax,'Type': type_cus, 'Status': "Active",'Total consumption':amount,'Price': price,'Late fee amount': late_fee,"Total Payment Amount": total,"Due Date": due,"Payment Date": payment,"Bill Status":status}
+                new_data = {'Customer Code': f'CH00120300{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':tax,'Type': type_cus, 'Status': "Active"}
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
                 updated_df.to_excel(writer, sheet_name='data_customer', index=False)
