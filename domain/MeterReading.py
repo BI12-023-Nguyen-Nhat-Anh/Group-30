@@ -52,10 +52,4 @@ class MeterReading:
     def get_customer_code(self):
         return self.__customer_code
 
-    def get_MeterReading(self):
-        # Take the data by the Customer Code in the data_MeterReading file
-        data=pd.read_excel("data/data_meterreading.xlsx",sheet_name="MeterReading")
-        global user_meterreading
-        user_meterreading=data.loc[data["Customer Code"]==self.__customer_code, "MeterReading"].values[0]
-        return user_meterreading
 MeterReading()
