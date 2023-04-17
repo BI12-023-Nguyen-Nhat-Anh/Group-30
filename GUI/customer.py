@@ -1,12 +1,11 @@
 import tkinter as tk
 import openpyxl
 from tkinter import ttk
-# from PIL import ImageTk, Image
 
 root = tk.Tk()
 root.title('Customer list')
-root.pack_propagate(False)
 root.geometry("1280x720")
+# Do not allow the window to be resizable
 root.resizable(0, 0)
 
 # Create a style
@@ -31,7 +30,7 @@ style.theme_use("forest-dark")
 paned = ttk.PanedWindow(root)
 paned.grid(row=0, column=0, columnspan=10, padx=(10, 20),
            pady=(10, 10), sticky="nsew")
-paned.pack_propagate(False)
+# paned.pack_propagate(False)
 
 # Pane #1
 pane_1 = ttk.Frame(paned)
@@ -47,7 +46,7 @@ treeFrame.grid(row=0, column=0, padx=5, pady=5)
 treeScrolly = ttk.Scrollbar(treeFrame)
 treeScrolly.pack(side="right", fill="y")
 
-# contents
+# create headers and scrollball
 cols = ("Customer Code", "Name", "Electricity usage address", "Phone Number",
         "Identity number", "Tax Code", "Type", "Status")
 treeview = ttk.Treeview(treeFrame, show="headings",
@@ -69,6 +68,8 @@ treeScrolly.config(command=treeview.yview)
 path = "data/data_customer.xlsx"
 workbook = openpyxl.load_workbook(path)
 sheet = workbook["filtered_data"]
+
+# load the excel data into treeview
 
 
 def load_data():
@@ -93,7 +94,7 @@ search_frame.grid(row=1, column=0, padx=(15, 10),
                   pady=(10, 10), columnspan=2, sticky="nsew")
 search_frame.columnconfigure(index=0, weight=1)
 search_frame.pack_propagate(False)
-# ID
+# Code
 code_entry = ttk.Entry(search_frame)
 code_entry.insert(0, "Customer Code")
 # double left-click on entry and the default text disappears, right-click to get the default text
@@ -200,11 +201,11 @@ def reset(event):
 
 paned2 = ttk.PanedWindow(root)
 paned2.grid(row=1, column=2, padx=(10, 0),
-            pady=(18, 0), columnspan=7, sticky="nsew")
+            pady=(18, 0), columnspan=4, sticky="nsew")
 # Pane #2
 pane_2 = ttk.Frame(paned2)
 paned2.add(pane_2, weight=2)
-paned2.pack_propagate(False)
+# paned2.pack_propagate(False)
 
 # Notebook
 notebook = ttk.Notebook(pane_2, height=280)
@@ -214,6 +215,10 @@ notebook.pack(fill=tk.BOTH, expand=True)
 # Tab #1
 tab_1 = ttk.Frame(notebook)
 notebook.add(tab_1, text="Details")
+
+# Tab #2
+tab_2 = ttk.Frame(notebook)
+notebook.add(tab_2, text="Bill")
 
 
 def on_treeview_select(event):
@@ -226,24 +231,36 @@ def on_treeview_select(event):
         sheet2 = workbook["data_customer"]
         cols2 = ("Customer Code", "Name", "Electricity usage address", "Residential address", "Phone Number", "Email",
                  "Identity number", "Tax Code", "Type", "Status")
+        cols3 = ("Total consumption", "Price", "Late fee amount",
+                 "Total payment amount", "Due Date", "Payment Date", "Bill Status")
         row = None
-        for r in sheet2.iter_rows(min_row=2):
+        for r in sheet2.iter_rows(min_row=2, min_col=1, max_col=17):
             if r[0].value == chosen_id:
                 row = r
                 break
 
         if row:
-            # Clear the current widgets in tab_1
+            # Clear the current widgets in tab_1 & tab_2
             for widget in tab_1.winfo_children():
+                widget.destroy()
+            for widget in tab_2.winfo_children():
                 widget.destroy()
 
             # Create labels for each header/value pair
             for j, header in enumerate(cols2):
                 header = cols2[j]
                 ttk.Label(tab_1, text=header + ":").grid(
-                    column=0, row=j, sticky="w", pady=5, padx=10)
+                    column=0, row=j, sticky="w", pady=5, padx=5)
                 ttk.Label(tab_1, text=row[j].value).grid(
-                    column=1, row=j, sticky="w", pady=5, padx=10)
+                    column=1, row=j, sticky="w", pady=5, padx=5)
+            cell_range = sheet2["K:Q"]
+            for column in cell_range:
+                for j, header in enumerate(cols3):
+                    header = cols3[j]
+                    ttk.Label(tab_2, text=header + ":").grid(
+                        column=3, row=j, sticky="w", pady=5, padx=4)
+                    ttk.Label(tab_2, text=row[j+10].value).grid(
+                        column=4, row=j, sticky="w", pady=5, padx=4)
 
 
 # center window
