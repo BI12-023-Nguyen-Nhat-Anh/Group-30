@@ -10,6 +10,9 @@ from themes.theme import theme
 import pandas as pd
 import re
 import random
+from Bill_Caculate import late_fee,price
+from domain.MeterReading import amount
+from Billing_Payments import total,status,due,payment
 
 window = Tk()
 window.title("Electric")
@@ -17,7 +20,8 @@ window.geometry("1080x720")
 window.resizable(False,False)
 logo(window)
 theme(window)
-random_number = random.randint(10**9, 10**10-1)
+global random_number
+random_number = random.randint(1000, 9999)
 
 
 
@@ -179,7 +183,7 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':'None','Type': type_cus, 'Status': "Active" }
+                new_data = {'Customer Code': f'CH00120300{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':'None','Type': type_cus, 'Status': "Active",'Total consumption':amount,'Price': price,'Late fee amount': late_fee,"Total Payment Amount": total,"Due Date": due,"Payment Date": payment,"Bill Status":status}
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
                 updated_df.to_excel(writer, sheet_name='data_customer', index=False)
@@ -219,7 +223,7 @@ def Save_Data():
             if formula_email(email) == False:
                 formula_email(email)
             else:
-                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':tax,'Type': type_cus, 'Status': "Active"}
+                new_data = {'Customer Code': f'CH{str(random_number)}','Name':name_cus,'Electricity usage address': electricity_usage,'Residential address': address,'Phone Number': str(phone),'Email': mail,'Identity number': str(ident),'Tax Code':tax,'Type': type_cus, 'Status': "Active",'Total consumption':amount,'Price': price,'Late fee amount': late_fee,"Total Payment Amount": total,"Due Date": due,"Payment Date": payment,"Bill Status":status}
                 df_new = pd.DataFrame(new_data,index=[0])
                 updated_df = pd.concat([df,df_new], ignore_index=True)
                 updated_df.to_excel(writer, sheet_name='data_customer', index=False)
@@ -375,19 +379,23 @@ def onClick_Intended():
         MyButton3.config(image=my_img)
         MyButton3.config(command=onClick_Intended)
 
+        
     def on_select(event):
-        if listbox.curselection() != ():
+       
+       if listbox.curselection() != ():
             selection = listbox.get(listbox.curselection())
             MyEntry7.delete(0,END)
             MyEntry7.insert(0,selection)
             listbox.destroy()
             myFrame3.destroy()
+            global MyLabel14
             
             if selection == "Household":
                  
-                global MyLabel14
                 MyLabel14 = Label(window, text="You cannot type here",bg="#313131")
                 MyLabel14.place(relx=0.515, rely=0.73, relwidth=0.45, relheight=0.06)
+                MyEntry7.delete(0,END)
+                MyEntry7.insert(0,selection)
                  
             elif selection == "Administrative office":
                 
@@ -396,6 +404,7 @@ def onClick_Intended():
                     selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)
                     MyEntry7.insert(0,selection)
+                    
                 else:
                     selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)
@@ -408,6 +417,7 @@ def onClick_Intended():
                     selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)
                     MyEntry7.insert(0,selection)
+                    
                 else:
                     selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)
@@ -421,6 +431,7 @@ def onClick_Intended():
                     selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)
                     MyEntry7.insert(0,selection)
+                    
                 else:
                     selection = listbox.get(listbox.curselection())
                     MyEntry7.delete(0,END)

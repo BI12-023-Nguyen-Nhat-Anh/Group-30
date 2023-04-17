@@ -6,6 +6,8 @@ numbers2 = []
 numbers3 = []
 global late_fee
 late_fee = 0
+global price
+price = 0
 def Household(count):
 
     # Seperate the total consumption electric for each stage
@@ -144,24 +146,28 @@ if customer.get_type() == "HouseHold":
     def late_fee_HouseHold():
          numbers[0]+(numbers[0]*(10/100))
          late_fee = (numbers[0]*(10/100))
+         price = numbers[0]
         
 elif customer.get_type() == "Administrative_offices":
     Administrative_offices(amount)
     def late_fee_Administrative_offices():
          numbers1[0]+(numbers1[0]*(10/100))
          late_fee = (numbers1[0]*(10/100))
+         price = numbers1[0]
         
 elif customer.get_type() == "Business":
     Business(amount)
     def late_fee_Business():
          numbers2[0]+(numbers2[0]*(10/100))
          late_fee = (numbers2[0]*(10/100))
+         price = numbers2[0]
         
 elif customer.get_type() == "Manufacturing_industries":
     Manufacturing_industries(amount)
     def late_fee_Manufacturing_industries():
          numbers3[0]+(numbers3[0]*(10/100))
          late_fee = (numbers3[0]*(10/100))
+         price = numbers3[0]
 else:
     print("Error!")
         
