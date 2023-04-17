@@ -173,8 +173,22 @@ def main_app():
     notebook.add(details_tab, text="Details")
     notebook.pack(fill=tk.BOTH, expand=True)
 
-    details_tab_text = tk.Text(details_tab, wrap=tk.WORD)
-    details_tab_text.pack(fill=tk.BOTH, expand=True)
+    details_tree = ttk.Treeview(details_tab, columns=list(filtered_data.columns), show='headings')
+    details_tree.pack(fill=tk.BOTH, expand=True)
+
+    # Configure columns and headings
+    for col in filtered_data.columns:
+        details_tree.heading(col, text=col)
+        details_tree.column(col, anchor="center", width=100)
+
+    # Insert data into the Treeview
+    for index, row in filtered_data.iterrows():
+        details_tree.insert('', 'end', values=tuple(row))
+
+    # Create a vertical scrollbar
+    details_tree_scrollbar = ttk.Scrollbar(details_tab, orient=tk.VERTICAL, command=details_tree.yview)
+    details_tree_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    details_tree.configure(yscrollcommand=details_tree_scrollbar.set)
 
     # Export chart to png
     def export_chart():

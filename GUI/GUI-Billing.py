@@ -45,7 +45,7 @@ treeview = ttk.Treeview(treeFrame, show="headings",
 
 for col in cols:
     treeview.heading(col, text=col)
-    treeview.column(col, width=140, anchor="center")
+    treeview.column(col, width=150, anchor="center")
 treeview.pack(fill="both", expand=True)
 treeScrolly.config(command=treeview.yview)
 
