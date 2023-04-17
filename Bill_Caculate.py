@@ -1,4 +1,11 @@
+from domain.customer import customer
+from domain.MeterReading import amount
 numbers = []
+numbers1 = []
+numbers2 = []
+numbers3 = []
+global late_fee
+late_fee = 0
 def Household(count):
 
     # Seperate the total consumption electric for each stage
@@ -79,7 +86,7 @@ def Manufacturing_industries(count):
         amount2 = 1600
         amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442 
     
-    numbers.append(amount)
+    numbers1.append(amount)
 
 def Administrative_offices(count):
     count1 = count - 600
@@ -103,7 +110,7 @@ def Administrative_offices(count):
         amount2 = 1600
         amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442
     
-    numbers.append(amount)
+    numbers2.append(amount)
 
 
 def Business(count):
@@ -128,28 +135,39 @@ def Business(count):
         amount2 = 1600
         amount = amount1 * 2.666 + amount2 * 2.629 + count2 * 2.442
     
-    numbers.append(amount)
+    numbers3.append(amount)
+
+
+if customer.get_type() == "HouseHold":
+
+    Household(amount)
+    def late_fee_HouseHold():
+         numbers[0]+(numbers[0]*(10/100))
+         late_fee = (numbers[0]*(10/100))
+        
+elif customer.get_type() == "Administrative_offices":
+    Administrative_offices(amount)
+    def late_fee_Administrative_offices():
+         numbers1[0]+(numbers1[0]*(10/100))
+         late_fee = (numbers1[0]*(10/100))
+        
+elif customer.get_type() == "Business":
+    Business(amount)
+    def late_fee_Business():
+         numbers2[0]+(numbers2[0]*(10/100))
+         late_fee = (numbers2[0]*(10/100))
+        
+elif customer.get_type() == "Manufacturing_industries":
+    Manufacturing_industries(amount)
+    def late_fee_Manufacturing_industries():
+         numbers3[0]+(numbers3[0]*(10/100))
+         late_fee = (numbers3[0]*(10/100))
+else:
+    print("Error!")
+        
 
 
 
-Household(500)
-Administrative_offices(2000)
-Business(1500)
-Manufacturing_industries(1700)
 
-
-
-def late_fee_HouseHold():
-   late_fee = numbers[0]+(numbers[0]*(10/100))
-   print(round(late_fee),2)
-def late_fee_Administrative_offices():
-    late_fee = numbers[1]+(numbers[1]*(10/100))
-    print(round(late_fee),2)
-def late_fee_Business():
-    late_fee = numbers[2]+(numbers[2]*(10/100))
-    print(round(late_fee),2)
-def late_fee_Manufacturing_industries():
-    late_fee = numbers[3]+(numbers[3]*(10/100))
-    print(round(late_fee),2)
 
 
