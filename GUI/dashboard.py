@@ -87,38 +87,32 @@ num_inactive_customer = Label(root_dashboard, text=f"{num_inactive_customer}",
                               font=family_font, bg="#FEF1EF", fg="#333536")
 num_inactive_customer.place(x=954.36, y=143.01, width=49, height=40)
 
-
-""" WAIT FOR BILL.PY
-# access the Bill excel
-all_bill = workbook["Bill"]
-
 # Get the number of bills in the worksheet
-num_bill = all_bill.max_row - 1
+num_bill = all_customer.max_row - 1
 
 # display number of customers
 num_bill = Label(root_dashboard, text=f"{num_bill}",
                  font=family_font, bg="#FEF6E8", fg="#333536")
 num_bill.place(x=234.36, y=447.01, width=64, height=49.67)
 
-bill_status_col = "G"
+bill_status_col = "Q"
 
 # display number of paid bills
 num_paid_bill = 0
-for row in all_bill.iter_rows(min_row=2, values_only=True):
-    if row[all_bill[f"{bill_status_col}1"].column - 1].lower() == "paid":
-        num_paid_bill += 1
+num_overdue_bill = 0
+for row in all_customer.iter_rows(min_row=2, min_col=17):
+    for cell in row:
+        if cell.value == "Paid":
+            num_paid_bill += 1
+        if cell.value == "Overdue":
+            num_overdue_bill += 1
 num_paid_bill = Label(root_dashboard, text=f"{num_paid_bill}",
                       font=family_font, bg="#FEFBE5", fg="#333536")
 num_paid_bill.place(x=594.36, y=447.01, width=64, height=49.67)
-
 # display number of overdue bills
-num_overdue_bill = 0
-for row in all_bill.iter_rows(min_row=2, values_only=True):
-    if row[all_bill[f"{bill_status_col}1"].column - 1].lower() == "overdue":
-        num_overdue_bill += 1
 num_overdue_bill = Label(root_dashboard, text=f"{num_overdue_bill}",
                          font=family_font, bg="#E4FEF4", fg="#333536")
 num_overdue_bill.place(x=954.36, y=447.01, width=64, height=49.67)
-"""
+
 
 root_dashboard.mainloop()
