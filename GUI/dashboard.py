@@ -29,29 +29,10 @@ canvas.create_image(0, 0, image=img, anchor="nw")
 rect_cus_menu = canvas.create_rectangle(16, 102, 158, 133, fill="", outline="")
 canvas.tag_bind(rect_cus_menu, "<Button-1>",
                 lambda event: switch_window_customer())
-rect_cus_image = canvas.create_rectangle(
-    200, 103, 533, 370, fill="", outline="")
-canvas.tag_bind(rect_cus_image, "<Button-1>",
-                lambda event: switch_window_customer())
-
-# for bill (both in menu and image)
-rect_bill_menu = canvas.create_rectangle(
-    16, 136, 158, 167, fill="", outline="")
-canvas.tag_bind(rect_bill_menu, "<Button-1>",
-                lambda event: switch_window_bill())
-rect_bill_image = canvas.create_rectangle(
-    200, 411, 533, 678, fill="", outline="")
-canvas.tag_bind(rect_bill_image, "<Button-1>",
-                lambda event: switch_window_bill())
 
 
 def switch_window_customer():
     import GUI.customer
-
-
-def switch_window_bill():
-    print("The bill window will be updated soon")
-    # import GUI.bill
 
 
 # set the font
