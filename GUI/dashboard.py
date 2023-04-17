@@ -114,5 +114,4 @@ num_overdue_bill = Label(root_dashboard, text=f"{num_overdue_bill}",
                          font=family_font, bg="#E4FEF4", fg="#333536")
 num_overdue_bill.place(x=954.36, y=447.01, width=64, height=49.67)
 
-
 root_dashboard.mainloop()
