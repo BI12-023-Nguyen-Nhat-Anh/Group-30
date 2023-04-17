@@ -1,7 +1,6 @@
 import openpyxl
 import os
 import datetime
-from Bill_Caculate import Household, Manufacturing_industries, Administrative_offices, Business
 
 class Billing:
     '''The Billing class now includes the following methods:

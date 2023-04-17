@@ -62,18 +62,21 @@ def main_app():
     # Filter data based on customer ID
     filtered_data = data[data["CustomerID"] == customer_id].sort_values(["Year", "Month"])
 
-    # Create paned window
-    paned_window = ttk.PanedWindow(root, orient=tk.VERTICAL)
-    paned_window.pack(fill=tk.BOTH, expand=True)
+    # Create frames
+    chart_pane = ttk.Frame(root, width=1200, height=600)
+    chart_pane.grid(row=0, column=0, columnspan=2, sticky="nsew")
 
-    chart_pane = ttk.Frame(paned_window, width=1200, height=600)
-    paned_window.add(chart_pane)
+    details_pane = ttk.Frame(root, width=600, height=150)
+    details_pane.grid(row=1, column=0, sticky="nsew")
 
-    details_pane = ttk.Frame(paned_window, width=1200, height=150)
-    paned_window.add(details_pane)
+    export_pane = ttk.Frame(root, width=600, height=150)
+    export_pane.grid(row=1, column=1, sticky="nsew")
 
-    export_pane = ttk.Frame(paned_window, width=1200, height=50)
-    paned_window.add(export_pane)
+    # Configure grid weights
+    root.columnconfigure(0, weight=1)
+    root.columnconfigure(1, weight=1)
+    root.rowconfigure(0, weight=1)
+    root.rowconfigure(1, weight=1)
 
     # Chart type variable
     chart_type = tk.StringVar()
