@@ -31,16 +31,16 @@ class MeterReading:
                         # # If customers pay late fees, they will be inactive and unable to use electricity
                         messagebox.showerror("Error!","Your account is invalid due to late payment of fees")
                     # Check the types of electricity customers use and random amount of electricity
-                    if(types=="HouseHold"):
+                    if(types=="Household"):
                         amount=random.randint(50,400)
                         data.to_excel("data/data_meterreading.xlsx", sheet_name="MeterReading",index=False)
-                    elif(types=="Manufacturing Industries"):
+                    elif(types=="Manufacturing industries"):
                         amount=random.randint(400,1000)
                         data.to_excel("data/data_meterreading.xlsx", sheet_name="MeterReading",index=False)
                     elif(types=="Business"):
                         amount=random.randint(200,700)
                         data.to_excel("data/data_meterreading.xlsx", sheet_name="MeterReading",index=False)
-                    elif(types=="Administrative Offices"):
+                    elif(types=="Administrative offices"):
                         amount=random.randint(200,700)
                         data.to_excel("data/data_meterreading.xlsx", sheet_name="MeterReading",index=False)
                     # Write data to excel file
