@@ -2,6 +2,7 @@ import tkinter as tk
 import openpyxl
 from tkinter import ttk
 from PIL import ImageTk
+from num2words import num2words
 
 root = tk.Tk()
 root.title('Details')
@@ -19,11 +20,8 @@ root.tk.call("source", theme_path)
 # Set the theme with the theme_use method
 style.theme_use("forest-dark")
 
-"""
-I don't know why whenever I set logo, this logo won't run...
 img = ImageTk.PhotoImage(file='assets/logo.png')
 root.iconphoto(False, img)
-"""
 
 
 """
@@ -170,15 +168,8 @@ def search(event):
     # Filter the data based on the search inputs
     filtered_data = []
     for value_tuple in list_values[1:]:
-        if ((name_value == "Name" or name_value in value_tuple[1].lower() and (any(word in value_tuple[1].lower() for word in name_value))) and (code_value == "Customer Code" or code_value in value_tuple[0])):
-            if type_value == "Type" and status_value == "Status":
-                filtered_data.append(value_tuple)
-            elif type_value in value_tuple[6]:
-                filtered_data.append(value_tuple)
-            elif status_value in value_tuple[7]:
-                filtered_data.append(value_tuple)
-            else:
-                filtered_data.append(value_tuple)
+        if name_value in value_tuple[1].lower() and (any(word in value_tuple[1].lower() for word in name_value)) or (code_value in value_tuple[0]) or (type_value in value_tuple[6]) or (status_value in value_tuple[7]):
+            filtered_data.append(value_tuple)
 
     # Update the treeview with the filtered data
     for value_tuple in filtered_data:
@@ -205,7 +196,7 @@ def reset(event):
 
 paned2 = ttk.PanedWindow(root)
 paned2.grid(row=1, column=2, padx=(10, 0),
-            pady=(18, 0), columnspan=4, sticky="nsew")
+            pady=(18, 0), columnspan=5, sticky="nsew")
 # Pane #2
 pane_2 = ttk.Frame(paned2)
 paned2.add(pane_2, weight=2)
@@ -233,38 +224,54 @@ def on_treeview_select(event):
         path = "data/data_customer.xlsx"
         workbook = openpyxl.load_workbook(path)
         sheet2 = workbook["data_customer"]
+
+        path3 = "data/data_meterreading.xlsx"
+        workbook3 = openpyxl.load_workbook(path3)
+        sheet3 = workbook3["MeterReading"]
         cols2 = ("Customer Code", "Name", "Electricity usage address", "Residential address", "Phone Number", "Email",
                  "Identity number", "Tax Code", "Type", "Status")
+
         cols3 = ("Total consumption", "Price", "Late fee amount",
                  "Total payment amount", "Due Date", "Payment Date", "Bill Status")
-        row = None
-        for r in sheet2.iter_rows(min_row=2, min_col=1, max_col=17):
+        row2 = None
+        for r in sheet2.iter_rows(min_row=2, min_col=1, max_col=10):
             if r[0].value == chosen_id:
-                row = r
+                row2 = r
                 break
-
-        if row:
-            # Clear the current widgets in tab_1 & tab_2
+        if row2:
+            # Clear the current widgets in tab_1
             for widget in tab_1.winfo_children():
-                widget.destroy()
-            for widget in tab_2.winfo_children():
                 widget.destroy()
 
             # Create labels for each header/value pair
             for j, header in enumerate(cols2):
                 header = cols2[j]
                 ttk.Label(tab_1, text=header + ":").grid(
-                    column=0, row=j, sticky="w", pady=5, padx=5)
-                ttk.Label(tab_1, text=row[j].value).grid(
-                    column=1, row=j, sticky="w", pady=5, padx=5)
-            cell_range = sheet2["K:Q"]
-            for column in cell_range:
+                    column=0, row=j, sticky="w", pady=5, padx=4)
+                ttk.Label(tab_1, text=row2[j].value).grid(
+                    column=1, row=j, sticky="w", pady=5, padx=4)
+            row3 = None
+            for m in sheet3.iter_rows(min_row=2, min_col=1, max_col=10):
+                if m[0].value == chosen_id:
+                    row3 = m
+                    break
+            if row3:
+                for widget in tab_2.winfo_children():
+                    widget.destroy()
                 for j, header in enumerate(cols3):
                     header = cols3[j]
                     ttk.Label(tab_2, text=header + ":").grid(
-                        column=3, row=j, sticky="w", pady=5, padx=4)
-                    ttk.Label(tab_2, text=row[j+10].value).grid(
-                        column=4, row=j, sticky="w", pady=5, padx=4)
+                        column=0, row=j, sticky="w", pady=5, padx=4)
+                    ttk.Label(tab_2, text=row3[j+3].value).grid(
+                        column=1, row=j, sticky="w", pady=5, padx=4)
+
+                if row3[6].value == None:
+                    pass
+                else:
+                    ttk.Label(tab_2, text="In Words: "). grid(
+                        column=0, row=7, sticky="w", pady=5, padx=4)
+                    ttk.Label(tab_2, text=num2words(row3[6].value, lang="eng") + " dong").grid(
+                        column=1, row=7, sticky="w", pady=5, padx=4)
 
 
 # center window
