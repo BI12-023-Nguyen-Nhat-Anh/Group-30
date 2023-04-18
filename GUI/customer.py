@@ -94,7 +94,7 @@ search_frame = ttk.LabelFrame(
     root, text="Search and filter", padding=(20, 10))
 search_frame.grid(row=1, column=0, padx=(15, 10),
                   pady=(10, 10), columnspan=2, sticky="nsew")
-search_frame.columnconfigure(index=0, weight=1)
+# tell frame not to let its children control its size
 search_frame.pack_propagate(False)
 # Code
 code_entry = ttk.Entry(search_frame)
@@ -200,7 +200,8 @@ paned2.grid(row=1, column=2, padx=(10, 0),
 # Pane #2
 pane_2 = ttk.Frame(paned2)
 paned2.add(pane_2, weight=2)
-# paned2.pack_propagate(False)
+# tell frame not to let its children control its size
+paned2.pack_propagate(False)
 
 # Notebook
 notebook = ttk.Notebook(pane_2, height=280)
@@ -227,7 +228,7 @@ def on_treeview_select(event):
 
         path3 = "data/data_meterreading.xlsx"
         workbook3 = openpyxl.load_workbook(path3)
-        sheet3 = workbook3["MeterReading"]
+        sheet3 = workbook3["Total consumption"]
         cols2 = ("Customer Code", "Name", "Electricity usage address", "Residential address", "Phone Number", "Email",
                  "Identity number", "Tax Code", "Type", "Status")
 
