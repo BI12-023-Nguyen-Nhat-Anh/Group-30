@@ -457,7 +457,7 @@ def onClick_Intended():
     listbox.bind("<<ListboxSelect>>", on_select)
     MyButton3.config(command=Close_tab)
 
-my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_5.png"))
+my_img = ImageTk.PhotoImage(Image.open("assets/Arrow_7.png"))
 
 MyButton = Button(image=my_img, fg="#313131", bd=0, activebackground="#313131", activeforeground="#313131",
 command=onClick_Province)
