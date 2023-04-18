@@ -22,7 +22,7 @@ def check_login(phone_input, password_input):
         if(admin_data.get_id()==phone):
             if(admin_data.get_password()==password):
                 root.destroy()
-                import GUI.dashboard
+                import GUI.customer
                 return True
     messagebox.showerror("Invalid","Please try again!")
     root.destroy()
