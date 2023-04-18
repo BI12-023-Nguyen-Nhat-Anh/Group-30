@@ -26,7 +26,6 @@ class MeterReading:
                     data_meterreading=pd.read_excel("data/data_meterreading.xlsx",sheet_name="Total consumption")
                     # Take status of that account to check
                     status=data.loc[data["Identity number"]==self.__customer_id,"Status"].values[0]
-                    print(f"Status: {status}")
                     if(status=="Active"):
                         # Get the data in which line has the same Customer_id as the logged in account
                         name=data.loc[data["Identity number"]==self.__customer_id,"Name"].values[0]
