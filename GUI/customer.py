@@ -227,7 +227,7 @@ def on_treeview_select(event):
 
         path3 = "data/data_meterreading.xlsx"
         workbook3 = openpyxl.load_workbook(path3)
-        sheet3 = workbook3["MeterReading"]
+        sheet3 = workbook3["Total consumption"]
         cols2 = ("Customer Code", "Name", "Electricity usage address", "Residential address", "Phone Number", "Email",
                  "Identity number", "Tax Code", "Type", "Status")
 
