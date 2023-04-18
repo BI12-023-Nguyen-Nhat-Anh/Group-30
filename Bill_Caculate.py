@@ -14,7 +14,6 @@ global price
 price = 0
 global total
 total = 0
-
 def Household(count):
 
     # Seperate the total consumption electric for each stage
@@ -72,7 +71,7 @@ def Household(count):
         amount_bill = (amount_bill1 * 1678) + (amount_bill2 * 1734) + (amount_bill3 * 2014) +(amount_bill4 * 2536)+ (amount_bill5 * 2834) + (count5 * 2927)
     
     numbers=amount_bill
-    return numbers
+    return float(numbers)
 
 def Manufacturing_industries(count):
     count1 = count - 600
@@ -97,7 +96,7 @@ def Manufacturing_industries(count):
         amount_bill = amount_bill1 * 2666 + amount_bill2 * 2629 + count2 * 2442 
     
     numbers1=amount_bill
-    return numbers1
+    return float(numbers1)
 
 def Administrative_offices(count):
     count1 = count - 600
@@ -122,7 +121,8 @@ def Administrative_offices(count):
         amount_bill = amount_bill1 * 2666 + amount_bill2 * 2629 + count2 * 2442
     
     numbers2=amount_bill
-    return numbers2
+    return float(numbers2)
+
 
 def Business(count):
     count1 = count - 600
@@ -147,7 +147,6 @@ def Business(count):
         amount_bill = amount_bill1 * 2666 + amount_bill2 * 2629 + count2 * 2442
     
     numbers3=amount_bill
-    return numbers3
 
 for custom in list_user:
     if(custom.get_phone()==phone):
@@ -157,31 +156,30 @@ for custom in list_user:
 # Read data_customer to get all information of that account
 data=pd.read_excel("data/data_customer.xlsx",sheet_name="filtered_data")
 type_electric=data.loc[data["Identity number"]==customer_id,"Type"].values
-print(f"numbers {numbers2}")
 if type_electric == "Household":
 
-    Household(amount)
+    numbers=Household(amount)
     # def late_fee_HouseHold():
     total =numbers+(numbers*(10/100))
     late_fee = (numbers*(10/100))
     price = numbers
         
 elif type_electric == "Administrative office":
-    Administrative_offices(amount)
+    numbers1=Administrative_offices(amount)
     # def late_fee_Administrative_offices():
     total = numbers1+(numbers1*(10/100))
     late_fee = (numbers1*(10/100))
     price = numbers1
-
+        
 elif type_electric == "Business":
-    Business(amount)
+    numbers2=Business(amount)
     # def late_fee_Business():
     total = numbers2+(numbers2*(10/100))
     late_fee = (numbers2*(10/100))
     price = numbers2
         
 elif type_electric == "Manufacturing industry":
-    Manufacturing_industries(amount)
+    numbers3=Manufacturing_industries(amount)
     # def late_fee_Manufacturing_industries():
     total = numbers3+(numbers3*(10/100))
     late_fee = (numbers3*(10/100))

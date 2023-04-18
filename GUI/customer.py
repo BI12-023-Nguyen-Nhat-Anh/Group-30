@@ -196,7 +196,7 @@ def reset(event):
 
 paned2 = ttk.PanedWindow(root)
 paned2.grid(row=1, column=2, padx=(10, 0),
-            pady=(18, 0), columnspan=5, sticky="nsew")
+            pady=(18, 0), columnspan=7, sticky="nsew")
 # Pane #2
 pane_2 = ttk.Frame(paned2)
 paned2.add(pane_2, weight=2)
