@@ -86,12 +86,11 @@ elif type_electric == "Manufacturing industry":
 else:
     print("Error!")
 
-print(late_fee)
 # Read data_customer to get all information of that account
 data_meterreading=pd.read_excel("data/data_meterreading.xlsx",sheet_name="Total consumption")
 
 # Write data to excel file
-new_data={"Customer Code": id_customer, "Name": name, "Total consumption": amount, "Type": types, "Price": price, "Late fee amount": late_fee, "Total payment amount": total, "Due Date": due, "Payment Date": payment,  "Bill Status": bill_status, "Status": status}
+new_data={"Customer Code": id_customer, "Name": name, "Total consumption": amount, "Type": types, "Price": price, "Late fee amount": late_fee, "Total payment amount": total, "Due Date": due, "Payment Date": payment,  "Bill Status": bill_status}
 df=pd.DataFrame(new_data,index=[0])
 update=pd.concat([data_meterreading,df])
 update.to_excel("data/data_meterreading.xlsx", index=False, sheet_name="Total consumption") 
