@@ -147,6 +147,7 @@ def Business(count):
         amount_bill = amount_bill1 * 2666 + amount_bill2 * 2629 + count2 * 2442
     
     numbers3=amount_bill
+    return float(numbers3)
 
 for custom in list_user:
     if(custom.get_phone()==phone):
