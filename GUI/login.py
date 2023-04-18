@@ -7,6 +7,10 @@ from main import admin_data
 from domain.user import user
 from assets.set_logo import logo
 
+def back_button(root):
+    root.destroy()
+    login()
+
 # check_login function takes input from user then compare with the data 
 def check_login(phone_input, password_input):
     global phone, password
@@ -144,6 +148,7 @@ def new_user():
     submit_button = tk.Button(image=submit, background="white", activebackground="white", borderwidth=0, command=lambda: check_user(phone_input, id_card, password_input, confirm_password))
     submit_button.place(x=88, y=427, in_=root_register)
 
+    back=tk.Button(text="Back",command=lambda: back_button(root_register), background="white", border=0,activebackground="white").place(x=10, y=30)
     root_register.mainloop()
 
 def reset():
@@ -202,6 +207,7 @@ def reset():
     update_button = tk.Button(image=sign_up_button, text="Update", background="white", activebackground="white", borderwidth=0, command=lambda: check_reset(id_card, password_input, confirm_password))
     update_button.place(x=60, y=480, in_=root_reset)
 
+    back=tk.Button(text="Back",command=lambda: back_button(root_reset), background="white", border=0,activebackground="white").place(x=10, y=30)
     root_reset.mainloop()
 
 def login():
