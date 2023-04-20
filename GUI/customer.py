@@ -251,28 +251,33 @@ def on_treeview_select(event):
                     column=0, row=j, sticky="w", pady=5, padx=4)
                 ttk.Label(tab_1, text=row2[j].value).grid(
                     column=1, row=j, sticky="w", pady=5, padx=4)
-            row3 = None
-            for m in sheet3.iter_rows(min_row=2, min_col=1, max_col=10):
-                if m[0].value == chosen_id:
-                    row3 = m
-                    break
-            if row3:
-                for widget in tab_2.winfo_children():
-                    widget.destroy()
-                for j, header in enumerate(cols3):
-                    header = cols3[j]
-                    ttk.Label(tab_2, text=header + ":").grid(
-                        column=0, row=j, sticky="w", pady=5, padx=4)
-                    ttk.Label(tab_2, text=row3[j+3].value).grid(
-                        column=1, row=j, sticky="w", pady=5, padx=4)
+        # Find the row with the selected customer code in sheet3
+        row3 = None
+        for r in sheet3.iter_rows(min_row=2, min_col=1, max_col=10):
+            if r[0].value == chosen_id:
+                row3 = r
+                break
 
-                if row3[6].value == None:
-                    pass
-                else:
-                    ttk.Label(tab_2, text="In Words: "). grid(
-                        column=0, row=7, sticky="w", pady=5, padx=4)
-                    ttk.Label(tab_2, text=num2words(row3[6].value, lang="eng") + " dong").grid(
-                        column=1, row=7, sticky="w", pady=5, padx=4)
+        # Clear the current widgets in tab_2
+        for widget in tab_2.winfo_children():
+            widget.destroy()
+
+        # Create labels for each header/value pair in tab_2 and convert the amount to words
+        if row3:
+            for j, header in enumerate(cols3):
+                header = cols3[j]
+                ttk.Label(tab_2, text=header + ":").grid(
+                    column=0, row=j, sticky="w", pady=5, padx=4)
+                ttk.Label(tab_2, text=row3[j+3].value).grid(
+                    column=1, row=j, sticky="w", pady=5, padx=4)
+
+            if row3[6].value is not None:
+                amount_in_words = num2words(
+                    row3[6].value, lang="eng") + " dong"
+                ttk.Label(tab_2, text="In Words: ").grid(
+                    column=0, row=len(cols3), sticky="w", pady=5, padx=4)
+                ttk.Label(tab_2, text=amount_in_words).grid(
+                    column=1, row=len(cols3), sticky="w", pady=5, padx=4)
 
 
 # center window
